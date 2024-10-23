@@ -27,15 +27,10 @@
 
 enum class PLAYER_ANIM_STATE
 {
-	IDLE_UP,
-	IDLE_DOWN,
-	IDLE_LEFT,
-	IDLE_RIGHT,
-
-	MOVE_UP,
-	MOVE_DOWN,
-	MOVE_LEFT,
-	MOVE_RIGHT,
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT,
 };
 
 Player::Player() :
@@ -57,7 +52,7 @@ Player::Player() :
 	m_Collider = AddComponent<Collider>();
 	m_Collider->SetName(L"Player_Hit_Box");
 	m_Collider->SetPos(Vec2(0, 0));
-	m_Collider->SetScale(Vec2(100.f, 100.f));
+	m_Collider->SetScale(Vec2(64.f, 64.f));
 	m_Collider->GetID();
 
 	m_RigidBody = AddComponent<GRigidBody>();
@@ -96,39 +91,23 @@ void Player::Tick()
 
 void Player::Move()
 {
-	if (GETKEYUP(KEY::LEFT))
-	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::IDLE_LEFT, 3.f, true);
-	}
-	else if (GETKEYUP(KEY::RIGHT))
-	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::IDLE_RIGHT, 3.f, true);
-	}
-	else if (GETKEYUP(KEY::UP))
-	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::IDLE_UP, 3.f, true);
-	}
-	else if (GETKEYUP(KEY::DOWN))
-	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::IDLE_DOWN, 3.f, true);
-	}
 
 	if (GETKEYDOWN(KEY::LEFT))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::MOVE_LEFT, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::LEFT, 10.f, true);
 	}
 	else if (GETKEYDOWN(KEY::RIGHT))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::MOVE_RIGHT, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 10.f, true);
 	}
 	
 	else if (GETKEYDOWN(KEY::UP))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::MOVE_UP, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::UP, 10.f, true);
 	}
 	else if (GETKEYDOWN(KEY::DOWN))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::MOVE_DOWN, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 10.f, true);
 	}
 	
 	
@@ -259,6 +238,7 @@ void Player::CreatePlayerFlipBook()
 	GTexture* pAtlas = GAssetManager::GetInst()->LoadTexture(L"Link", L"Texture\\link_32.bmp");
 
 	
+	/*
 	CreateFlipBook(L"LINK_IDLE_DOWN", pAtlas, Vec2(0.f, 0.f), Vec2(120.f, 130.), 3);
 	CreateFlipBook(L"LINK_IDLE_LEFT", pAtlas, Vec2(0.f, 130.f), Vec2(120.f, 130.), 3);
 	CreateFlipBook(L"LINK_IDLE_UP", pAtlas, Vec2(0.f, 260.f), Vec2(120.f, 130.), 1);
@@ -268,22 +248,16 @@ void Player::CreatePlayerFlipBook()
 	CreateFlipBook(L"LINK_MOVE_LEFT", pAtlas, Vec2(0.f, 650.f), Vec2(120.f, 130.), 10);
 	CreateFlipBook(L"LINK_MOVE_UP", pAtlas, Vec2(0.f, 780.f), Vec2(120.f, 130.), 10);
 	CreateFlipBook(L"LINK_MOVE_RIGHT", pAtlas, Vec2(0.f, 910.f), Vec2(120.f, 130.), 10);
-	
+	*/
 
 	// FlipbookPlayer 컴포넌트 추가하기
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::IDLE_DOWN, GAssetManager::GetInst()->LoadFlipBook(L"LINK_IDLE_DOWN", L"FlipBook\\LINK_IDLE_DOWN.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::IDLE_LEFT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_IDLE_LEFT", L"FlipBook\\LINK_IDLE_LEFT.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::IDLE_UP, GAssetManager::GetInst()->LoadFlipBook(L"LINK_IDLE_UP", L"FlipBook\\LINK_IDLE_UP.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::IDLE_RIGHT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_IDLE_RIGHT", L"FlipBook\\LINK_IDLE_RIGHT.flip"));
+	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::DOWN, GAssetManager::GetInst()->LoadFlipBook(L"LINK_DOWN", L"FlipBook\\Link_16\\LINK_DOWN.flip"));
+	//m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::LEFT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_LEFT", L"FlipBook\\LINK_IDLE_LEFT.flip"));
+	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::UP, GAssetManager::GetInst()->LoadFlipBook(L"LINK_UP", L"FlipBook\\Link_16\\LINK_UP.flip"));
+	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::RIGHT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_RIGHT", L"FlipBook\\Link_16\\LINK_RIGHT.flip"));
 
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::MOVE_UP, GAssetManager::GetInst()->LoadFlipBook(L"LINK_MOVE_UP", L"FlipBook\\LINK_MOVE_UP.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::MOVE_DOWN, GAssetManager::GetInst()->LoadFlipBook(L"LINK_MOVE_DOWN", L"FlipBook\\LINK_MOVE_DOWN.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::MOVE_LEFT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_MOVE_LEFT", L"FlipBook\\LINK_MOVE_LEFT.flip"));
-	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::MOVE_RIGHT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_MOVE_RIGHT", L"FlipBook\\LINK_MOVE_RIGHT.flip"));
-
-	GSprite* pSprite = GAssetManager::GetInst()->FindSprite(L"LINK_IDLE_RIGHT_1");
-	pSprite->SetOffset(Vec2(1.f, 0.f));
+	m_FlipBookPlayer->SetScale(Vec2(4.f, 4.f));
 }
 
 void Player::CreateFlipBook(const wstring& _FlipBookName, GTexture* _Atlas, Vec2 _LftTop, Vec2 _Slice, int MaxFrame)

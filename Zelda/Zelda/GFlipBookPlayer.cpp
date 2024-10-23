@@ -14,6 +14,7 @@ GFlipBookPlayer::GFlipBookPlayer() :
 	m_vecFlipBook(),
 	m_CurFlipBook(nullptr),
 	m_SpriteIdx(0),
+	m_Scale(1.f,1.f),
 	m_FPS(0.f),
 	m_Time(0.f),
 	m_Repeat(true),
@@ -72,16 +73,17 @@ void GFlipBookPlayer::Render()
 	// Sprite 를 화면에 그린다.
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
-
+	
 	TransparentBlt(hBackDC
-		, vPos.x - (Sprite->GetSlice().x / 2) + Sprite->GetOffset().x
-		, vPos.y - (Sprite->GetSlice().y / 2) + Sprite->GetOffset().y
-		, Sprite->GetSlice().x
-		, Sprite->GetSlice().y
+		, vPos.x - (Sprite->GetSlice().x / 2) * m_Scale.x + Sprite->GetOffset().x
+		, vPos.y - (Sprite->GetSlice().y / 2) * m_Scale.x + Sprite->GetOffset().y
+		, Sprite->GetSlice().x * m_Scale.x
+		, Sprite->GetSlice().y * m_Scale.x
 		, Sprite->GetAtlas()->GetDC()
 		, Sprite->GetLeftTop().x
 		, Sprite->GetLeftTop().y
 		, Sprite->GetSlice().x
 		, Sprite->GetSlice().y
-		, RGB(255, 0, 255));
+		, RGB(116, 116, 116));
+	
 }

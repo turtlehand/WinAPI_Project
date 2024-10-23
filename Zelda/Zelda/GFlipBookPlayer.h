@@ -7,13 +7,17 @@ class GFlipBookPlayer : public Component
 private:
 	vector<GFlipBook*>	m_vecFlipBook;	// FlipBook 목록
 	GFlipBook*			m_CurFlipBook;	// 현재 재생중인 FlipBook
-	int					m_SpriteIdx;		
+	int					m_SpriteIdx;
+
+	Vec2				m_Scale;
 
 	float				m_FPS;			// FlipBook 재생속도
 	float				m_Time;			// 누적시간
 	bool				m_Repeat;		// 반복 재생 여부
 	bool				m_Finish;		// 재생이 끝났는지 여부
 public:
+	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+
 	void AddFlipBook(GFlipBook* _FlipBook) { m_vecFlipBook.push_back(_FlipBook); }
 	void AddFlipBook(int _idx, GFlipBook* _FlipBook)
 	{
