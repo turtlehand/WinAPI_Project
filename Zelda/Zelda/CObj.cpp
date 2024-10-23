@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CObj.h"
-#include "Component.h"
+#include "GComponent.h"
 #include "Collider.h"
 #include "GCamera.h"
 

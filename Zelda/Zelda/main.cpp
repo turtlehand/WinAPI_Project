@@ -40,7 +40,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,         // 프로세스 주소(I
 
 	RegisterClassExW(&wcex);
 
-	if (FAILED(CEngine::GetInst()->Init(hInstance, POINT{ 1280, 768 })))
+	if (FAILED(CEngine::GetInst()->Init(hInstance, POINT{ 1024, 768 })))
 		return FALSE;
 	CTimeMgr::GetInst()->Init();
 

@@ -94,19 +94,23 @@ void Player::Move()
 
 	if (GETKEYDOWN(KEY::LEFT))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::LEFT, 10.f, true);
+		m_FlipBookPlayer->SetXFlip(true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 10.f, true);
 	}
 	else if (GETKEYDOWN(KEY::RIGHT))
 	{
+		m_FlipBookPlayer->SetXFlip(false);
 		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 10.f, true);
 	}
 	
 	else if (GETKEYDOWN(KEY::UP))
 	{
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::UP, 10.f, true);
+		m_FlipBookPlayer->SetYFlip(true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 10.f, true);
 	}
 	else if (GETKEYDOWN(KEY::DOWN))
 	{
+		m_FlipBookPlayer->SetYFlip(false);
 		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 10.f, true);
 	}
 	

@@ -133,6 +133,9 @@
     <Filter Include="Game\08. State\01. Player">
       <UniqueIdentifier>{65182be0-bf3f-442e-aca5-ce57e0bda945}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\06. Component\06. SpriteRenderer">
+      <UniqueIdentifier>{7a10ddac-1130-4ce9-87dc-39aa000bf17c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -201,7 +204,7 @@
     <ClInclude Include="func.h">
       <Filter>Game\01. Header</Filter>
     </ClInclude>
-    <ClInclude Include="Component.h">
+    <ClInclude Include="GComponent.h">
       <Filter>Game\06. Component</Filter>
     </ClInclude>
     <ClInclude Include="Collider.h">
@@ -288,7 +291,12 @@
     <ClInclude Include="GMChaseState.h">
       <Filter>Game\08. State\02. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="main.h" />
+    <ClInclude Include="main.h">
+      <Filter>Default</Filter>
+    </ClInclude>
+    <ClInclude Include="GSpriteRenderer.h">
+      <Filter>Game\06. Component\06. SpriteRenderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -341,7 +349,7 @@
     <ClCompile Include="func.cpp">
       <Filter>Game\01. Header</Filter>
     </ClCompile>
-    <ClCompile Include="Component.cpp">
+    <ClCompile Include="GComponent.cpp">
       <Filter>Game\06. Component</Filter>
     </ClCompile>
     <ClCompile Include="Collider.cpp">
@@ -429,6 +437,9 @@
       <Filter>Game\08. State\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="GSpriteRenderer.cpp">
+      <Filter>Game\06. Component\06. SpriteRenderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Zelda.rc">

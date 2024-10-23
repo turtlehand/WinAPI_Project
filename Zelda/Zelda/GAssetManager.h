@@ -21,6 +21,7 @@ public:
 	GTexture* FindTexture(const wstring& _Key);
 	GTexture* LoadTexture(const wstring& _Key, const wstring& _RelativePath);
 	GTexture* CreateTexture(const wstring& _Key, UINT _Width, UINT _Height);
+	int DeleteTexture(const wstring& _Key);
 
 	GSprite* FindSprite(const wstring& _Key);
 	GSprite* LoadSprite(const wstring& _Key, const wstring& _RelativePath);

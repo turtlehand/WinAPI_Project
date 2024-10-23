@@ -75,6 +75,17 @@ GTexture* GAssetManager::CreateTexture(const wstring& _Key, UINT _Width, UINT _H
 	return pTex;
 }
 
+int GAssetManager::DeleteTexture(const wstring& _Key)
+{
+	GTexture* pTex = FindTexture(_Key);
+	assert(pTex != nullptr);
+
+	m_mapTexture.erase(_Key);
+	delete pTex;
+
+	return S_OK;
+}
+
 
 #pragma endregion
 

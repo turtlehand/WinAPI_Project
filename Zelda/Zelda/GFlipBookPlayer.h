@@ -1,8 +1,8 @@
 #pragma once
-#include "Component.h"
+#include "GComponent.h"
 class GFlipBook;
 
-class GFlipBookPlayer : public Component
+class GFlipBookPlayer : public GComponent
 {
 private:
 	vector<GFlipBook*>	m_vecFlipBook;	// FlipBook 목록
@@ -10,6 +10,10 @@ private:
 	int					m_SpriteIdx;
 
 	Vec2				m_Scale;
+	COLORREF			m_DeleteColor;
+
+	bool				m_XFlip;
+	bool				m_YFlip;
 
 	float				m_FPS;			// FlipBook 재생속도
 	float				m_Time;			// 누적시간
@@ -17,6 +21,12 @@ private:
 	bool				m_Finish;		// 재생이 끝났는지 여부
 public:
 	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+
+	void SetDeleteColor(COLORREF _DeleteColor) { m_DeleteColor = _DeleteColor; }
+
+	void SetXFlip(bool _XFlip) { m_XFlip = _XFlip; }
+
+	void SetYFlip(bool _YFlip) { m_YFlip = _YFlip; }
 
 	void AddFlipBook(GFlipBook* _FlipBook) { m_vecFlipBook.push_back(_FlipBook); }
 	void AddFlipBook(int _idx, GFlipBook* _FlipBook)

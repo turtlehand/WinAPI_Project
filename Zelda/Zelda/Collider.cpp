@@ -8,7 +8,7 @@
 #include "GRigidBody.h"
 
 Collider::Collider() :
-	Component(COMPONENT_TYPE::COLLIDER),
+	GComponent(COMPONENT_TYPE::COLLIDER),
 	m_Offset(),
 	m_Scale(),
 	m_Active(true),

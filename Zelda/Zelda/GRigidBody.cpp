@@ -2,7 +2,7 @@
 #include "GRigidBody.h"
 
 GRigidBody::GRigidBody() :
-	Component(COMPONENT_TYPE::RIGIDBODY),
+	GComponent(COMPONENT_TYPE::RIGIDBODY),
 	m_RigidBodyType(RIGIDBODY_TYPE::DYNAMIC),
 	m_Force(),
 	m_Velocity(),

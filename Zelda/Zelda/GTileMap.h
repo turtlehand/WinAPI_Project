@@ -1,8 +1,8 @@
 #pragma once
-#include "Component.h"
+#include "GComponent.h"
 class GTexture;
 
-class GTileMap : public Component
+class GTileMap : public GComponent
 {
 private:
 	int m_Row;	// 타일 행 개수

@@ -1,8 +1,8 @@
 #pragma once
-#include "Component.h"
+#include "GComponent.h"
 
 class GState;
-class GFSM : public Component
+class GFSM : public GComponent
 {
 private:
 	map<wstring, GState*> m_mapState;

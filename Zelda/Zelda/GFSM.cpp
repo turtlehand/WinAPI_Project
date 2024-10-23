@@ -43,7 +43,7 @@ void GFSM::FinalTick()
 }
 
 GFSM::GFSM() :
-	Component(COMPONENT_TYPE::FSM)
+	GComponent(COMPONENT_TYPE::FSM)
 {
 }
 

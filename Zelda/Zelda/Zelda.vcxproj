@@ -144,7 +144,7 @@
     <ClInclude Include="CObj.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
-    <ClInclude Include="Component.h" />
+    <ClInclude Include="GComponent.h" />
     <ClInclude Include="CSelectGDI.h" />
     <ClInclude Include="CTimeMgr.h" />
     <ClInclude Include="DeBugRenderManager.h" />
@@ -184,6 +184,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="GSpriteRenderer.h" />
     <ClInclude Include="struct.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TaskManager.h" />
@@ -198,7 +199,7 @@
     <ClCompile Include="CObj.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
-    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="GComponent.cpp" />
     <ClCompile Include="CSelectGDI.cpp" />
     <ClCompile Include="CTimeMgr.cpp" />
     <ClCompile Include="DeBugRenderManager.cpp" />
@@ -234,6 +235,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="GSpriteRenderer.cpp" />
     <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

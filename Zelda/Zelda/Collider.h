@@ -1,7 +1,7 @@
 #pragma once
-#include "Component.h"
+#include "GComponent.h"
 #include "CObj.h"
-class Collider : public Component
+class Collider : public GComponent
 {
 	bool	m_Trigger;
 

@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GFlipBookPlayer.h"
 
+#include "GAssetManager.h"
+
 #include "CTimeMgr.h"
 #include "GFlipBook.h"
 #include "GCamera.h"
@@ -10,11 +12,14 @@
 #include "GTexture.h"
 
 GFlipBookPlayer::GFlipBookPlayer() :
-	Component(COMPONENT_TYPE::FILPBOOKPLAYER),
+	GComponent(COMPONENT_TYPE::FILPBOOKPLAYER),
 	m_vecFlipBook(),
 	m_CurFlipBook(nullptr),
 	m_SpriteIdx(0),
 	m_Scale(1.f,1.f),
+	m_DeleteColor(RGB(-1,-1,-1)),
+	m_XFlip(false),
+	m_YFlip(false),
 	m_FPS(0.f),
 	m_Time(0.f),
 	m_Repeat(true),
@@ -73,17 +78,66 @@ void GFlipBookPlayer::Render()
 	// Sprite 를 화면에 그린다.
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
+
+	// 각종 연산을 위한 임시 텍스쳐
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"Temp", Sprite->GetSlice().x, Sprite->GetSlice().y);
+
+	StretchBlt(TempTexture->GetDC(),
+		0,
+		0,
+		Sprite->GetSlice().x,
+		Sprite->GetSlice().y,
+		Sprite->GetAtlas()->GetDC(),
+		Sprite->GetLeftTop().x,
+		Sprite->GetLeftTop().y,
+		Sprite->GetSlice().x,
+		Sprite->GetSlice().y,
+		SRCCOPY);
+
+	// 반전
+	if (m_XFlip)
+	{
+
+		StretchBlt(TempTexture->GetDC(),
+			Sprite->GetSlice().x - 1,
+			0,
+			-(Sprite->GetSlice().x + 1),
+			Sprite->GetSlice().y,
+			Sprite->GetAtlas()->GetDC(),
+			Sprite->GetLeftTop().x,
+			Sprite->GetLeftTop().y,
+			Sprite->GetSlice().x,
+			Sprite->GetSlice().y,
+			SRCCOPY);
+		
+	}
+	if (m_YFlip)
+	{
+
+		StretchBlt(TempTexture->GetDC(),
+			0,
+			Sprite->GetSlice().y - 1,
+			Sprite->GetSlice().x,
+			-(Sprite->GetSlice().y + 1),
+			Sprite->GetAtlas()->GetDC(),
+			Sprite->GetLeftTop().x,
+			Sprite->GetLeftTop().y,
+			Sprite->GetSlice().x,
+			Sprite->GetSlice().y,
+			SRCCOPY);
+	}
 	
 	TransparentBlt(hBackDC
 		, vPos.x - (Sprite->GetSlice().x / 2) * m_Scale.x + Sprite->GetOffset().x
-		, vPos.y - (Sprite->GetSlice().y / 2) * m_Scale.x + Sprite->GetOffset().y
+		, vPos.y - (Sprite->GetSlice().y / 2) * m_Scale.y + Sprite->GetOffset().y
 		, Sprite->GetSlice().x * m_Scale.x
-		, Sprite->GetSlice().y * m_Scale.x
-		, Sprite->GetAtlas()->GetDC()
-		, Sprite->GetLeftTop().x
-		, Sprite->GetLeftTop().y
+		, Sprite->GetSlice().y * m_Scale.y
+		, TempTexture->GetDC()
+		, 0
+		, 0
 		, Sprite->GetSlice().x
 		, Sprite->GetSlice().y
 		, RGB(116, 116, 116));
 	
+	GAssetManager::GetInst()->DeleteTexture(L"Temp");
 }

@@ -6,14 +6,14 @@
 #include "CKeyMgr.h"
 
 class Collider;
-class Component;
+class GComponent;
 
 class CObj : public CBase
 {
 private:
 	Vec2 m_Pos;
 	Vec2 m_Scale;
-	vector<Component*> m_Component;
+	vector<GComponent*> m_Component;
 	LAYER_TYPE m_LayerType;
 	bool m_Dead;
 

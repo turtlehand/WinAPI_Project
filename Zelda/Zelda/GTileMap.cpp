@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "GTileMap.h"
 
-#include "Component.h"
+#include "GComponent.h"
 #include "GTexture.h"
 
 #include "GCamera.h"
 #include "GPathManager.h"
 
 GTileMap::GTileMap() :
-	Component(COMPONENT_TYPE::TILEMAP),
+	GComponent(COMPONENT_TYPE::TILEMAP),
 	m_Row(1),
 	m_Col(1),
 	m_Atlas(nullptr),

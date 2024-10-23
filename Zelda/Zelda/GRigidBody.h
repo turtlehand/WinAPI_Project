@@ -1,8 +1,8 @@
 #pragma once
-#include "Component.h"
+#include "GComponent.h"
 
 class GRigidBody :
-	public Component
+	public GComponent
 {
 private:
 	RIGIDBODY_TYPE	m_RigidBodyType;		// 리지드바디 타입
