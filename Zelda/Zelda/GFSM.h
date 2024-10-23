@@ -1,0 +1,22 @@
+#pragma once
+#include "Component.h"
+
+class GState;
+class GFSM : public Component
+{
+private:
+	map<wstring, GState*> m_mapState;
+	GState* m_CurState;
+public:
+	void AddState(const wstring& K_Keyey, GState* _State);
+	GState* FindState(const wstring& _Key);
+	void ChanageState(const wstring& _Key);
+
+public:
+	void FinalTick();
+
+public:
+	GFSM();
+	virtual ~GFSM() override;
+};
+

@@ -1,0 +1,25 @@
+[ASSETTYPE]
+2
+
+[KEY]
+LINK_MOVE_RIGHT_4
+
+[PATH]
+Sprite\LINK_MOVE_RIGHT_4.sprite
+
+[LEFTTOP]
+480, 910
+
+[SLICE]
+120, 130
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+Link
+
+[ATLAS_PATH]
+Texture\link_32.bmp
+
