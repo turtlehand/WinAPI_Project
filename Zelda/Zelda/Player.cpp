@@ -91,27 +91,30 @@ void Player::Tick()
 
 void Player::Move()
 {
+	//m_FlipBookPlayer->SetXFlip(false);
+	//m_FlipBookPlayer->SetYFlip(false);
 
 	if (GETKEYDOWN(KEY::LEFT))
 	{
 		m_FlipBookPlayer->SetXFlip(true);
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 2.f, true);
 	}
 	else if (GETKEYDOWN(KEY::RIGHT))
 	{
 		m_FlipBookPlayer->SetXFlip(false);
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 10.f, true);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::RIGHT, 2.f, true);
 	}
-	
 	else if (GETKEYDOWN(KEY::UP))
 	{
 		m_FlipBookPlayer->SetYFlip(true);
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 10.f, true);
+		m_FlipBookPlayer->SetXFlip(false);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 2.f, true);
 	}
 	else if (GETKEYDOWN(KEY::DOWN))
 	{
 		m_FlipBookPlayer->SetYFlip(false);
-		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 10.f, true);
+		m_FlipBookPlayer->SetXFlip(false);
+		m_FlipBookPlayer->Play((int)PLAYER_ANIM_STATE::DOWN, 2.f, true);
 	}
 	
 	
@@ -262,6 +265,10 @@ void Player::CreatePlayerFlipBook()
 	m_FlipBookPlayer->AddFlipBook((int)PLAYER_ANIM_STATE::RIGHT, GAssetManager::GetInst()->LoadFlipBook(L"LINK_RIGHT", L"FlipBook\\Link_16\\LINK_RIGHT.flip"));
 
 	m_FlipBookPlayer->SetScale(Vec2(4.f, 4.f));
+
+	//m_FlipBookPlayer->SetAlpha(127);
+	m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
+
 }
 
 void Player::CreateFlipBook(const wstring& _FlipBookName, GTexture* _Atlas, Vec2 _LftTop, Vec2 _Slice, int MaxFrame)

@@ -83,6 +83,8 @@ int GAssetManager::DeleteTexture(const wstring& _Key)
 	m_mapTexture.erase(_Key);
 	delete pTex;
 
+	pTex = nullptr;
+
 	return S_OK;
 }
 

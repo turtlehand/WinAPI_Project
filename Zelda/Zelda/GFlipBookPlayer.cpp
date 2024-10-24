@@ -17,6 +17,7 @@ GFlipBookPlayer::GFlipBookPlayer() :
 	m_CurFlipBook(nullptr),
 	m_SpriteIdx(0),
 	m_Scale(1.f,1.f),
+	m_Alpha(255),
 	m_DeleteColor(RGB(-1,-1,-1)),
 	m_XFlip(false),
 	m_YFlip(false),
@@ -29,6 +30,150 @@ GFlipBookPlayer::GFlipBookPlayer() :
 
 GFlipBookPlayer::~GFlipBookPlayer()
 {
+}
+
+void GFlipBookPlayer::XFlip(GTexture*& _Textrue)
+{
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"XFlip", _Textrue->GetWidth(), _Textrue->GetHeight());
+
+	StretchBlt(TempTexture->GetDC(),
+		_Textrue->GetWidth() - 1,
+		0,
+		-((int)_Textrue->GetWidth()),
+		_Textrue->GetHeight(),
+		_Textrue->GetDC(),
+		0,
+		0,
+		_Textrue->GetWidth(),
+		_Textrue->GetHeight(),
+		SRCCOPY);
+
+	GAssetManager::GetInst()->DeleteTexture(_Textrue->GetKey());
+
+	_Textrue = TempTexture;
+}
+
+void GFlipBookPlayer::YFlip(GTexture*& _Textrue)
+{
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"YFlip", _Textrue->GetWidth(), _Textrue->GetHeight());
+
+	StretchBlt(TempTexture->GetDC(),
+		0,
+		_Textrue->GetHeight() - 1,
+		_Textrue->GetWidth(),
+		-((int)_Textrue->GetHeight()),
+		_Textrue->GetDC(),
+		0,
+		0,
+		_Textrue->GetWidth(),
+		_Textrue->GetHeight(),
+		SRCCOPY);
+
+	GAssetManager::GetInst()->DeleteTexture(_Textrue->GetKey());
+
+	_Textrue = TempTexture;
+}
+
+void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
+{
+	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
+	Vec2 vPos = GetOwner()->GetRenderPos();
+
+	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * m_Scale.x, _Textrue->GetHeight() * m_Scale.y);
+
+	// 임시 텍스쳐에 배경 복사
+	BitBlt(TempTexture->GetDC()
+		, 0
+		, 0
+		, TempTexture->GetWidth()
+		, TempTexture->GetHeight()
+		, hBackDC
+		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x
+		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y
+		, SRCCOPY);
+
+	// 스프라이트 배경 없애고 텍스쳐에 그리기
+	TransparentBlt(TempTexture->GetDC()
+		, 0
+		, 0
+		, TempTexture->GetWidth()
+		, TempTexture->GetHeight()
+		, _Textrue->GetDC()
+		, 0
+		, 0
+		, _Textrue->GetWidth()
+		, _Textrue->GetHeight()
+		, m_DeleteColor);
+
+	// 텍스쳐를 배경에 반투명하게 그리기
+	BLENDFUNCTION blend = {};
+
+	blend.BlendOp = AC_SRC_OVER;
+	blend.BlendFlags = 0;
+	blend.SourceConstantAlpha = m_Alpha;
+	blend.AlphaFormat = 0;
+
+	AlphaBlend(hBackDC
+		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x
+		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y
+		, TempTexture->GetWidth()
+		, TempTexture->GetHeight()
+		, TempTexture->GetDC()
+		, 0, 0
+		, TempTexture->GetWidth()
+		, TempTexture->GetHeight()
+		, blend);
+
+	GAssetManager::GetInst()->DeleteTexture(TempTexture->GetKey());
+}
+
+
+void GFlipBookPlayer::DeleteColor(GTexture*& _Textrue)
+{
+	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
+	Vec2 vPos = GetOwner()->GetRenderPos();
+
+	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+
+	// 스프라이트 배경 없애고 텍스쳐에 그리기
+	TransparentBlt(hBackDC
+		, vPos.x - _Textrue->GetWidth() * m_Scale.x / 2 + Sprite->GetOffset().x
+		, vPos.y - _Textrue->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y
+		, _Textrue->GetWidth() * m_Scale.x
+		, _Textrue->GetHeight() * m_Scale.y
+		, _Textrue->GetDC()
+		, 0, 0
+		, _Textrue->GetWidth()
+		, _Textrue->GetHeight()
+		, m_DeleteColor);
+}
+
+void GFlipBookPlayer::Alpha(GTexture*& _Texture)
+{
+	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
+	Vec2 vPos = GetOwner()->GetRenderPos();
+
+	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+
+	BLENDFUNCTION blend = {};
+
+	blend.BlendOp = AC_SRC_OVER;
+	blend.BlendFlags = 0;
+	blend.SourceConstantAlpha = m_Alpha;
+	blend.AlphaFormat = 0;
+
+	AlphaBlend(hBackDC
+		, vPos.x - _Texture->GetWidth() * m_Scale.x / 2  + Sprite->GetOffset().x
+		, vPos.y - _Texture->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y
+		, _Texture->GetWidth() * m_Scale.x
+		, _Texture->GetHeight() * m_Scale.y
+		, _Texture->GetDC()
+		, 0, 0
+		, _Texture->GetWidth()
+		, _Texture->GetHeight()
+		, blend);
 }
 
 void GFlipBookPlayer::FinalTick()
@@ -75,69 +220,46 @@ void GFlipBookPlayer::Render()
 
 	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
 
-	// Sprite 를 화면에 그린다.
-	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
-	Vec2 vPos = GetOwner()->GetRenderPos();
-
 	// 각종 연산을 위한 임시 텍스쳐
-	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"Temp", Sprite->GetSlice().x, Sprite->GetSlice().y);
+	m_RenderTexture = GAssetManager::GetInst()->CreateTexture(L"Temp", Sprite->GetSlice().x, Sprite->GetSlice().y);
 
-	StretchBlt(TempTexture->GetDC(),
-		0,
-		0,
-		Sprite->GetSlice().x,
-		Sprite->GetSlice().y,
-		Sprite->GetAtlas()->GetDC(),
-		Sprite->GetLeftTop().x,
-		Sprite->GetLeftTop().y,
-		Sprite->GetSlice().x,
-		Sprite->GetSlice().y,
-		SRCCOPY);
-
-	// 반전
-	if (m_XFlip)
-	{
-
-		StretchBlt(TempTexture->GetDC(),
-			Sprite->GetSlice().x - 1,
-			0,
-			-(Sprite->GetSlice().x + 1),
-			Sprite->GetSlice().y,
-			Sprite->GetAtlas()->GetDC(),
-			Sprite->GetLeftTop().x,
-			Sprite->GetLeftTop().y,
-			Sprite->GetSlice().x,
-			Sprite->GetSlice().y,
-			SRCCOPY);
-		
-	}
-	if (m_YFlip)
-	{
-
-		StretchBlt(TempTexture->GetDC(),
-			0,
-			Sprite->GetSlice().y - 1,
-			Sprite->GetSlice().x,
-			-(Sprite->GetSlice().y + 1),
-			Sprite->GetAtlas()->GetDC(),
-			Sprite->GetLeftTop().x,
-			Sprite->GetLeftTop().y,
-			Sprite->GetSlice().x,
-			Sprite->GetSlice().y,
-			SRCCOPY);
-	}
-	
-	TransparentBlt(hBackDC
-		, vPos.x - (Sprite->GetSlice().x / 2) * m_Scale.x + Sprite->GetOffset().x
-		, vPos.y - (Sprite->GetSlice().y / 2) * m_Scale.y + Sprite->GetOffset().y
-		, Sprite->GetSlice().x * m_Scale.x
-		, Sprite->GetSlice().y * m_Scale.y
-		, TempTexture->GetDC()
+	BitBlt(m_RenderTexture->GetDC()
 		, 0
 		, 0
 		, Sprite->GetSlice().x
 		, Sprite->GetSlice().y
-		, RGB(116, 116, 116));
-	
-	GAssetManager::GetInst()->DeleteTexture(L"Temp");
+		, Sprite->GetAtlas()->GetDC()
+		, Sprite->GetLeftTop().x
+		, Sprite->GetLeftTop().y
+		, SRCCOPY);
+
+
+	// 반전
+	if (m_XFlip)
+	{
+		XFlip(m_RenderTexture);
+		
+	}
+	if (m_YFlip)
+	{
+		YFlip(m_RenderTexture);
+	}
+
+	// 업애고 싶은 색도 있고 알파값도 수정하고 싶다면
+	// 복봍을 여러번 하므로 자제할 것
+	if (RGB(-1, -1, -1) != m_DeleteColor && m_Alpha != 255)
+	{
+		DeleteColorAlpha(m_RenderTexture);
+	}
+	//없애고 싶은 색만 있다면
+	else if (RGB(-1, -1, -1) != m_DeleteColor)
+	{
+		DeleteColor(m_RenderTexture);
+	}
+	else if (m_Alpha != 255)
+	{
+		Alpha(m_RenderTexture);
+	}
+
+	GAssetManager::GetInst()->DeleteTexture(m_RenderTexture->GetKey());
 }

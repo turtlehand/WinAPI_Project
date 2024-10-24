@@ -2,6 +2,8 @@
 #include "GComponent.h"
 class GFlipBook;
 
+class GTexture;
+
 class GFlipBookPlayer : public GComponent
 {
 private:
@@ -10,6 +12,7 @@ private:
 	int					m_SpriteIdx;
 
 	Vec2				m_Scale;
+	int					m_Alpha;
 	COLORREF			m_DeleteColor;
 
 	bool				m_XFlip;
@@ -19,8 +22,12 @@ private:
 	float				m_Time;			// 누적시간
 	bool				m_Repeat;		// 반복 재생 여부
 	bool				m_Finish;		// 재생이 끝났는지 여부
+
+	GTexture*			m_RenderTexture;// Render 시킬 Texture
 public:
 	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+
+	void SetAlpha(int _Alpha) { m_Alpha = _Alpha; }
 
 	void SetDeleteColor(COLORREF _DeleteColor) { m_DeleteColor = _DeleteColor; }
 
@@ -56,6 +63,13 @@ public:
 		m_Finish = false;
 		m_SpriteIdx = 0;
 	}
+
+private:
+	void XFlip(GTexture*& _Textrue);
+	void YFlip(GTexture*& _Textrue);
+	void DeleteColor(GTexture*& _Textrue);
+	void Alpha(GTexture*& _Texture);
+	void DeleteColorAlpha(GTexture*& _Textrue);
 
 public:
 	virtual void FinalTick() override;
