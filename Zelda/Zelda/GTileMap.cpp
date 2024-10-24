@@ -9,8 +9,8 @@
 
 GTileMap::GTileMap() :
 	GComponent(COMPONENT_TYPE::TILEMAP),
-	m_Row(1),
-	m_Col(1),
+	m_Row(0),
+	m_Col(0),
 	m_Atlas(nullptr),
 	m_AtlasTileRow(0),
 	m_AtlasTileCol(0),

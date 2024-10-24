@@ -7,13 +7,16 @@
 GMap::GMap() :
 	m_TileMap(nullptr)
 {
-	m_TileMap = AddComponent<GTileMap>();
-	m_TileMap->SetRowCol(0, 0);
-	m_TileMap->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+
 }
 
 GMap::~GMap()
 {
+}
+
+void GMap::Awake()
+{
+	m_TileMap = AddComponent<GTileMap>();
 }
 
 void GMap::Begin()

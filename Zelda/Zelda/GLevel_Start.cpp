@@ -34,38 +34,45 @@ void GLevel_Start::Begin()
 
 	// Player 생성하기
 	Player* player = new Player;
+	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetName(L"Player");
 	player->SetPos(0.f, 0.f);
 	player->SetScale(0, 0);
-	AddObject(player, LAYER_TYPE::PLAYER);
+	
 
 	// Monster 생성하기
 	Monster* monster = new Monster;
+	AddObject(monster, LAYER_TYPE::MONSTER);
 	monster->SetName(L"Monster");
 	monster->SetPos(300.f, 200.f);
 	monster->SetScale(100, 100);
 	monster->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
-	AddObject(monster, LAYER_TYPE::MONSTER);
+	
 
 	Monster* monster2 = new Monster;
+	AddObject(monster2, LAYER_TYPE::MONSTER);
 	monster2->SetName(L"Monster2");
 	monster2->SetPos(-300.f, 200.f);
 	monster2->SetScale(100, 100);
 	monster2->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
-	AddObject(monster2, LAYER_TYPE::MONSTER);
+	
 
 	// TileMap Object 추가
-	GMap* pTileMap = new GMap;
-	pTileMap->SetPos(Vec2(0.f, 0.f));
 	wstring FilePath = GPathManager::GetContentPath();
-	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp.tile");
+	GMap* pTileMap = new GMap;
 	AddObject(pTileMap, LAYER_TYPE::TILE);
+	pTileMap->SetPos(Vec2(0.f, 0.f));
+	pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp.tile");
+	
 
 	// TileMap Object 추가
 	pTileMap = new GMap;
-	pTileMap->SetPos(Vec2(1000.f, 1000.f));
-	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp2.tile");
 	AddObject(pTileMap, LAYER_TYPE::TILE);
+	pTileMap->SetPos(Vec2(1000.f, 1000.f));
+	pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp2.tile");
+	
 
 	CollisionManager::GetInst()->CollisionCheckClear();
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);

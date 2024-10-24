@@ -27,7 +27,7 @@ public:
 private:
 	void CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right);
 	void CollisionBtwCollider(Collider* _LeftCol, Collider* _RightCol);
-	bool IsCollision(Collider* _LeftCol, Collider* _RightCol);
+	bool IsCollision_RectBtwRect(Collider* _LeftCol, Collider* _RightCol);
 
 	void Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid);
 

@@ -20,6 +20,7 @@ public:
 	// Tick			: 매 프레임마다 Object 들이 수행할 작업
 	// FinalTick	: 매 프레임마다 Object 의 Component들이 수행할 작업
 	// Render		: 매 프레임마다 Object 가 화면에 그려질 때
+	virtual void Awake() {};
 	virtual void Begin() = 0;
 	virtual void Tick() = 0;
 	virtual void FinalTick();

@@ -55,6 +55,14 @@ enum class LAYER_TYPE
 	END = 32
 };
 
+enum class COLLIDER_TYPE
+{
+	RECTANGLE,
+	CIRCLE,
+	EDGE,
+	TILE,
+};
+
 enum class COMPONENT_TYPE
 {
 	COLLIDER,

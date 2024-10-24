@@ -18,6 +18,7 @@ private:
 	bool m_Dead;
 
 public:
+	virtual void Awake() {};
 	virtual void Begin() = 0;			// 레벨이 시작될 때
 	virtual void Tick() = 0;			// 오브젝트가 할 일
 	void FinalTick();					// 오브젝트가 소유한 Component가 할 일

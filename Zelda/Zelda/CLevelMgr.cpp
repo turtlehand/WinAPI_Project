@@ -26,9 +26,11 @@ CLevelMgr::~CLevelMgr()
 void CLevelMgr::Init()
 {
 	m_arrLevel[(int)LEVEL_TYPE::EDITOR] = new GLevel_Editor;
+	m_arrLevel[(int)LEVEL_TYPE::EDITOR]->Awake();
 	m_arrLevel[(int)LEVEL_TYPE::START] = new GLevel_Start;
+	m_arrLevel[(int)LEVEL_TYPE::START]->Awake();
 
-	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::START];
+	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::EDITOR];
 	m_CurLevel->Begin();
 }
 

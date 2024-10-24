@@ -97,7 +97,7 @@ void CollisionManager::CollisionBtwCollider(Collider* _LeftCol, Collider* _Right
 	bool IsDead = _LeftCol->GetOwner()->IsDead() || _RightCol->GetOwner()->IsDead();
 
 	// 충돌해 있다.
-	if (!IsDead && IsCollision(_LeftCol, _RightCol))
+	if (!IsDead && IsCollision_RectBtwRect(_LeftCol, _RightCol))
 	{
 		// 이전에 충돌한 적 없다.
 		if (iter->second == false)
@@ -137,7 +137,7 @@ void CollisionManager::CollisionBtwCollider(Collider* _LeftCol, Collider* _Right
 
 }
 
-bool CollisionManager::IsCollision(Collider* _LeftCol, Collider* _RightCol)
+bool CollisionManager::IsCollision_RectBtwRect(Collider* _LeftCol, Collider* _RightCol)
 {
 	Vec2 LPos = _LeftCol->GetGlobalPos();
 	Vec2 LScale = _LeftCol->GetScale();

@@ -50,31 +50,36 @@ void GLevel_Editor::Begin()
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
 	m_MapObj = new GMap;
-	m_MapObj->SetName(L"Map");
-	//m_MapObj->SetPos(Vec2(-CEngine::GetInst()->GetResolution().x/2, -CEngine::GetInst()->GetResolution().y/2));
 	AddObject(m_MapObj, LAYER_TYPE::TILE);
+	m_MapObj->SetName(L"Map");
+	m_MapObj->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	//m_MapObj->SetPos(Vec2(-CEngine::GetInst()->GetResolution().x/2, -CEngine::GetInst()->GetResolution().y/2));
+	
 
 	GPanel* pUI = new GPanel;
+	AddObject(pUI, LAYER_TYPE::UI);
 	pUI->SetName(L"TestUI");
 	pUI->SetPos(0, 0);
 	pUI->SetScale(200, 400);
-	AddObject(pUI, LAYER_TYPE::UI);
+	
 
 	GButton* pSaveButton = new GButton;
+	pUI->AddChildUI(pSaveButton);
 	pSaveButton->SetName(L"TestUI");
 	pSaveButton->SetPos(10, -10);
 	pSaveButton->SetScale(80, 30);
 	pSaveButton->SetBrushType(BRUSH_TYPE::RED);
 	pSaveButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::SaveTileMap);
-	pUI->AddChildUI(pSaveButton);
+	
 
 	GButton* pLoadButton = new GButton;
+	pUI->AddChildUI(pLoadButton);
 	pLoadButton->SetName(L"TestUI");
 	pLoadButton->SetPos(110, -10);
 	pLoadButton->SetScale(80, 30);
 	pLoadButton->SetBrushType(BRUSH_TYPE::BLUE);
 	pLoadButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTileMap);
-	pUI->AddChildUI(pLoadButton);
+	
 
 	CLevel::Begin();
 }
@@ -83,7 +88,7 @@ void GLevel_Editor::Tick()
 {
 	CLevel::Tick();
 
-	if(GETKEYDOWN(KEY::NUM8))
+	if(GETKEYDOWN(KEY::ENTER))
 	{
 		ChangeLevel(LEVEL_TYPE::START);
 	}

@@ -18,6 +18,8 @@ void CLevel::AddObject(CObj* _Object, LAYER_TYPE _Layer)
 {
 	m_vecObjects[(UINT)_Layer].push_back(_Object);
 	_Object->m_LayerType = _Layer;
+
+	_Object->Awake();
 }
 
 void CLevel::Begin()
