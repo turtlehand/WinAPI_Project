@@ -1,7 +1,7 @@
 #pragma once
 #include "CObj.h"
 
-class Collider;
+class GCollider;
 class GFlipBookPlayer;
 class GTexture;
 class GRigidBody;
@@ -20,7 +20,7 @@ private:
 	float m_MaxJumpTime;
 	float m_JumpTime;
 
-	Collider* m_Collider;
+	GCollider* m_Collider;
 	GFlipBookPlayer* m_FlipBookPlayer;
 	GRigidBody* m_RigidBody;
 
@@ -31,7 +31,7 @@ public:
 	virtual void Render() override;			// 오브젝트를 그리기
 
 public:
-	virtual void EnterOverlap(Collider* _Collider) override;
+	virtual void EnterOverlap(GCollider* _Collider) override;
 
 public:
 

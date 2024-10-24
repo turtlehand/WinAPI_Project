@@ -8,7 +8,7 @@
 #include "GAssetManager.h"
 #include "GTexture.h"
 
-#include "Collider.h"
+#include "GBoxCollider.h"
 #include "GRigidBody.h"
 #include "GFSM.h"
 
@@ -26,7 +26,7 @@ Monster::Monster() :
 {
 	m_Texture = (GTexture*)GAssetManager::GetInst()->LoadTexture(L"Monster", L"Texture\\TX_GlowScene_2.png");;
 
-	m_HitBox = AddComponent<Collider>();
+	m_HitBox = AddComponent<GBoxCollider>();
 	m_HitBox->SetName(L"Monster_Hit_Box");
 	m_HitBox->SetPos(Vec2(0, 0));
 	m_HitBox->SetScale(Vec2(50.f, 50.f));
@@ -95,7 +95,7 @@ void Monster::Render()
 	*/
 }
 
-void Monster::EnterOverlap(Collider* _Collider)
+void Monster::EnterOverlap(GCollider* _Collider)
 {
 
 }

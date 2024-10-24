@@ -1,14 +1,14 @@
 #pragma once
 #include "CObj.h"
 
-class Collider;
+class GCollider;
 class GRigidBody;
 
 class GPlatform :
     public CObj
 {
 private:
-	Collider* m_Collider;
+	GCollider* m_Collider;
 	GRigidBody* m_RigidBody;
 
 public:

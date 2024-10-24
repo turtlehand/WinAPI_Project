@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CObj.h"
 #include "GComponent.h"
-#include "Collider.h"
+#include "GCollider.h"
 #include "GCamera.h"
 
 CObj::CObj() :
@@ -26,15 +26,15 @@ void CObj::FinalTick()
 	}
 }
 
-void CObj::EnterOverlap(Collider* _Collider)
+void CObj::EnterOverlap(GCollider* _Collider)
 {
 }
 
-void CObj::Overlap(Collider* _Collider)
+void CObj::Overlap(GCollider* _Collider)
 {
 }
 
-void CObj::ExitOverlap(Collider* _Collider)
+void CObj::ExitOverlap(GCollider* _Collider)
 {
 }
 

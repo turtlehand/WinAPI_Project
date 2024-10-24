@@ -142,7 +142,8 @@
     <ClInclude Include="CLevel.h" />
     <ClInclude Include="CLevelMgr.h" />
     <ClInclude Include="CObj.h" />
-    <ClInclude Include="Collider.h" />
+    <ClInclude Include="GBoxCollider.h" />
+    <ClInclude Include="GCollider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="GComponent.h" />
     <ClInclude Include="CSelectGDI.h" />
@@ -197,7 +198,8 @@
     <ClCompile Include="CLevel.cpp" />
     <ClCompile Include="CLevelMgr.cpp" />
     <ClCompile Include="CObj.cpp" />
-    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="GBoxCollider.cpp" />
+    <ClCompile Include="GCollider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="GComponent.cpp" />
     <ClCompile Include="CSelectGDI.cpp" />

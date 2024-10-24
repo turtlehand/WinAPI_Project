@@ -5,7 +5,7 @@
 #include "DeBugRenderManager.h"
 #include "GCamera.h"
 
-#include"Collider.h"
+#include"GBoxCollider.h"
 
 Missile::Missile() :
 	m_Velocity(),
@@ -14,7 +14,7 @@ Missile::Missile() :
 	m_Mass(1.f),
 	m_Force()
 {
-	m_HitBox = AddComponent<Collider>();
+	m_HitBox = AddComponent<GBoxCollider>();
 	m_HitBox->SetName(L"Missile_HitBox");
 	m_HitBox->SetPos(Vec2(0.f, 0.f));
 	m_HitBox->SetScale(Vec2(10.f,10.f));
@@ -68,7 +68,7 @@ void Missile::Render()
 	}
 }
 
-void Missile::EnterOverlap(Collider* _Collider)
+void Missile::EnterOverlap(GCollider* _Collider)
 {
 	if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::MONSTER)
 		DeleteGameObject(this);

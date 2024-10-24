@@ -4,7 +4,7 @@
 #include "CLevelMgr.h"
 
 #include "CLevel.h"
-#include "Collider.h"
+#include "GCollider.h"
 
 #include "GRigidBody.h"
 
@@ -49,8 +49,8 @@ void CollisionManager::CollisionCheck(LAYER_TYPE _Left, LAYER_TYPE _Right)
 void CollisionManager::CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right)
 {
 	// 현재 레벨에 저장된 Collider를 가져온다.
-	const vector<Collider*>& vecLeft = CLevelMgr::GetInst()->GetCurrentLevel()->GetCollider(_Left);
-	const vector<Collider*>& vecRight = CLevelMgr::GetInst()->GetCurrentLevel()->GetCollider(_Right);
+	const vector<GCollider*>& vecLeft = CLevelMgr::GetInst()->GetCurrentLevel()->GetCollider(_Left);
+	const vector<GCollider*>& vecRight = CLevelMgr::GetInst()->GetCurrentLevel()->GetCollider(_Right);
 
 	// 서로 다른 레이어간의 충돌 검사
 	if (_Left != _Right)
@@ -78,7 +78,7 @@ void CollisionManager::CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right)
 	}
 }
 
-void CollisionManager::CollisionBtwCollider(Collider* _LeftCol, Collider* _RightCol)
+void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _RightCol)
 {
 	COLLISION_ID ColID = {};
 	ColID.Left = _LeftCol->GetID();
@@ -97,7 +97,7 @@ void CollisionManager::CollisionBtwCollider(Collider* _LeftCol, Collider* _Right
 	bool IsDead = _LeftCol->GetOwner()->IsDead() || _RightCol->GetOwner()->IsDead();
 
 	// 충돌해 있다.
-	if (!IsDead && IsCollision_RectBtwRect(_LeftCol, _RightCol))
+	if (!IsDead && IsCollision_BoxBtwBox(_LeftCol, _RightCol))
 	{
 		// 이전에 충돌한 적 없다.
 		if (iter->second == false)
@@ -137,7 +137,7 @@ void CollisionManager::CollisionBtwCollider(Collider* _LeftCol, Collider* _Right
 
 }
 
-bool CollisionManager::IsCollision_RectBtwRect(Collider* _LeftCol, Collider* _RightCol)
+bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _RightCol)
 {
 	Vec2 LPos = _LeftCol->GetGlobalPos();
 	Vec2 LScale = _LeftCol->GetScale();

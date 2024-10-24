@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GPlatform.h"
 
-#include "Collider.h"
+#include "GBoxCollider.h"
 #include "GRigidBody.h"
 
 #include "CEngine.h"
@@ -10,7 +10,7 @@ GPlatform::GPlatform() :
 	m_Collider(),
 	m_RigidBody()
 {
-	m_Collider = AddComponent<Collider>();
+	m_Collider = AddComponent<GBoxCollider>();
 	m_Collider->SetName(L"Platform_Collider");
 	m_Collider->SetScale(Vec2(800, 100));
 

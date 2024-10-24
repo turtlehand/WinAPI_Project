@@ -22,6 +22,7 @@
 #include "GFlipBook.h"
 #include "GSprite.h"
 
+#include "GBoxCollider.h"
 #include "GFlipBookPlayer.h"
 #include "GRigidBody.h"
 
@@ -49,7 +50,7 @@ Player::Player() :
 	SetMaxMoveSpeed(200.f);
 	SetInitForce(100000.f);
 
-	m_Collider = AddComponent<Collider>();
+	m_Collider = AddComponent<GBoxCollider>();
 	m_Collider->SetName(L"Player_Hit_Box");
 	m_Collider->SetPos(Vec2(0, 0));
 	m_Collider->SetScale(Vec2(64.f, 64.f));
@@ -233,7 +234,7 @@ void Player::Render()
 	*/
 }
 
-void Player::EnterOverlap(Collider* _Collider)
+void Player::EnterOverlap(GCollider* _Collider)
 {
 	if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::DEFAULT)
 		m_JumpStack = 2;

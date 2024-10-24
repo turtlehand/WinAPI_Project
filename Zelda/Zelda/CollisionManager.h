@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Collider.h"
+#include "GCollider.h"
 
 class GRigidBody;
 union COLLISION_ID
@@ -26,8 +26,16 @@ public:
 
 private:
 	void CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right);
-	void CollisionBtwCollider(Collider* _LeftCol, Collider* _RightCol);
-	bool IsCollision_RectBtwRect(Collider* _LeftCol, Collider* _RightCol);
+	void CollisionBtwCollider(GCollider* _LeftCol, GCollider* _RightCol);
+
+	bool IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _RightCol);
+	bool IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
+	bool IsCollision_BoxBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
+
+	bool IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
+	bool IsCollision_CircleBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
+	
+	bool IsCollision_EdgeBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
 
 	void Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid);
 

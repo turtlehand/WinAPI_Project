@@ -2,13 +2,13 @@
 #include "CBase.h"
 
 class CObj;
-class Collider;
+class GCollider;
 
 class CLevel : public CBase
 {
 private:
 	vector<CObj*> m_vecObjects[(UINT)LAYER_TYPE::END];
-	vector<Collider*> m_vecCollider[(UINT)LAYER_TYPE::END];
+	vector<GCollider*> m_vecCollider[(UINT)LAYER_TYPE::END];
 
 public:
 	CLevel();
@@ -32,8 +32,8 @@ public:
 	const vector<CObj*>& GetGameObject(LAYER_TYPE _Layer) { return m_vecObjects[(UINT)_Layer]; }
 	vector<CObj*>& GetUI() { return m_vecObjects[(UINT)LAYER_TYPE::UI]; }
 
-	void RegisterCollider(Collider * _Collider,LAYER_TYPE _Layer) { m_vecCollider[(UINT)_Layer].push_back(_Collider); }
-	const vector<Collider*>& GetCollider(LAYER_TYPE _Layer) { return m_vecCollider[(UINT)_Layer]; }
+	void RegisterCollider(GCollider * _Collider,LAYER_TYPE _Layer) { m_vecCollider[(UINT)_Layer].push_back(_Collider); }
+	const vector<GCollider*>& GetCollider(LAYER_TYPE _Layer) { return m_vecCollider[(UINT)_Layer]; }
 
 	CObj* FindGameObject( const wstring& _Name , LAYER_TYPE _Layer = LAYER_TYPE::END);
 

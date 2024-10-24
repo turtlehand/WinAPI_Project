@@ -207,7 +207,7 @@
     <ClInclude Include="GComponent.h">
       <Filter>Game\06. Component</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="GCollider.h">
       <Filter>Game\06. Component\01. Collider</Filter>
     </ClInclude>
     <ClInclude Include="DeBugRenderManager.h">
@@ -297,6 +297,9 @@
     <ClInclude Include="GSpriteRenderer.h">
       <Filter>Game\06. Component\06. SpriteRenderer</Filter>
     </ClInclude>
+    <ClInclude Include="GBoxCollider.h">
+      <Filter>Game\06. Component\01. Collider\01. Box</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -352,7 +355,7 @@
     <ClCompile Include="GComponent.cpp">
       <Filter>Game\06. Component</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="GCollider.cpp">
       <Filter>Game\06. Component\01. Collider</Filter>
     </ClCompile>
     <ClCompile Include="DeBugRenderManager.cpp">
@@ -439,6 +442,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GSpriteRenderer.cpp">
       <Filter>Game\06. Component\06. SpriteRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="GBoxCollider.cpp">
+      <Filter>Game\06. Component\01. Collider\01. Box</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

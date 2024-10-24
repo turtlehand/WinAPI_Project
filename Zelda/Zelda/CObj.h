@@ -5,7 +5,7 @@
 #include "CTimeMgr.h"
 #include "CKeyMgr.h"
 
-class Collider;
+class GCollider;
 class GComponent;
 
 class CObj : public CBase
@@ -24,9 +24,9 @@ public:
 	void FinalTick();					// 오브젝트가 소유한 Component가 할 일
 	virtual void Render() = 0;			// 오브젝트를 그리기
 
-	virtual void EnterOverlap(Collider* _Collider);
-	virtual void Overlap(Collider* _Collider);
-	virtual void ExitOverlap(Collider* _Collider);
+	virtual void EnterOverlap(GCollider* _Collider);
+	virtual void Overlap(GCollider* _Collider);
+	virtual void ExitOverlap(GCollider* _Collider);
 
 public:
 	void SetPos(Vec2 _Pos) { m_Pos = _Pos; }

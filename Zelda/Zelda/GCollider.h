@@ -1,22 +1,23 @@
 #pragma once
 #include "GComponent.h"
 #include "CObj.h"
-class Collider : public GComponent
+class GCollider : public GComponent
 {
+	COLLIDER_TYPE m_Type;
+
 	bool	m_Trigger;
 
 	Vec2	m_Offset;
 	Vec2	m_Scale;
 
-	bool	m_Active;
 	int		m_OverlapCount;
 
 public:
-	Collider();
-	~Collider();
+	GCollider(COLLIDER_TYPE _Type);
+	~GCollider();
 
 public:
-	virtual void FinalTick();
+	virtual void FinalTick() = 0;
 
 public:
 	void SetTrigger(bool _Trigger) { m_Trigger = _Trigger; }
@@ -30,15 +31,14 @@ public:
 	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
 	Vec2 GetScale() const { return m_Scale; }
 
-	void SetActive(bool _Active) { m_Active = _Active; }
-	bool GetActive() const { return m_Active; }
-
 	bool GetCollision() const { return m_OverlapCount; }
 
+	int GetOverlapCount() const { return m_OverlapCount; }
+
 public:
-	void EnterOverlap(Collider* _Other);
-	void Overlap(Collider* _Other);
-	void ExitOverlap(Collider* _Other);
+	void EnterOverlap(GCollider* _Other);
+	void Overlap(GCollider* _Other);
+	void ExitOverlap(GCollider* _Other);
 
 };
 

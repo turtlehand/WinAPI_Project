@@ -1,6 +1,6 @@
 #pragma once
 #include "CObj.h"
-#include "Collider.h"
+#include "GCollider.h"
 
 class Missile :
 	public CObj
@@ -8,7 +8,7 @@ class Missile :
 private:
 	Vec2 m_Velocity;
 	float m_VelocityScale;
-	Collider* m_HitBox;
+	GCollider* m_HitBox;
 
 	float m_Mass;
 	Vec2 m_Force;
@@ -18,7 +18,7 @@ public:
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 
-	virtual void EnterOverlap(Collider* _Collider) override;
+	virtual void EnterOverlap(GCollider* _Collider) override;
 
 
 public:
@@ -28,7 +28,7 @@ public:
 	void SetVelocityScale(float _VelocityScale) { m_VelocityScale = _VelocityScale; }
 	float GetVelocityScale() { return m_VelocityScale; }
 
-	Collider* GetCollider() { return m_HitBox; }
+	GCollider* GetCollider() { return m_HitBox; }
 
 	void SetMass(float _Mass) { m_Mass = _Mass; }
 	float GetMass() { return m_Mass; }

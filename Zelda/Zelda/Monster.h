@@ -3,7 +3,7 @@
 
 class GTexture;
 
-class Collider;
+class GCollider;
 class GRigidBody;
 class GFSM;
 
@@ -22,7 +22,7 @@ private:
 
 	GTexture* m_Texture;
 
-	Collider* m_HitBox;
+	GCollider* m_HitBox;
 	GRigidBody* m_RigidBody;
 	GFSM* m_FSM;
 
@@ -31,7 +31,7 @@ public:
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 
-	virtual void EnterOverlap(Collider* _Collider) override;
+	virtual void EnterOverlap(GCollider* _Collider) override;
 
 public:
 	

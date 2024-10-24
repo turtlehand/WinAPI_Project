@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Collider.h"
+#include "GCollider.h"
 
 #include "CLevelMgr.h"
 #include "CLevel.h"
@@ -7,47 +7,41 @@
 
 #include "GRigidBody.h"
 
-Collider::Collider() :
+GCollider::GCollider(COLLIDER_TYPE _Type) :
 	GComponent(COMPONENT_TYPE::COLLIDER),
+	m_Type(_Type),
 	m_Offset(),
 	m_Scale(),
-	m_Active(true),
 	m_OverlapCount(0),
 	m_Trigger(false)
 {
 }
 
-Collider::~Collider()
+GCollider::~GCollider()
 {
 	
 }
 
-void Collider::FinalTick()
+void GCollider::FinalTick()
 {
 	// Collider 등록하기
 
 	LAYER_TYPE LayerType = GetOwner()->GetLayerType();
 	CLevelMgr::GetInst()->GetCurrentLevel()->RegisterCollider(this, LayerType);
-	Vec2 vPos = GetGlobalPos();
-
-	if (m_OverlapCount)
-		DrawDebugRect(PEN_TYPE::RED, 0.f, vPos, m_Scale );
-	else
-		DrawDebugRect(PEN_TYPE::GREEN, 0.f, vPos, m_Scale);
 }
 
-void Collider::EnterOverlap(Collider* _Other)
+void GCollider::EnterOverlap(GCollider* _Other)
 {
 	m_OverlapCount++;
 	GetOwner()->EnterOverlap(_Other);
 }
 
-void Collider::Overlap(Collider* _Other)
+void GCollider::Overlap(GCollider* _Other)
 {
 	GetOwner()->Overlap(_Other);
 }
 
-void Collider::ExitOverlap(Collider* _Other)
+void GCollider::ExitOverlap(GCollider* _Other)
 {
 	GetOwner()->ExitOverlap(_Other);
 	m_OverlapCount--;
