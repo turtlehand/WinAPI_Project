@@ -5,6 +5,8 @@
 
 #include "CLevel.h"
 #include "GCollider.h"
+#include "GBoxCollider.h"
+#include "GCircleCollider.h"
 
 #include "GRigidBody.h"
 
@@ -97,7 +99,7 @@ void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _Rig
 	bool IsDead = _LeftCol->GetOwner()->IsDead() || _RightCol->GetOwner()->IsDead();
 
 	// 충돌해 있다.
-	if (!IsDead && IsCollision_BoxBtwBox(_LeftCol, _RightCol))
+	if (!IsDead && IsCollision(_LeftCol, _RightCol))
 	{
 		// 이전에 충돌한 적 없다.
 		if (iter->second == false)
@@ -137,19 +139,71 @@ void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _Rig
 
 }
 
+bool CollisionManager::IsCollision(GCollider* _LeftCol, GCollider* _RightCol)
+{
+
+	bool CollisionBool = false;
+
+	if (_LeftCol->GetColliderType() == COLLIDER_TYPE::BOX)
+	{
+		if(_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
+			CollisionBool = IsCollision_BoxBtwBox(_LeftCol, _RightCol);
+		//else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+			//CollisionBool = IsCollision_BoxBtwCircle(_LeftCol, _RightCol);
+	}
+	else if (_LeftCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+	{
+		//if (_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
+			//CollisionBool = IsCollision_BoxBtwCircle(_RightCol, _LeftCol);
+		if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+			CollisionBool = IsCollision_CircleBtwCircle(_LeftCol, _RightCol);
+	}
+
+	return CollisionBool;
+}
+
 bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _RightCol)
 {
-	Vec2 LPos = _LeftCol->GetGlobalPos();
-	Vec2 LScale = _LeftCol->GetScale();
+	GBoxCollider* _LeftBox = dynamic_cast<GBoxCollider*>(_LeftCol);
+	GBoxCollider* _RightBox = dynamic_cast<GBoxCollider*>(_RightCol);
 
-	Vec2 RPos = _RightCol->GetGlobalPos();
-	Vec2 RScale = _RightCol->GetScale();
+	assert(_LeftBox != nullptr && _RightBox != nullptr);
 
-	Vec2 Distance = _RightCol->GetGlobalPos() - _LeftCol->GetGlobalPos();
+	Vec2 LPos = _LeftBox->GetGlobalPos();
+	Vec2 LScale = _LeftBox->GetScale();
+
+	Vec2 RPos = _RightBox->GetGlobalPos();
+	Vec2 RScale = _RightBox->GetScale();
+
+	Vec2 Distance = _RightBox->GetGlobalPos() - _LeftBox->GetGlobalPos();
 
 
 	if (fabs(Distance.x) < (LScale.x + RScale.x ) / 2.f &&
 		fabs(Distance.y) < (LScale.y + RScale.y ) / 2.f)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool CollisionManager::IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollider* _RightCol)
+{
+	GCircleCollider* _LeftCircle = dynamic_cast<GCircleCollider*>(_LeftCol);
+	GCircleCollider* _RightCircle = dynamic_cast<GCircleCollider*>(_RightCol);
+
+	assert(_LeftCircle != nullptr && _RightCircle != nullptr);
+
+	Vec2 LPos = _LeftCircle->GetGlobalPos();
+	float LRadius = _LeftCircle->GetRadius();
+
+	Vec2 RPos = _RightCircle->GetGlobalPos();
+	float RRadius = _RightCircle->GetRadius();
+
+	Vec2 Distance = _RightCircle->GetGlobalPos() - _LeftCircle->GetGlobalPos();
+
+
+	if (Distance.Length() < LRadius + RRadius)
 	{
 		return true;
 	}

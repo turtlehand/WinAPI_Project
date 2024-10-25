@@ -65,6 +65,19 @@ void DrawDebugCircle(PEN_TYPE _Color, time_t _Duration, Vec2 _Position, float _R
 	DeBugRenderManager::GetInst()->AddDeBugInfo(info);
 }
 
+void DrawDebugEllipse(PEN_TYPE _Color, time_t _Duration, Vec2 _Position, Vec2 _Scale)
+{
+	DeBugRenderInfo info;
+	info.Color = _Color;
+	info.Duration = _Duration;
+	info.Time = 0.f;
+	info.Type = DEBUG_SHAPE::CIRCLE;
+	info.vParam0 = _Position;
+	info.vParam1 = Vec2(_Scale.x, _Scale.y);
+
+	DeBugRenderManager::GetInst()->AddDeBugInfo(info);
+}
+
 void DrawDebugLine(PEN_TYPE _Color, time_t _Duration, Vec2 _Position0, Vec2 _Position1)
 {
 	DeBugRenderInfo info;

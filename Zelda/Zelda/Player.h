@@ -1,7 +1,7 @@
 #pragma once
 #include "CObj.h"
 
-class GCollider;
+class GCircleCollider;
 class GFlipBookPlayer;
 class GTexture;
 class GRigidBody;
@@ -20,7 +20,7 @@ private:
 	float m_MaxJumpTime;
 	float m_JumpTime;
 
-	GCollider* m_Collider;
+	GCircleCollider* m_Collider;
 	GFlipBookPlayer* m_FlipBookPlayer;
 	GRigidBody* m_RigidBody;
 

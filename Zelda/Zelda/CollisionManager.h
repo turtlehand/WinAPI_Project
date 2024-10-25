@@ -28,6 +28,8 @@ private:
 	void CollisionBtwLayer(LAYER_TYPE _Left, LAYER_TYPE _Right);
 	void CollisionBtwCollider(GCollider* _LeftCol, GCollider* _RightCol);
 
+	bool IsCollision(GCollider* _LeftCol, GCollider* _RightCol);
+
 	bool IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _RightCol);
 	bool IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
 	bool IsCollision_BoxBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);

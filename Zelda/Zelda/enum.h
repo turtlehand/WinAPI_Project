@@ -57,7 +57,7 @@ enum class LAYER_TYPE
 
 enum class COLLIDER_TYPE
 {
-	RECTANGLE,
+	BOX,
 	CIRCLE,
 	EDGE,
 	TILE,

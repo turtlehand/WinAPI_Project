@@ -1,6 +1,8 @@
 #pragma once
 #include "CObj.h"
-#include "GCollider.h"
+
+class GBoxCollider;
+class GCollider;
 
 class Missile :
 	public CObj
@@ -8,7 +10,7 @@ class Missile :
 private:
 	Vec2 m_Velocity;
 	float m_VelocityScale;
-	GCollider* m_HitBox;
+	GBoxCollider* m_HitBox;
 
 	float m_Mass;
 	Vec2 m_Force;
@@ -28,7 +30,7 @@ public:
 	void SetVelocityScale(float _VelocityScale) { m_VelocityScale = _VelocityScale; }
 	float GetVelocityScale() { return m_VelocityScale; }
 
-	GCollider* GetCollider() { return m_HitBox; }
+	GCollider* GetCollider() { return (GCollider*)m_HitBox; }
 
 	void SetMass(float _Mass) { m_Mass = _Mass; }
 	float GetMass() { return m_Mass; }

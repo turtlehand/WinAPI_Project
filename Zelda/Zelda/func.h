@@ -22,6 +22,8 @@ void DrawDebugRect(PEN_TYPE _Color, time_t _Duration, Vec2 _Position, Vec2 _Scal
 
 void DrawDebugCircle(PEN_TYPE _Color, time_t _Duration, Vec2 _Position, float _Radius);
 
+void DrawDebugEllipse(PEN_TYPE _Color, time_t _Duration, Vec2 _Position, Vec2 _Scale);
+
 void DrawDebugLine(PEN_TYPE _Color, time_t _Duration, Vec2 _Position0, Vec2 _Position1);
 
 #pragma endregion

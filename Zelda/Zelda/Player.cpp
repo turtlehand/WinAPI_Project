@@ -23,6 +23,7 @@
 #include "GSprite.h"
 
 #include "GBoxCollider.h"
+#include "GCircleCollider.h"
 #include "GFlipBookPlayer.h"
 #include "GRigidBody.h"
 
@@ -50,10 +51,10 @@ Player::Player() :
 	SetMaxMoveSpeed(200.f);
 	SetInitForce(100000.f);
 
-	m_Collider = AddComponent<GBoxCollider>();
+	m_Collider = AddComponent<GCircleCollider>();
 	m_Collider->SetName(L"Player_Hit_Box");
 	m_Collider->SetPos(Vec2(0, 0));
-	m_Collider->SetScale(Vec2(64.f, 64.f));
+	m_Collider->SetRadius(64.f);
 	m_Collider->GetID();
 
 	m_RigidBody = AddComponent<GRigidBody>();

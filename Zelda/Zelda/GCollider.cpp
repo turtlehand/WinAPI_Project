@@ -9,9 +9,8 @@
 
 GCollider::GCollider(COLLIDER_TYPE _Type) :
 	GComponent(COMPONENT_TYPE::COLLIDER),
-	m_Type(_Type),
+	m_ColliderType(_Type),
 	m_Offset(),
-	m_Scale(),
 	m_OverlapCount(0),
 	m_Trigger(false)
 {

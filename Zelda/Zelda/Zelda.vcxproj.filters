@@ -136,6 +136,9 @@
     <Filter Include="Game\06. Component\06. SpriteRenderer">
       <UniqueIdentifier>{7a10ddac-1130-4ce9-87dc-39aa000bf17c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\06. Component\01. Collider\02. Circle">
+      <UniqueIdentifier>{868a131d-9539-449c-a6e8-d8db4ed4a388}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -300,6 +303,9 @@
     <ClInclude Include="GBoxCollider.h">
       <Filter>Game\06. Component\01. Collider\01. Box</Filter>
     </ClInclude>
+    <ClInclude Include="GCircleCollider.h">
+      <Filter>Game\06. Component\01. Collider\02. Circle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -445,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="GBoxCollider.cpp">
       <Filter>Game\06. Component\01. Collider\01. Box</Filter>
+    </ClCompile>
+    <ClCompile Include="GCircleCollider.cpp">
+      <Filter>Game\06. Component\01. Collider\02. Circle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
