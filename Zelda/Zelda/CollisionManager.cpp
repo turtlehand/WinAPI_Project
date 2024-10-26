@@ -148,14 +148,14 @@ bool CollisionManager::IsCollision(GCollider* _LeftCol, GCollider* _RightCol)
 	{
 		if(_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
 			CollisionBool = IsCollision_BoxBtwBox(_LeftCol, _RightCol);
-		//else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
-			//CollisionBool = IsCollision_BoxBtwCircle(_LeftCol, _RightCol);
+		else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+			CollisionBool = IsCollision_BoxBtwCircle(_LeftCol, _RightCol);
 	}
 	else if (_LeftCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
 	{
-		//if (_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
-			//CollisionBool = IsCollision_BoxBtwCircle(_RightCol, _LeftCol);
-		if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+		if (_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
+			CollisionBool = IsCollision_BoxBtwCircle(_RightCol, _LeftCol);
+		else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
 			CollisionBool = IsCollision_CircleBtwCircle(_LeftCol, _RightCol);
 	}
 
@@ -181,6 +181,71 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 	if (fabs(Distance.x) < (LScale.x + RScale.x ) / 2.f &&
 		fabs(Distance.y) < (LScale.y + RScale.y ) / 2.f)
 	{
+		return true;
+	}
+
+	return false;
+}
+
+bool CollisionManager::IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol)
+{
+	GBoxCollider* _LeftBox = dynamic_cast<GBoxCollider*>(_LeftCol);
+	GCircleCollider* _RightCircle = dynamic_cast<GCircleCollider*>(_RightCol);
+
+	assert(_LeftBox != nullptr && _RightCircle != nullptr);
+
+	Vec2 LPos = _LeftBox->GetGlobalPos();
+	Vec2 LScale = _LeftBox->GetScale();
+
+	Vec2 RPos = _RightCircle->GetGlobalPos();
+	float RRadius = _RightCircle->GetRadius();
+
+	Vec2 Distance = _RightCircle->GetGlobalPos() - _LeftBox->GetGlobalPos();
+
+	if (fabs(Distance.x) < (LScale.x / 2.f + RRadius)  &&
+		fabs(Distance.y) < (LScale.y / 2.f + RRadius))
+	{
+		// 꼭짓점의 좌표를 구한다.
+		Vec2 RT = LPos + Vec2(LScale.x, LScale.y) / 2;
+		Vec2 RB = LPos + Vec2(LScale.x, -LScale.y) / 2;
+		Vec2 LT = LPos + Vec2(-LScale.x, LScale.y) / 2;
+		Vec2 LB = LPos + Vec2(-LScale.x, -LScale.y) / 2;
+
+		// 원이 사각형의 오른쪽 위에 있다.
+		if ((RPos - RT).x > 0 && (RPos - RT).y > 0)
+		{
+			// 원안에 사각형의 꼭짓점이 있다.
+			if ((RPos - RT).Length() < RRadius)
+			{
+				return true;
+			}
+			return false;
+		}
+		else if ((RPos - RB).x > 0 && (RPos - RB).y < 0)
+		{
+			if ((RPos - RB).Length() < RRadius)
+			{
+				return true;
+			}
+			return false;
+		}
+		else if ((RPos - LT).x < 0 && (RPos - LT).y > 0)
+		{
+			if ((RPos - LT).Length() < RRadius)
+			{
+				return true;
+			}
+			return false;
+		}
+		else if ((RPos - LB).x < 0 && (RPos - LB).y < 0)
+		{
+			if ((RPos - LB).Length() < RRadius)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		return true;
 	}
 

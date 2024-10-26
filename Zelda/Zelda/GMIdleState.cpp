@@ -41,7 +41,7 @@ void GMIdleState::FinalTick()
 
 		if (m_Monster->GetInfo().DetectRange > Distance)
 		{
-			m_Monster->m_FSM->ChanageState(L"CHASE");
+			//m_Monster->m_FSM->ChanageState(L"CHASE");
 		}
 	}
 

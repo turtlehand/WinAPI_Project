@@ -3,7 +3,7 @@
 
 class GTexture;
 
-class GCircleCollider;
+class GBoxCollider;
 class GRigidBody;
 class GFSM;
 
@@ -22,7 +22,7 @@ private:
 
 	GTexture* m_Texture;
 
-	GCircleCollider* m_HitBox;
+	GBoxCollider* m_HitBox;
 	GRigidBody* m_RigidBody;
 	GFSM* m_FSM;
 
