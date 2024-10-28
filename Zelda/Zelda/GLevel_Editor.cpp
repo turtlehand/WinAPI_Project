@@ -13,6 +13,7 @@
 #include "GPanel.h"
 #include "GButton.h"
 #include "GTileMap.h"
+#include "GTilePalette.h"
 
 #include "GSound.h"
 
@@ -21,6 +22,8 @@ INT_PTR CALLBACK    TileMapInfoProc(HWND, UINT, WPARAM, LPARAM);
 
 GLevel_Editor::GLevel_Editor() :
 	m_hMenu(nullptr),
+	m_TilePalette(nullptr),
+	m_CurTile(nullptr),
 	m_MapObj(nullptr)
 {
 }
@@ -52,7 +55,9 @@ void GLevel_Editor::Begin()
 	m_MapObj = new GMap;
 	AddObject(m_MapObj, LAYER_TYPE::TILE);
 	m_MapObj->SetName(L"Map");
-	m_MapObj->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	//m_MapObj->GetTileMap()->SetScale(Vec2(4.f, 4.f));
+
+	//m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(L"Forest_Palette", L"TilePalette\\\Forest_Palette.tp");
 	//m_MapObj->SetPos(Vec2(-CEngine::GetInst()->GetResolution().x/2, -CEngine::GetInst()->GetResolution().y/2));
 	
 
@@ -69,7 +74,7 @@ void GLevel_Editor::Begin()
 	pSaveButton->SetPos(10, -10);
 	pSaveButton->SetScale(80, 30);
 	pSaveButton->SetBrushType(BRUSH_TYPE::RED);
-	pSaveButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::SaveTileMap);
+	//pSaveButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::SaveTileMap);
 	
 
 	GButton* pLoadButton = new GButton;
@@ -78,7 +83,7 @@ void GLevel_Editor::Begin()
 	pLoadButton->SetPos(110, -10);
 	pLoadButton->SetScale(80, 30);
 	pLoadButton->SetBrushType(BRUSH_TYPE::BLUE);
-	pLoadButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTileMap);
+	pLoadButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTilePalette);
 	
 
 	CLevel::Begin();
@@ -93,13 +98,10 @@ void GLevel_Editor::Tick()
 		ChangeLevel(LEVEL_TYPE::START);
 	}
 
-	if (GETKEYPRESSED(KEY::LBTN))
+	if (GETKEYPRESSED(KEY::LBTN) && m_TilePalette != nullptr)
 	{
-		Tile* TileInfo = m_MapObj->GetTileMap()->GetTile(CKeyMgr::GetInst()->GetMousePos());
-		if (TileInfo != nullptr)
-		{
-			TileInfo->ImgIdx = 5;
-		}
+		m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_CurTile);
+		m_CurTile = m_TilePalette->GetTile(1);
 	}
 
 }
@@ -126,6 +128,7 @@ void GLevel_Editor::End()
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 }
 
+/*
 void GLevel_Editor::SaveTileMap()
 {
 
@@ -155,11 +158,11 @@ void GLevel_Editor::SaveTileMap()
 	}
 }
 
+
 void GLevel_Editor::LoadTileMap()
 {
 	wstring strContentPath = GPathManager::GetContentPath();
 	strContentPath += L"TileMap";
-
 
 	// 파일 경로 문자열
 	wchar_t szFilePath[255] = {};
@@ -182,6 +185,35 @@ void GLevel_Editor::LoadTileMap()
 		m_MapObj->GetTileMap()->Load(RelativePath);
 	}
 }
+*/
+
+void GLevel_Editor::LoadTilePalette()
+{
+	wstring strContentPath = GPathManager::GetContentPath();
+	strContentPath += L"TilePalette";
+
+	// 파일 경로 문자열
+	wchar_t szFilePath[255] = {};
+
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = szFilePath;	// 최종적으로 고른 경로를 받아낼 목적지
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"TP\0*.tp\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+	if (GetSaveFileName(&Desc))
+	{
+		wstring RelativePath = szFilePath;
+		CheckExt(L".tp", RelativePath);
+		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
+		m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(PathKey(RelativePath), RelativePath);
+		m_CurTile = m_TilePalette->GetTile(0);
+	}
+}
 
 bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 {
@@ -202,7 +234,7 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
 		assert(EditorLevel != nullptr);
 
-		EditorLevel->SaveTileMap();
+		//EditorLevel->SaveTileMap();
 
 		return true;
 	}
@@ -215,7 +247,7 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
 		assert(EditorLevel != nullptr);
 
-		EditorLevel->LoadTileMap();
+		//EditorLevel->LoadTileMap();
 		return true;
 	}
 	break;

@@ -86,6 +86,8 @@ enum class ASSET_TYPE
 	SOUND,		// 소리	
 	SPRITE,		// 특정 텍스쳐의 특정 부위
 	FLIPBOOK,	// Sprite 의 집합체
+	TILE,
+	TILEPALETTE,
 };
 
 enum class RIGIDBODY_TYPE

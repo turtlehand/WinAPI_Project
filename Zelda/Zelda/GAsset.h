@@ -8,8 +8,8 @@ private:
 	wstring m_RelativePath;
 	const ASSET_TYPE m_Type;
 public:
-	const wstring& GetKey() { return m_Key; }
-	const wstring& GetRelativePath() { return m_RelativePath; }
+	const wstring& GetKey() const { return m_Key; }
+	const wstring& GetRelativePath() const { return m_RelativePath; }
 	const ASSET_TYPE GetAssetType() { return m_Type; }
 	
 protected:

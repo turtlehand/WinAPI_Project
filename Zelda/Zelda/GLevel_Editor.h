@@ -1,12 +1,16 @@
 #pragma once
 #include "CLevel.h"
 #include "GMap.h"
+#include "GTilePalette.h"
 
 class GLevel_Editor :
     public CLevel
 {
 private:
 	GMap* m_MapObj;
+	GTilePalette* m_TilePalette;
+	GTile* m_CurTile;
+
 	HMENU m_hMenu;
 
 public:
@@ -20,10 +24,12 @@ public:
 	virtual void End() override;
 	
 public:
-	void SaveTileMap();
-	void LoadTileMap();
+	void LoadTilePalette();
+	//void SaveTileMap();
+	//void LoadTileMap();
 
 public:
 	GMap* GetMapObject() { return m_MapObj; }
+	GTilePalette* GetTilePalette() { return m_TilePalette; }
 };
 

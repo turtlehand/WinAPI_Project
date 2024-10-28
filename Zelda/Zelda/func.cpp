@@ -214,3 +214,14 @@ void CheckExt(const wstring& _Ext, wstring& _strFilePath)
 		}
 	}
 }
+
+// 파일의 이름을 출력한다.
+wstring PathKey(const wstring& _strFilePath)
+{
+	wchar_t szExt[50] = {};
+
+	_wsplitpath_s(_strFilePath.c_str(), nullptr, 0, nullptr, 0, szExt, 50, nullptr, 0);
+
+	wstring Key = szExt;
+	return Key;
+}

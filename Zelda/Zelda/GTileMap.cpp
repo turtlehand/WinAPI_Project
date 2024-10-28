@@ -1,20 +1,21 @@
 #include "pch.h"
 #include "GTileMap.h"
 
+#include "GAssetManager.h"
 #include "GComponent.h"
-#include "GTexture.h"
+#include "GTilePalette.h"
 
 #include "GCamera.h"
 #include "GPathManager.h"
+#include "GTile.h"
+#include "GSprite.h"
+#include "GTexture.h"
 
 GTileMap::GTileMap() :
 	GComponent(COMPONENT_TYPE::TILEMAP),
+	m_Scale(1.f,1.f),
 	m_Row(0),
-	m_Col(0),
-	m_Atlas(nullptr),
-	m_AtlasTileRow(0),
-	m_AtlasTileCol(0),
-	m_AtlasResolution()
+	m_Col(0)
 {
 }
 
@@ -33,22 +34,39 @@ void GTileMap::SetRowCol(int _Row, int _Col)
 
 	for (int i = 0; i < m_Row * m_Col; ++i)
 	{
-		m_vecTile[i].ImgIdx = -1;
+		m_vecTile[i] = nullptr;
 	}
 }
 
-void GTileMap::SetAtlasTexture(GTexture* _Atlas)
+void GTileMap::SetTile(Vec2 _MousePos, GTile* _Tile)
 {
-	m_Atlas = _Atlas;
-
-	if (nullptr == m_Atlas)
+	// 화면을 벗어났다면 무효처리
+	if (CKeyMgr::GetInst()->IsMouseOffScreen())
 		return;
-	m_AtlasResolution = Vec2((float)m_Atlas->GetWidth(), (float)m_Atlas->GetHeight());
-	m_AtlasTileRow = m_AtlasResolution.y / TILE_SIZE;
-	m_AtlasTileCol = m_AtlasResolution.x / TILE_SIZE;
+
+	// 마우스 좌표에 Object의 좌표를 빼서 Offset을 구한다. 
+	Vec2 Offset = _MousePos - GetOwner()->GetPos();
+
+	// 이렇게 나온 Offset이 음수라면 타일맵을 벗어난 것이므로 무효처리한다.
+	if (Offset.x < 0 || Offset.y < 0)
+		return;
+
+	int Row = Offset.y / TILE_SIZE;
+	int Col = Offset.x / TILE_SIZE;
+
+	// Row와 Col이 타일맵 보다 크다면 벗어난 것이므로 무효처리한다.
+	if (Col < 0 || Row < 0 || m_Col <= Col || m_Row <= Row)
+		return;
+	m_vecTile[Row * m_Col + Col] = _Tile;
 }
 
-Tile* GTileMap::GetTile(Vec2 _MousePos)
+/// <summary>
+/// 마우스 위치에 타일을 내보낸다.
+/// </summary>
+/// <param name="_MousePos"></param>
+/// <returns></returns>
+
+const GTile** GTileMap::GetTile(Vec2 _MousePos)
 {
 	// 화면을 벗어났다면 무효처리
 	if (CKeyMgr::GetInst()->IsMouseOffScreen())
@@ -71,6 +89,8 @@ Tile* GTileMap::GetTile(Vec2 _MousePos)
 	return &m_vecTile[Row * m_Col + Col];
 }
 
+
+/*
 bool GTileMap::Save(wstring _FullPath)
 {
 	FILE* File = nullptr;
@@ -81,11 +101,11 @@ bool GTileMap::Save(wstring _FullPath)
 	fwrite(&m_Row, sizeof(int), 1, File);
 	fwrite(&m_Col, sizeof(int), 1, File);
 
-	SaveAssetRef(m_Atlas, File);
+	SaveAssetRef(m_TilePalette, File);
 
-	for (size_t i = 0; i < m_vecTile.size(); ++i)
+	for (size_t i = 0; i < m_vecTileInfo.size(); ++i)
 	{
-		fwrite(&m_vecTile[i], sizeof(Tile), 1, File);
+		fwrite(&m_vecTileInfo[i], sizeof(TileInfo), 1, File);
 	}
 
 	fclose(File);
@@ -104,18 +124,19 @@ bool GTileMap::Load(wstring _FullPath)
 	fread(&m_Col, sizeof(int), 1, File);
 	SetRowCol(m_Row, m_Col);
 
-	m_Atlas = (GTexture*)LoadAssetRef(File);
-	SetAtlasTexture(m_Atlas);
+	m_TilePalette = (GTilePalette*)LoadAssetRef(File);
+	SetTilePalette(m_TilePalette);
 
 	for (size_t i = 0; i < m_Row * m_Col; ++i)
 	{
-		fread(&m_vecTile[i], sizeof(Tile), 1, File);
+		fread(&m_vecTile[i], sizeof(TileInfo), 1, File);
 	}
 
 	fclose(File);
 
 	return true;
 }
+*/
 
 void GTileMap::FinalTick()
 {
@@ -138,7 +159,7 @@ void GTileMap::FinalTick()
 
 void GTileMap::Render()
 {
-	if (nullptr == m_Atlas)
+	if (m_vecTile.size() == 0)
 		return;
 
 	Vec2 OwnerPos = GetOwner()->GetPos();
@@ -146,8 +167,6 @@ void GTileMap::Render()
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 
 	int ImgIdx = 0;
-	int ImgRow = ImgIdx / m_AtlasTileCol;
-	int ImgCol = ImgIdx % m_AtlasTileCol;
 
 	// 최적화
 	Vec2 vCamLook = GCamera::GetInst()->GetLookAt();
@@ -177,20 +196,18 @@ void GTileMap::Render()
 
 			// 반목문 회차에 맞는 행렬에 대해서 이게 몇번째 타일정보인지 1차원 인덱스로 변환
 			// 해당 타일정보에 접근한다.
-			ImgIdx = m_vecTile[Row * m_Col + Col].ImgIdx;
-			ImgRow = ImgIdx / m_AtlasTileCol;
-			ImgCol = ImgIdx % m_AtlasTileCol;
+			const GTile* Tile = m_vecTile[Row * m_Col + Col];
 
-			// -1일 시 비어있다는 의미
-			if (ImgIdx == -1)
+			// 타일이 비어있다면 그리지 않는다.
+			if (Tile == nullptr)
 				continue;
 
-			assert(0 <= ImgIdx && ImgIdx < m_AtlasTileCol * m_AtlasTileRow);
+			//assert(GAssetManager::GetInst()->LoadTile(Tile->GetKey(),Tile->GetRelativePath()) != nullptr);
 
 			BitBlt(dc,
 				(int)OwnerRenderPos.x + Col * TILE_SIZE, (int)OwnerRenderPos.y - Row * TILE_SIZE - TILE_SIZE,
-				TILE_SIZE, TILE_SIZE,
-				m_Atlas->GetDC(), ImgCol * TILE_SIZE, ImgRow * TILE_SIZE, SRCCOPY);
+				TILE_SIZE * m_Scale.x, TILE_SIZE * m_Scale.y,
+				Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y, SRCCOPY);
 		}
 	}
 }

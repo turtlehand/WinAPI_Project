@@ -62,16 +62,16 @@ void GLevel_Start::Begin()
 	GMap* pTileMap = new GMap;
 	AddObject(pTileMap, LAYER_TYPE::TILE);
 	pTileMap->SetPos(Vec2(0.f, 0.f));
-	pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
-	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp.tile");
+	//pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	//pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp.tile");
 	
 
 	// TileMap Object Ãß°¡
 	pTileMap = new GMap;
 	AddObject(pTileMap, LAYER_TYPE::TILE);
 	pTileMap->SetPos(Vec2(1000.f, 1000.f));
-	pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
-	pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp2.tile");
+	//pTileMap->GetTileMap()->SetAtlasTexture(GAssetManager::GetInst()->LoadTexture(L"Tile", L"Texture\\TILE.bmp"));
+	//pTileMap->GetTileMap()->Load(FilePath + L"TileMap\\Temp2.tile");
 	
 
 	CollisionManager::GetInst()->CollisionCheckClear();

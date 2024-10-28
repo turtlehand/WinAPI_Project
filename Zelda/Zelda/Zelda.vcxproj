@@ -177,7 +177,9 @@
     <ClInclude Include="GSprite.h" />
     <ClInclude Include="GState.h" />
     <ClInclude Include="GTexture.h" />
+    <ClInclude Include="GTile.h" />
     <ClInclude Include="GTileMap.h" />
+    <ClInclude Include="GTilePalette.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GuidedMissile.h" />
     <ClInclude Include="GUIManager.h" />
@@ -229,7 +231,9 @@
     <ClCompile Include="GSprite.cpp" />
     <ClCompile Include="GState.cpp" />
     <ClCompile Include="GTexture.cpp" />
+    <ClCompile Include="GTile.cpp" />
     <ClCompile Include="GTileMap.cpp" />
+    <ClCompile Include="GTilePalette.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GuidedMissile.cpp" />
     <ClCompile Include="GUIManager.cpp" />

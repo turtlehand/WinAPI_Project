@@ -29,4 +29,4 @@
 
 #define PI 3.14159265
 
-#define TILE_SIZE 64
+#define TILE_SIZE 16

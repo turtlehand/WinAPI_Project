@@ -124,11 +124,6 @@ struct DeBugRenderInfo
 	float Time;			// 진행 시간
 };
 
-struct Tile
-{
-	int ImgIdx;
-};
-
 struct MonsterInfo
 {
 	float MaxHP;

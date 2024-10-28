@@ -139,6 +139,12 @@
     <Filter Include="Game\06. Component\01. Collider\02. Circle">
       <UniqueIdentifier>{868a131d-9539-449c-a6e8-d8db4ed4a388}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\07. Asset\05. Tile">
+      <UniqueIdentifier>{8615f5b8-a96d-48e8-8fcf-4fa2db0c03d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\07. Asset\06. TilePalette">
+      <UniqueIdentifier>{f248232a-d33e-477a-82a0-e7b0a52596d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -306,6 +312,12 @@
     <ClInclude Include="GCircleCollider.h">
       <Filter>Game\06. Component\01. Collider\02. Circle</Filter>
     </ClInclude>
+    <ClInclude Include="GTile.h">
+      <Filter>Game\07. Asset\05. Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="GTilePalette.h">
+      <Filter>Game\07. Asset\06. TilePalette</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -454,6 +466,12 @@
     </ClCompile>
     <ClCompile Include="GCircleCollider.cpp">
       <Filter>Game\06. Component\01. Collider\02. Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="GTile.cpp">
+      <Filter>Game\07. Asset\05. Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="GTilePalette.cpp">
+      <Filter>Game\07. Asset\06. TilePalette</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

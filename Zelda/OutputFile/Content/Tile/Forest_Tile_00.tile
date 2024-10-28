@@ -1,0 +1,16 @@
+[ASSETTYPE]
+4
+
+[KEY]
+Forest_Tile_00
+
+[PATH]
+Tile\Tile_16\Forest_Tile_00.tile
+
+[SPRITE]
+[SPRITE_KEY]
+Forest_Tile_00
+
+[SPRITE_PATH]
+Sprite\Tile_16\Forest_Tile_00.sprite
+

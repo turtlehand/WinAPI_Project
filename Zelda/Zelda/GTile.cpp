@@ -1,31 +1,37 @@
 #include "pch.h"
-#include "GFlipBook.h"
+#include "GTile.h"
 
-
-#include "GSprite.h"
-#include "GPathManager.h"
 #include "GAssetManager.h"
+#include "GPathManager.h"
+#include "GSprite.h"
 
-
-GFlipBook::GFlipBook() :
-	GAsset(ASSET_TYPE::FLIPBOOK),
-	m_Sprites()
+GTile::GTile() :
+	GAsset(ASSET_TYPE::TILE),
+	m_Sprite(nullptr),
+	m_Collider(false)
 {
 }
 
-GFlipBook::~GFlipBook()
+GTile::~GTile()
 {
 }
 
-int GFlipBook::Save(const wstring& _RelativePath)
+void GTile::Create(GSprite* _Sprite, bool _Collider)
+{
+	m_Sprite = _Sprite;
+	m_Collider = _Collider;
+}
+
+int GTile::Save(const wstring& _RelativePath)
 {
 	wstring RelativePath = _RelativePath;
-	CheckExt(L".flip", RelativePath);
+	CheckExt(L".tile", RelativePath);
 
-	// 에셋이 자신이 어디에 저장되었는지 알게 함
+	// 에셋이 자신이 어디에 저장되는지 알게 함
 	SetRelativePath(RelativePath);
 
 	wstring strFilePath = GPathManager::GetContentPath() + RelativePath;
+
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"w");
 
@@ -38,34 +44,24 @@ int GFlipBook::Save(const wstring& _RelativePath)
 	fwprintf_s(File, L"[PATH]\n");
 	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
 
-	fwprintf_s(File, L"[SPRITESIZE]\n");
-	fwprintf_s(File, L"%d\n\n", (int)m_Sprites.size());
+	fwprintf_s(File, L"[SPRITE]\n");
 
-	for (int i = 0; i < m_Sprites.size(); ++i)
-	{
-		fwprintf_s(File, L"[INDEX]\n");
-		fwprintf_s(File, L"%d\n\n", i);
+	fwprintf_s(File, L"[SPRITE_KEY]\n");
+	fwprintf_s(File, L"%s\n\n", m_Sprite->GetKey().c_str());
 
-		fwprintf_s(File, L"[KEY]\n");
-		fwprintf_s(File, L"%s\n\n", m_Sprites[i]->GetKey().c_str());
-
-		fwprintf_s(File, L"[PATH]\n");
-		fwprintf_s(File, L"%s\n\n", m_Sprites[i]->GetRelativePath().c_str());
-	}
+	fwprintf_s(File, L"[SPRITE_PATH]\n");
+	fwprintf_s(File, L"%s\n\n", m_Sprite->GetRelativePath().c_str());
 
 	fclose(File);
-
 	return S_OK;
 }
 
-int GFlipBook::Load(const wstring& _RelativePath)
+int GTile::Load(const wstring& _RelativePath)
 {
 	wstring strFilePath = GPathManager::GetContentPath() + _RelativePath;
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
-
-	int SpriteSize = 0;
 
 	while (true)
 	{
@@ -87,27 +83,19 @@ int GFlipBook::Load(const wstring& _RelativePath)
 			fwscanf_s(File, L"%s", szBuff, 255);
 			SetRelativePath(szBuff);
 		}
-		else if (szString == L"[SPRITESIZE]")
+		else if (szString == L"[SPRITE]")
 		{
-			fwscanf_s(File, L"%d", &SpriteSize);
-			m_Sprites.resize(SpriteSize);
-		}
-		else if (szString == L"[INDEX]")
-		{
-			int index = 0;
-			fwscanf_s(File, L"%d", &index);
-
-			wstring SpriteKey, SpritePath;
+			wstring AtlasKey, AtlasPath;
 
 			fwscanf_s(File, L"%s", szBuff, 255);
 			fwscanf_s(File, L"%s", szBuff, 255);
-			SpriteKey = szBuff;
+			AtlasKey = szBuff;
 
 			fwscanf_s(File, L"%s", szBuff, 255);
 			fwscanf_s(File, L"%s", szBuff, 255);
-			SpritePath = szBuff;
+			AtlasPath = szBuff;
 
-			m_Sprites[index] = GAssetManager::GetInst()->LoadSprite(SpriteKey, SpritePath);
+			m_Sprite = GAssetManager::GetInst()->LoadSprite(AtlasKey, AtlasPath);
 		}
 
 	}

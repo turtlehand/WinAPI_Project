@@ -1,0 +1,25 @@
+[ASSETTYPE]
+2
+
+[KEY]
+Forest_Tile_00
+
+[PATH]
+Sprite\Tile_16\Forest_Tile_00.sprite
+
+[LEFTTOP]
+194, 59
+
+[SLICE]
+16, 16
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+OverWorldTile_16
+
+[ATLAS_PATH]
+Texture\OverWorldTile_16.png
+

@@ -4,6 +4,8 @@ class GTexture;
 class GSprite;
 class GFlipBook;
 class GSound;
+class GTile;
+class GTilePalette;
 
 class GAssetManager
 {
@@ -13,6 +15,8 @@ private:
 	map<wstring, GSprite*> m_mapSprite;
 	map<wstring, GFlipBook*> m_mapFlipBook;
 	map<wstring, GSound*> m_mapSound;
+	map<wstring, GTile*> m_mapTile;
+	map<wstring, GTilePalette*> m_mapTilePalette;
 	
 
 public:
@@ -33,5 +37,12 @@ public:
 
 	GSound* FindSound(const wstring& _Key);
 	GSound* LoadSound(const wstring& _Key, const wstring& _RelativePath);
+
+	GTile* FindTile(const wstring& _Key);
+	GTile* LoadTile(const wstring& _Key, const wstring& _RelativePath);
+	void AddTile(const wstring& _Key, GTile* _Tile);
+
+	GTilePalette* FindTilePalette(const wstring& _Key);
+	GTilePalette* LoadTilePalette(const wstring& _Key, const wstring& _RelativePath);
 	
 };

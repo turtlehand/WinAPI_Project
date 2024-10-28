@@ -43,6 +43,7 @@ int CCW(const Vec2& _Other1, const Vec2& _Other2);
 void SaveAssetRef(GAsset* _Asset, FILE* _File);
 GAsset* LoadAssetRef(FILE* _File);
 void CheckExt(const wstring& _Ext, wstring& _strFilePath);
+wstring PathKey(const wstring& _strFilePath);
 
 #pragma endregion
 

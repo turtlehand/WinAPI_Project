@@ -1,28 +1,30 @@
 #pragma once
 #include "GComponent.h"
-class GTexture;
+class GTilePalette;
+class GTile;
 
 class GTileMap : public GComponent
 {
 private:
+	Vec2 m_Scale;
+
 	int m_Row;	// 타일 행 개수
 	int m_Col;	// 타일 열 개수
-	
-	GTexture* m_Atlas;			
-	int m_AtlasTileRow;			// 아틀라스 텍스펴 안에 있는 타일 열 개수
-	int m_AtlasTileCol;			// 아틀라스 텍스쳐 안에 있는 타일 행 개수
-	Vec2 m_AtlasResolution;		// 아틀라스 해상도
 
-	vector<Tile> m_vecTile;
+	vector<const GTile*> m_vecTile;			// 타일의 주소를 갖는 벡터
 
 public:
+	void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+	Vec2 GetScale() { return m_Scale; }
+
 	void SetRowCol(int _Row, int _Col);
-	void SetAtlasTexture(GTexture* _Atlas);
 
-	Tile* GetTile(Vec2 _MousePos);
+	void SetTile(Vec2 _MousePos, GTile* _Tile);
 
-	bool Save(wstring _FullPath);
-	bool Load(wstring _FullPath);
+	const GTile** GetTile(Vec2 _MousePos);
+
+	//bool Save(wstring _FullPath);
+	//bool Load(wstring _FullPath);
 
 public:
 	virtual void FinalTick() override;
