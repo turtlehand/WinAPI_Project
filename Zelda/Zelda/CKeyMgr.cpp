@@ -4,7 +4,7 @@
 #include "CEngine.h"
 #include "GCamera.h"
 
-UINT KeyValue[KEY::KEY_END] =
+UINT KeyValue[(UINT)KEY::KEY_END] =
 {
 	'Q', 'W', 'E', 'R', 'T', 'Y',
 	'A', 'S', 'D', 'F', 'G', 'H',
@@ -34,7 +34,10 @@ UINT KeyValue[KEY::KEY_END] =
 	VK_RBUTTON,
 };
 
-CKeyMgr::CKeyMgr()
+CKeyMgr::CKeyMgr() :
+	m_vecKeyInfo{},
+	m_MouseWheel(0),
+	m_MousePos()
 {
 
 }
@@ -51,6 +54,8 @@ void CKeyMgr::Init()
 	{
 		m_vecKeyInfo[i] = KeyInfo{ KEY_STATE::NONE, false };
 	}
+
+	m_MouseWheel = 0;
 }
 
 void CKeyMgr::Progress()
@@ -95,6 +100,15 @@ void CKeyMgr::Progress()
 		m_MousePos = GCamera::GetInst()->GetGamePos(ptPos);
 		m_MousePos = IsMouseOffScreen() ? Vec2(NAN, NAN) : GCamera::GetInst()->GetGamePos(ptPos);
 
+		//
+		if (m_MouseWheel != 0 && !m_MouseWheelPrevPressed)
+			m_MouseWheelPrevPressed = true;
+		else if (m_MouseWheel != 0 && m_MouseWheelPrevPressed)
+		{
+			m_MouseWheel = 0;
+			m_MouseWheelPrevPressed = false;
+		}
+			
 
 	}
 	else
@@ -116,6 +130,8 @@ void CKeyMgr::Progress()
 		}
 
 		m_MousePos = Vec2(NAN, NAN);
+		m_MouseWheel = 0;
+
 	}
 
 

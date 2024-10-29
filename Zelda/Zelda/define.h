@@ -25,6 +25,8 @@
 #define GETKEYUP(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::UP
 #define GETKEYNONE(Key) CKeyMgr::GetInst()->GetKeyState(Key) == KEY_STATE::NONE
 
+#define GETMW CKeyMgr::GetInst()->GetMouseWheel()
+
 #define DELETEGAMEOBJECT(p) if(p != nullptr) {delete p; p = nullptr;}
 
 #define PI 3.14159265

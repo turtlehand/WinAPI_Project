@@ -12,6 +12,10 @@
 #include "GUI.h"
 #include "GPanel.h"
 #include "GButton.h"
+
+#include "GTexture.h"
+#include "GTile.h"
+#include "GSprite.h"
 #include "GTileMap.h"
 #include "GTilePalette.h"
 
@@ -23,7 +27,7 @@ INT_PTR CALLBACK    TileMapInfoProc(HWND, UINT, WPARAM, LPARAM);
 GLevel_Editor::GLevel_Editor() :
 	m_hMenu(nullptr),
 	m_TilePalette(nullptr),
-	m_CurTile(nullptr),
+	m_CurTile(-1),
 	m_MapObj(nullptr)
 {
 }
@@ -39,7 +43,7 @@ void GLevel_Editor::Begin()
 
 	if (pSound != nullptr)
 	{
-		pSound->SetVolume(1.f);
+		pSound->SetVolume(10.f);
 		pSound->PlayToBGM(true);
 
 	}
@@ -55,7 +59,7 @@ void GLevel_Editor::Begin()
 	m_MapObj = new GMap;
 	AddObject(m_MapObj, LAYER_TYPE::TILE);
 	m_MapObj->SetName(L"Map");
-	//m_MapObj->GetTileMap()->SetScale(Vec2(4.f, 4.f));
+	m_MapObj->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 
 	//m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(L"Forest_Palette", L"TilePalette\\\Forest_Palette.tp");
 	//m_MapObj->SetPos(Vec2(-CEngine::GetInst()->GetResolution().x/2, -CEngine::GetInst()->GetResolution().y/2));
@@ -68,22 +72,30 @@ void GLevel_Editor::Begin()
 	pUI->SetScale(200, 400);
 	
 
-	GButton* pSaveButton = new GButton;
-	pUI->AddChildUI(pSaveButton);
-	pSaveButton->SetName(L"TestUI");
-	pSaveButton->SetPos(10, -10);
-	pSaveButton->SetScale(80, 30);
-	pSaveButton->SetBrushType(BRUSH_TYPE::RED);
-	//pSaveButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::SaveTileMap);
+	GButton* pSaveTMButton = new GButton;
+	pUI->AddChildUI(pSaveTMButton);
+	pSaveTMButton->SetName(L"TestUI");
+	pSaveTMButton->SetPos(10, -360);
+	pSaveTMButton->SetScale(80, 30);
+	pSaveTMButton->SetBrushType(BRUSH_TYPE::RED);
+	pSaveTMButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::SaveTileMap);
 	
 
-	GButton* pLoadButton = new GButton;
-	pUI->AddChildUI(pLoadButton);
-	pLoadButton->SetName(L"TestUI");
-	pLoadButton->SetPos(110, -10);
-	pLoadButton->SetScale(80, 30);
-	pLoadButton->SetBrushType(BRUSH_TYPE::BLUE);
-	pLoadButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTilePalette);
+	GButton* pLoadTMButton = new GButton;
+	pUI->AddChildUI(pLoadTMButton);
+	pLoadTMButton->SetName(L"TestUI");
+	pLoadTMButton->SetPos(110, -360);
+	pLoadTMButton->SetScale(80, 30);
+	pLoadTMButton->SetBrushType(BRUSH_TYPE::BLUE);
+	pLoadTMButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTileMap);
+
+	GButton* pLoadTPButton = new GButton;
+	pUI->AddChildUI(pLoadTPButton);
+	pLoadTPButton->SetName(L"TestUI");
+	pLoadTPButton->SetPos(10, -10);
+	pLoadTPButton->SetScale(80, 30);
+	pLoadTPButton->SetBrushType(BRUSH_TYPE::BLUE);
+	pLoadTPButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTilePalette);
 	
 
 	CLevel::Begin();
@@ -98,10 +110,24 @@ void GLevel_Editor::Tick()
 		ChangeLevel(LEVEL_TYPE::START);
 	}
 
-	if (GETKEYPRESSED(KEY::LBTN) && m_TilePalette != nullptr)
+	if (m_TilePalette != nullptr)
 	{
-		m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_CurTile);
-		m_CurTile = m_TilePalette->GetTile(1);
+		if (GETKEYPRESSED(KEY::LBTN))
+		{
+			if(m_CurTile < 0)
+				m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), nullptr);
+			else
+				m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_TilePalette->GetTile(m_CurTile));
+		}
+
+		if (GETMW > 0)
+		{
+			m_CurTile = ++m_CurTile < m_TilePalette->GetTileSize() ? m_CurTile : m_TilePalette->GetTileSize() - 1;
+		}
+		else if (GETMW < 0)
+		{
+			m_CurTile = -1 < m_CurTile ? --m_CurTile : -1;
+		}
 	}
 
 }
@@ -117,6 +143,19 @@ void GLevel_Editor::Render()
 	swprintf_s(buff, 255, L"%d, %d", (int)MousePos.x, (int)MousePos.y);
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, buff, wcslen(buff));
 
+
+	if (m_TilePalette != nullptr && -1 < m_CurTile)
+	{
+		// 현재 타일
+		GTile* Tile = m_TilePalette->GetTile(m_CurTile);
+		StretchBlt(CEngine::GetInst()->GetSecondDC(),
+			CEngine::GetInst()->GetResolution().x - 100, 50,
+			64, 64,
+			Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y,
+			Tile->GetSprite()->GetSlice().x, Tile->GetSprite()->GetSlice().y, SRCCOPY);
+	}
+
+
 }
 
 void GLevel_Editor::End()
@@ -128,13 +167,11 @@ void GLevel_Editor::End()
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 }
 
-/*
+
 void GLevel_Editor::SaveTileMap()
 {
-
 	wstring strContentPath = GPathManager::GetContentPath();
 	strContentPath += L"TileMap";
-
 
 	// 파일 경로 문자열
 	wchar_t szFilePath[255] = {};
@@ -145,14 +182,14 @@ void GLevel_Editor::SaveTileMap()
 	Desc.hwndOwner = nullptr;
 	Desc.lpstrFile = szFilePath;	// 최종적으로 고른 경로를 받아낼 목적지
 	Desc.nMaxFile = 255;
-	Desc.lpstrFilter = L"Tile\0*.tile\0ALL\0*.*";
+	Desc.lpstrFilter = L"TILEMAP\0*.tm\0ALL\0*.*";
 	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 	Desc.lpstrInitialDir = strContentPath.c_str();
 
 	if (GetSaveFileName(&Desc))
 	{
 		wstring RelativePath = szFilePath;
-		CheckExt(L".tile", RelativePath);
+		CheckExt(L".tm", RelativePath);
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
 		m_MapObj->GetTileMap()->Save(RelativePath);
 	}
@@ -173,19 +210,19 @@ void GLevel_Editor::LoadTileMap()
 	Desc.hwndOwner = nullptr;
 	Desc.lpstrFile = szFilePath;	// 최종적으로 고른 경로를 받아낼 목적지
 	Desc.nMaxFile = 255;
-	Desc.lpstrFilter = L"Tile\0*.tile\0ALL\0*.*";
+	Desc.lpstrFilter = L"TILEMAP\0*.tm\0ALL\0*.*";
 	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 	Desc.lpstrInitialDir = strContentPath.c_str();
 
 	if (GetSaveFileName(&Desc))
 	{
 		wstring RelativePath = szFilePath;
-		CheckExt(L".tile", RelativePath);
+		CheckExt(L".tm", RelativePath);
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
 		m_MapObj->GetTileMap()->Load(RelativePath);
 	}
 }
-*/
+
 
 void GLevel_Editor::LoadTilePalette()
 {
@@ -211,7 +248,6 @@ void GLevel_Editor::LoadTilePalette()
 		CheckExt(L".tp", RelativePath);
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
 		m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(PathKey(RelativePath), RelativePath);
-		m_CurTile = m_TilePalette->GetTile(0);
 	}
 }
 
@@ -234,7 +270,7 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
 		assert(EditorLevel != nullptr);
 
-		//EditorLevel->SaveTileMap();
+		EditorLevel->SaveTileMap();
 
 		return true;
 	}
@@ -247,7 +283,7 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
 		assert(EditorLevel != nullptr);
 
-		//EditorLevel->LoadTileMap();
+		EditorLevel->LoadTileMap();
 		return true;
 	}
 	break;

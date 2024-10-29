@@ -2,6 +2,7 @@
 #include "main.h"
 
 #include "CEngine.h"
+#include "CKeyMgr.h"
 #include "CTimeMgr.h"
 
 #define MAX_LOADSTRING 100
@@ -126,6 +127,22 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+	case WM_MOUSEWHEEL:
+	{
+		if ((SHORT)HIWORD(wParam) > 0)
+		{
+			CKeyMgr::GetInst()->SetMouseWheel(1);
+		}
+		else if ((SHORT)HIWORD(wParam) < 0)
+		{
+			CKeyMgr::GetInst()->SetMouseWheel(-1);
+		}
+		else
+		{
+			CKeyMgr::GetInst()->SetMouseWheel(0);
+		}
+		return 0;
+	}
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

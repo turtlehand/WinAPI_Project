@@ -7,7 +7,7 @@
 
 GTilePalette::GTilePalette() :
 	GAsset(ASSET_TYPE::TILEPALETTE),
-	m_Tile{}
+	m_vecTile{}
 {
 
 }
@@ -33,6 +33,7 @@ int GTilePalette::Save(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"w");
+	assert(File);
 
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
@@ -44,18 +45,29 @@ int GTilePalette::Save(const wstring& _RelativePath)
 	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
 
 	fwprintf_s(File, L"[TILESIZE]\n");
-	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
+	fwprintf_s(File, L"%d\n\n", m_vecTile.size());
 
-	for (int i = 0; i < m_Tile.size(); ++i)
+	for (int i = 0; i < m_vecTile.size(); ++i)
 	{
 		fwprintf_s(File, L"[INDEX]\n");
 		fwprintf_s(File, L"%d\n\n", i);
 
-		fwprintf_s(File, L"[KEY]\n");
-		fwprintf_s(File, L"%s\n\n", m_Tile[i]->GetKey().c_str());
+		if (m_vecTile[i] == nullptr)
+		{
+			fwprintf_s(File, L"[KEY]\n");
+			fwprintf_s(File, L"%s\n\n", L"NULL");
 
-		fwprintf_s(File, L"[PATH]\n");
-		fwprintf_s(File, L"%s\n\n", m_Tile[i]->GetRelativePath().c_str());
+			fwprintf_s(File, L"[PATH]\n");
+			fwprintf_s(File, L"%s\n\n", L"NULL");
+		}
+		else
+		{
+			fwprintf_s(File, L"[KEY]\n");
+			fwprintf_s(File, L"%s\n\n", m_vecTile[i]->GetKey().c_str());
+
+			fwprintf_s(File, L"[PATH]\n");
+			fwprintf_s(File, L"%s\n\n", m_vecTile[i]->GetRelativePath().c_str());
+		}
 	}
 
 	fclose(File);
@@ -68,8 +80,7 @@ int GTilePalette::Load(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
-
-	int SpriteSize = 0;
+	assert(File);
 
 	while (true)
 	{
@@ -93,8 +104,9 @@ int GTilePalette::Load(const wstring& _RelativePath)
 		}
 		else if (szString == L"[TILESIZE]")
 		{
-			fwscanf_s(File, L"%d", &SpriteSize);
-			m_Tile.resize(SpriteSize);
+			int TileSize = 0;
+			fwscanf_s(File, L"%d", &TileSize);
+			m_vecTile.resize(TileSize);
 		}
 		else if (szString == L"[INDEX]")
 		{
@@ -111,7 +123,15 @@ int GTilePalette::Load(const wstring& _RelativePath)
 			fwscanf_s(File, L"%s", szBuff, 255);
 			TilePath = szBuff;
 
-			m_Tile[index] = GAssetManager::GetInst()->LoadTile(TileKey, TilePath);
+			if (TileKey == L"NULL" || TilePath == L"NULL")
+			{
+				assert(TileKey == L"NULL" && TilePath == L"NULL");
+				m_vecTile[index] = nullptr;
+			}
+			else
+			{
+				m_vecTile[index] = GAssetManager::GetInst()->LoadTile(TileKey, TilePath);
+			}
 		}
 
 	}

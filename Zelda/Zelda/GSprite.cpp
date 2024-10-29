@@ -36,6 +36,7 @@ int GSprite::Save(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"w");
+	assert(File != nullptr);
 
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
@@ -73,6 +74,7 @@ int GSprite::Load(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
+	assert(File != nullptr);
 
 	while (true)
 	{

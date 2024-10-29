@@ -87,7 +87,7 @@ void GLevel_Start::Tick()
 	CLevel::Tick();
 	
 
-	if (GETKEYDOWN(KEY::NUM8))
+	if (GETKEYDOWN(KEY::ENTER))
 	{
 		ChangeLevel(LEVEL_TYPE::EDITOR);
 	}

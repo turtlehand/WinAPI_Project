@@ -19,12 +19,12 @@ public:
 
 	void SetRowCol(int _Row, int _Col);
 
-	void SetTile(Vec2 _MousePos, GTile* _Tile);
+	void SetTile(Vec2 _MousePos, GTile* _Tile = nullptr);
 
-	const GTile** GetTile(Vec2 _MousePos);
+	//const GTile** GetTile(Vec2 _MousePos);
 
-	//bool Save(wstring _FullPath);
-	//bool Load(wstring _FullPath);
+	int Save(const wstring& _FullPath);
+	int Load(const wstring& _FullPath);
 
 public:
 	virtual void FinalTick() override;

@@ -7,13 +7,13 @@ class GTilePalette :
     public GAsset
 {
 private:
-    vector<GTile*> m_Tile;
+    vector<GTile*> m_vecTile;
 
 public:
     GTile* const GetTile(Vec2 _MousePos);
-	GTile* const GetTile(int _Index) { return m_Tile[_Index]; }
+	GTile* const GetTile(int _Index) { return m_vecTile[_Index]; }
 
-	int const GetTileSize() { return m_Tile.size(); }
+	int const GetTileSize() { return m_vecTile.size(); }
 
 public:
 	virtual int Save(const wstring& _RelativePath) override;

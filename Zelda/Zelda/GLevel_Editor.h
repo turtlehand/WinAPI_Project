@@ -9,7 +9,7 @@ class GLevel_Editor :
 private:
 	GMap* m_MapObj;
 	GTilePalette* m_TilePalette;
-	GTile* m_CurTile;
+	int m_CurTile;
 
 	HMENU m_hMenu;
 
@@ -25,8 +25,8 @@ public:
 	
 public:
 	void LoadTilePalette();
-	//void SaveTileMap();
-	//void LoadTileMap();
+	void SaveTileMap();
+	void LoadTileMap();
 
 public:
 	GMap* GetMapObject() { return m_MapObj; }
