@@ -1,0 +1,9 @@
+[ASSETTYPE]
+4
+
+[SPRITE]
+[SPRITE_KEY]
+test_0
+
+[SPRITE_PATH]
+Sprite\test_0.sprite

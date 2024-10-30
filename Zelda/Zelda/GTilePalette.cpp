@@ -14,6 +14,36 @@ GTilePalette::GTilePalette() :
 
 GTilePalette::~GTilePalette()
 {
+
+}
+
+int GTilePalette::AddTile(const wstring& Key, const wstring& _RelativePath)
+{
+	GTile* pTile;
+
+	if (_RelativePath == L"")
+	{
+		pTile = GAssetManager::GetInst()->FindTile(Key);
+	}
+	else
+	{
+		pTile = GAssetManager::GetInst()->LoadTile(Key, _RelativePath);
+	}
+
+	assert(pTile != nullptr);
+
+	for (size_t i = 0; i < m_vecTile.size(); ++i)
+	{
+		if (m_vecTile[i] == pTile)
+			return S_OK;
+	}
+
+	m_vecTile.push_back(pTile);
+
+	Save(GetRelativePath());
+
+	return S_OK;
+
 }
 
 GTile* const GTilePalette::GetTile(Vec2 _MousePos)

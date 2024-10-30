@@ -10,6 +10,8 @@ private:
     vector<GTile*> m_vecTile;
 
 public:
+	int AddTile(const wstring& Key, const wstring& _RelativePath = L"");
+
     GTile* const GetTile(Vec2 _MousePos);
 	GTile* const GetTile(int _Index) { return m_vecTile[_Index]; }
 

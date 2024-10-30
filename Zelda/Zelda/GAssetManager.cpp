@@ -131,7 +131,7 @@ GSprite* GAssetManager::LoadSprite(const wstring& _Key, const wstring& _Relative
 
 void GAssetManager::AddSprite(const wstring& _Key, GSprite* _Sprite)
 {
-	// Sprite가 없다면 중지
+	// Sprite가 있다면 중지
 	assert(!FindSprite(_Key));
 
 	// 스프라이트에 키를 설정해주고 컨테이너에 스프라이트 등록

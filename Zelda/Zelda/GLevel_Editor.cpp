@@ -23,6 +23,7 @@
 
 
 INT_PTR CALLBACK    TileMapInfoProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    TextureSliceInfoProc(HWND, UINT, WPARAM, LPARAM);
 
 GLevel_Editor::GLevel_Editor() :
 	m_hMenu(nullptr),
@@ -127,6 +128,11 @@ void GLevel_Editor::Tick()
 		else if (GETMW < 0)
 		{
 			m_CurTile = -1 < m_CurTile ? --m_CurTile : -1;
+		}
+
+		if (GETKEYPRESSED(KEY::SPACE))
+		{
+			m_TilePalette->AddTile(L"test_1", L"Tile\\test_1.tile");
 		}
 	}
 
@@ -262,6 +268,13 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 		return true;
 	}
 	break;
+	case ID_TEXTURE_SLICE:
+	{
+		DialogBox(_inst, MAKEINTRESOURCE(IDD_TEXTURE_SLICE), _wnd, &TextureSliceInfoProc);
+
+		return true;
+	}
+	break;
 	case IDM_TILE_SAVE:
 	{
 		// GLevel_Editor에 있는 MapObject 의 타일맵 컴포넌트의 행렬을 설정해주어야 함
@@ -321,6 +334,105 @@ INT_PTR CALLBACK TileMapInfoProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM 
 			GMap* pMap = pLevel->GetMapObject();
 			pMap->GetComponent<GTileMap>()->SetRowCol(Row, Col);
 
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		// 취소
+		// 아무일도 일어나지 않는다.
+		else if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
+}
+
+// ==========================
+// Texture_Slice Dialog 프로시저
+// ==========================
+INT_PTR CALLBACK TextureSliceInfoProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		// 확인
+		// Row, Col 값을 바탕으로 타일맵을 변경시킨다.
+		if (LOWORD(wParam) == IDOK)
+		{
+			// 텍스쳐 불러오기
+			wchar_t Buffer[255];
+			wstring TexKey, TexPath;
+			GetDlgItemTextW(hDlg, IDC_TEXTURE_SLCIE_KEY, Buffer, 255);
+			TexKey = Buffer;
+			GetDlgItemTextW(hDlg, IDC_TEXTURE_SLCIE_PATH, Buffer, 255);
+			TexPath = Buffer;
+
+			GTexture* pTexture = GAssetManager::GetInst()->LoadTexture(TexKey, TexPath);
+			assert(pTexture != nullptr);
+
+			Vec2 StartPos;
+			StartPos.x = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_START_X, nullptr, true);
+			StartPos.y = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_START_Y, nullptr, true);
+
+			Vec2 Size;
+			Size.x = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_SIZE_X, nullptr, true);
+			Size.y = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_SIZE_Y, nullptr, true);
+
+			Vec2 Gap;
+			Gap.x = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_GAP_X, nullptr, true);
+			Gap.y = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_GAP_Y, nullptr, true);
+
+			Vec2 Num;
+			Num.x = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_COL, nullptr, true);
+			Num.y = GetDlgItemInt(hDlg, IDC_TEXTURE_SLCIE_ROW, nullptr, true);
+
+			for (UINT Row = 0; Row < Num.y; ++Row)
+			{
+				for (UINT Col = 0; Col < Num.x; ++Col)
+				{
+					GSprite* pSprite = new GSprite;
+
+					Vec2 LeftTop;
+					LeftTop.x = StartPos.x + Size.x * Col + (Col == 0 ? 0 : Gap.x) * Col;
+					LeftTop.y = StartPos.y + Size.y * Row + (Row == 0 ? 0 : Gap.y) * Row;
+
+					pSprite->Create(pTexture, LeftTop, Size);
+					
+					GetDlgItemTextW(hDlg, IDC_TEXTURE_SLCIE_NAME, Buffer, 255);
+					wstring KeyName = Buffer;
+					KeyName += L"_";
+					KeyName += std::to_wstring(Row * (int)Num.x + Col);
+					GAssetManager::GetInst()->AddSprite(KeyName, pSprite);
+
+					wstring strSavePath = L"Sprite\\";
+					strSavePath += pSprite->GetKey();
+					pSprite->Save(strSavePath);
+				}
+				
+			}
+
+			
+
+			/*
+			GLevel_Editor* pLevel = dynamic_cast<GLevel_Editor*>(CLevelMgr::GetInst()->GetCurrentLevel());
+
+			// 에디터 레벨에서만 작동할 수 있게 예외처리 해준다.
+			assert(pLevel != nullptr);
+
+			// 해당 ID의 정수값을 가져온다.
+			int Row = GetDlgItemInt(hDlg, IDC_EDIT_ROW, nullptr, true);
+			int Col = GetDlgItemInt(hDlg, IDC_EDIT_COL, nullptr, true);
+
+			// 타일맵을 적용시킨다.
+			GMap* pMap = pLevel->GetMapObject();
+			pMap->GetComponent<GTileMap>()->SetRowCol(Row, Col);
+			*/
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;
 		}

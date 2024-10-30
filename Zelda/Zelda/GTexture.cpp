@@ -68,6 +68,10 @@ int GTexture::Load(const wstring& _RelativePath)
 		if (stat != Status::Ok)
 			assert(nullptr);
 	}
+	else
+	{
+		assert(false);
+	}
 
 
 	// 비트맵을 타겟으로 지정할 DC 생성

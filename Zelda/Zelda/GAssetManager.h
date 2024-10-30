@@ -40,9 +40,11 @@ public:
 
 	GTile* FindTile(const wstring& _Key);
 	GTile* LoadTile(const wstring& _Key, const wstring& _RelativePath);
+	//void CreateTile(const wstring& _Key, const wstring& _RelativePath, GSprite* _Sprite);
 	void AddTile(const wstring& _Key, GTile* _Tile);
 
 	GTilePalette* FindTilePalette(const wstring& _Key);
 	GTilePalette* LoadTilePalette(const wstring& _Key, const wstring& _RelativePath);
+	//void CreateTilePalette(const wstring& _Key);
 	
 };
