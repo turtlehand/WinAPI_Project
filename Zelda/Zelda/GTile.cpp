@@ -34,15 +34,10 @@ int GTile::Save(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"w");
+	assert(File != nullptr);
 
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
-
-	fwprintf_s(File, L"[KEY]\n");
-	fwprintf_s(File, L"%s\n\n", GetKey().c_str());
-
-	fwprintf_s(File, L"[PATH]\n");
-	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
 
 	fwprintf_s(File, L"[SPRITE]\n");
 
@@ -62,6 +57,7 @@ int GTile::Load(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
+	assert(File != nullptr);
 
 	while (true)
 	{
@@ -73,17 +69,7 @@ int GTile::Load(const wstring& _RelativePath)
 			break;
 		}
 
-		if (szString == L"[KEY]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetKey(szBuff);
-		}
-		else if (szString == L"[PATH]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetRelativePath(szBuff);
-		}
-		else if (szString == L"[SPRITE]")
+		if (szString == L"[SPRITE]")
 		{
 			wstring AtlasKey, AtlasPath;
 

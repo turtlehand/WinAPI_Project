@@ -1,9 +1,0 @@
-[ASSETTYPE]
-TILEMAP
-
-[ROW]
-0
-
-[COL]
-0
-

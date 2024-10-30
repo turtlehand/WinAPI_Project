@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
 // Microsoft Visual C++에서 생성한 포함 파일입니다.
-// WinAPI.rc에서 사용되고 있습니다.
+// Zelda.rc에서 사용되고 있습니다.
 //
 #define IDC_MYICON                      2
 #define IDD_WINAPI_DIALOG               102
@@ -28,6 +28,8 @@
 #define IDM_TILE_SETTING                32777
 #define IDM_TILE_SAVE                   32778
 #define IDM_TILE_LOAD                   32779
+#define ID_32780                        32780
+#define ID_TEXTURE_SLICE                32781
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -36,7 +38,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32780
+#define _APS_NEXT_COMMAND_VALUE         32782
 #define _APS_NEXT_CONTROL_VALUE         1006
 #define _APS_NEXT_SYMED_VALUE           110
 #endif

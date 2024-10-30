@@ -244,7 +244,7 @@ void Player::EnterOverlap(GCollider* _Collider)
 void Player::CreatePlayerFlipBook()
 {
 	// AtlasTexture
-	GTexture* pAtlas = GAssetManager::GetInst()->LoadTexture(L"Link", L"Texture\\link_32.bmp");
+	//GTexture* pAtlas = GAssetManager::GetInst()->LoadTexture(L"Link", L"Texture\\link_32.bmp");
 
 	
 	/*

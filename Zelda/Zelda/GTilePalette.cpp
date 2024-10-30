@@ -38,12 +38,6 @@ int GTilePalette::Save(const wstring& _RelativePath)
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
 
-	fwprintf_s(File, L"[KEY]\n");
-	fwprintf_s(File, L"%s\n\n", GetKey().c_str());
-
-	fwprintf_s(File, L"[PATH]\n");
-	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
-
 	fwprintf_s(File, L"[TILESIZE]\n");
 	fwprintf_s(File, L"%d\n\n", m_vecTile.size());
 
@@ -92,17 +86,8 @@ int GTilePalette::Load(const wstring& _RelativePath)
 			break;
 		}
 
-		if (szString == L"[KEY]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetKey(szBuff);
-		}
-		else if (szString == L"[PATH]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetRelativePath(szBuff);
-		}
-		else if (szString == L"[TILESIZE]")
+
+		if (szString == L"[TILESIZE]")
 		{
 			int TileSize = 0;
 			fwscanf_s(File, L"%d", &TileSize);

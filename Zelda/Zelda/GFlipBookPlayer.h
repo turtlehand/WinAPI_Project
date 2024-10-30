@@ -11,17 +11,17 @@ private:
 	GFlipBook*			m_CurFlipBook;	// 현재 재생중인 FlipBook
 	int					m_SpriteIdx;
 
+	float				m_FPS;			// FlipBook 재생속도
+	float				m_Time;			// 누적시간
+	bool				m_Repeat;		// 반복 재생 여부
+	bool				m_Finish;		// 재생이 끝났는지 여부
+
 	Vec2				m_Scale;
 	int					m_Alpha;
 	COLORREF			m_DeleteColor;
 
 	bool				m_XFlip;
 	bool				m_YFlip;
-
-	float				m_FPS;			// FlipBook 재생속도
-	float				m_Time;			// 누적시간
-	bool				m_Repeat;		// 반복 재생 여부
-	bool				m_Finish;		// 재생이 끝났는지 여부
 
 	GTexture*			m_RenderTexture;// Render 시킬 Texture
 public:

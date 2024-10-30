@@ -28,15 +28,10 @@ int GFlipBook::Save(const wstring& _RelativePath)
 	wstring strFilePath = GPathManager::GetContentPath() + RelativePath;
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"w");
+	assert(File != nullptr);
 
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
-
-	fwprintf_s(File, L"[KEY]\n");
-	fwprintf_s(File, L"%s\n\n", GetKey().c_str());
-
-	fwprintf_s(File, L"[PATH]\n");
-	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
 
 	fwprintf_s(File, L"[SPRITESIZE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)m_Sprites.size());
@@ -64,7 +59,7 @@ int GFlipBook::Load(const wstring& _RelativePath)
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
-
+	assert(File != nullptr);
 	int SpriteSize = 0;
 
 	while (true)
@@ -77,17 +72,7 @@ int GFlipBook::Load(const wstring& _RelativePath)
 			break;
 		}
 
-		if (szString == L"[KEY]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetKey(szBuff);
-		}
-		else if (szString == L"[PATH]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetRelativePath(szBuff);
-		}
-		else if (szString == L"[SPRITESIZE]")
+		if (szString == L"[SPRITESIZE]")
 		{
 			fwscanf_s(File, L"%d", &SpriteSize);
 			m_Sprites.resize(SpriteSize);

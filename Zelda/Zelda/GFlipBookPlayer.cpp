@@ -16,15 +16,17 @@ GFlipBookPlayer::GFlipBookPlayer() :
 	m_vecFlipBook(),
 	m_CurFlipBook(nullptr),
 	m_SpriteIdx(0),
-	m_Scale(1.f,1.f),
-	m_Alpha(255),
-	m_DeleteColor(RGB(-1,-1,-1)),
-	m_XFlip(false),
-	m_YFlip(false),
 	m_FPS(0.f),
 	m_Time(0.f),
 	m_Repeat(true),
-	m_Finish(false)
+	m_Finish(false),
+
+	m_RenderTexture(nullptr),
+	m_Scale(1.f, 1.f),
+	m_Alpha(255),
+	m_DeleteColor(RGB(-1, -1, -1)),
+	m_XFlip(false),
+	m_YFlip(false)
 {
 }
 
@@ -34,6 +36,9 @@ GFlipBookPlayer::~GFlipBookPlayer()
 
 void GFlipBookPlayer::XFlip(GTexture*& _Textrue)
 {
+	// 새로운 텍스쳐를 생성하고
+	// 그 텍스쳐에 반전된 원본 텍스쳐를 복사한다.
+	// 원본 텍스쳐는 지워버린다.
 	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"XFlip", _Textrue->GetWidth(), _Textrue->GetHeight());
 
 	StretchBlt(TempTexture->GetDC(),
@@ -55,6 +60,9 @@ void GFlipBookPlayer::XFlip(GTexture*& _Textrue)
 
 void GFlipBookPlayer::YFlip(GTexture*& _Textrue)
 {
+	// 새로운 텍스쳐를 생성하고
+	// 그 텍스쳐에 반전된 원본 텍스쳐를 복사한다.
+	// 원본 텍스쳐는 지워버린다.
 	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"YFlip", _Textrue->GetWidth(), _Textrue->GetHeight());
 
 	StretchBlt(TempTexture->GetDC(),
@@ -128,7 +136,6 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 
 	GAssetManager::GetInst()->DeleteTexture(TempTexture->GetKey());
 }
-
 
 void GFlipBookPlayer::DeleteColor(GTexture*& _Textrue)
 {
@@ -251,12 +258,13 @@ void GFlipBookPlayer::Render()
 	{
 		DeleteColorAlpha(m_RenderTexture);
 	}
-	//없애고 싶은 색만 있다면
+	// 없애고 싶은 색만 있다면
 	else if (RGB(-1, -1, -1) != m_DeleteColor)
 	{
 		DeleteColor(m_RenderTexture);
 	}
-	else if (m_Alpha != 255)
+	// 알파값만 조절하고 싶다면
+	else
 	{
 		Alpha(m_RenderTexture);
 	}

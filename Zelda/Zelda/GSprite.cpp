@@ -41,12 +41,6 @@ int GSprite::Save(const wstring& _RelativePath)
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
 
-	fwprintf_s(File, L"[KEY]\n");
-	fwprintf_s(File, L"%s\n\n",GetKey().c_str());
-
-	fwprintf_s(File, L"[PATH]\n");
-	fwprintf_s(File, L"%s\n\n", GetRelativePath().c_str());
-
 	fwprintf_s(File, L"[LEFTTOP]\n");
 	fwprintf_s(File, L"%d, %d\n\n", (int)GetLeftTop().x, (int)GetLeftTop().y);
 
@@ -86,17 +80,7 @@ int GSprite::Load(const wstring& _RelativePath)
 			break;
 		}
 
-		if (szString == L"[KEY]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetKey(szBuff);
-		}
-		else if (szString == L"[PATH]")
-		{
-			fwscanf_s(File, L"%s", szBuff, 255);
-			SetRelativePath(szBuff);
-		}
-		else if (szString == L"[LEFTTOP]")
+		if (szString == L"[LEFTTOP]")
 		{
 			int x = 0, y = 0;
 			fwscanf_s(File, L"%d, %d", &x, &y);
