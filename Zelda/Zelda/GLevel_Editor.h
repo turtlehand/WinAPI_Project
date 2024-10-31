@@ -24,7 +24,9 @@ public:
 	virtual void End() override;
 	
 public:
+	void SaveTilePalette();
 	void LoadTilePalette();
+
 	void SaveTileMap();
 	void LoadTileMap();
 

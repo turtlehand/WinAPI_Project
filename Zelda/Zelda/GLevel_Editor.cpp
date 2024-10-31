@@ -24,6 +24,7 @@
 
 INT_PTR CALLBACK    TileMapInfoProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    TextureSliceInfoProc(HWND, UINT, WPARAM, LPARAM);
+INT_PTR CALLBACK    TPAddTileInfoProc(HWND, UINT, WPARAM, LPARAM);
 
 GLevel_Editor::GLevel_Editor() :
 	m_hMenu(nullptr),
@@ -129,11 +130,6 @@ void GLevel_Editor::Tick()
 		{
 			m_CurTile = -1 < m_CurTile ? --m_CurTile : -1;
 		}
-
-		if (GETKEYPRESSED(KEY::SPACE))
-		{
-			m_TilePalette->AddTile(L"test_1", L"Tile\\test_1.tile");
-		}
 	}
 
 }
@@ -229,6 +225,32 @@ void GLevel_Editor::LoadTileMap()
 	}
 }
 
+void GLevel_Editor::SaveTilePalette()
+{
+	wstring strContentPath = GPathManager::GetContentPath();
+	strContentPath += L"TilePalette";
+
+	// 파일 경로 문자열
+	wchar_t szFilePath[255] = {};
+
+	OPENFILENAME Desc = {};
+
+	Desc.lStructSize = sizeof(OPENFILENAME);
+	Desc.hwndOwner = nullptr;
+	Desc.lpstrFile = szFilePath;	// 최종적으로 고른 경로를 받아낼 목적지
+	Desc.nMaxFile = 255;
+	Desc.lpstrFilter = L"TP\0*.tp\0ALL\0*.*";
+	Desc.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+	Desc.lpstrInitialDir = strContentPath.c_str();
+
+	if (GetSaveFileName(&Desc))
+	{
+		wstring FullPath = szFilePath;
+		CheckExt(L".tp", FullPath);
+		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
+		m_TilePalette->Save(FullPath);
+	}
+}
 
 void GLevel_Editor::LoadTilePalette()
 {
@@ -250,10 +272,10 @@ void GLevel_Editor::LoadTilePalette()
 
 	if (GetSaveFileName(&Desc))
 	{
-		wstring RelativePath = szFilePath;
-		CheckExt(L".tp", RelativePath);
+		wstring FullPath = szFilePath;
+		CheckExt(L".tp", FullPath);
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
-		m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(PathKey(RelativePath), RelativePath);
+		m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(PathKey(FullPath), FullPath);
 	}
 }
 
@@ -261,6 +283,36 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 {
 	switch (wParam)
 	{
+	case IDM_TILE_PALETTE:
+	{
+		DialogBox(_inst, MAKEINTRESOURCE(IDD_TILE_PALETTE), _wnd, &TPAddTileInfoProc);
+
+		return true;
+	}
+	case IDM_TILE_PALETTE_SAVE:
+	{
+		// GLevel_Editor에 있는 MapObject 의 타일맵 컴포넌트의 행렬을 설정해주어야 함
+		// 현재 레벨을 알아낸다. 정황상 현재 레벨은 반드시 GLevel_Editor여야 한다.
+		CLevel* CurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
+		assert(EditorLevel != nullptr);
+
+		EditorLevel->SaveTilePalette();
+
+		return true;
+	}
+	case IDM_TILE_PALETTE_LOAD:
+	{
+		// GLevel_Editor에 있는 MapObject 의 타일맵 컴포넌트의 행렬을 설정해주어야 함
+		// 현재 레벨을 안ㄹ아낸다. 정황상 현재 레벨은 반드시 GLevel_Editor여야 한다.
+		CLevel* CurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
+		assert(EditorLevel != nullptr);
+
+		EditorLevel->LoadTilePalette();
+
+		return true;
+	}
 	case IDM_TILE_SETTING:
 	{
 		DialogBox(_inst, MAKEINTRESOURCE(IDD_TILE_SETTING), _wnd, &TileMapInfoProc);
@@ -270,7 +322,11 @@ bool EditorMenu(HINSTANCE _inst, HWND _wnd, int wParam)
 	break;
 	case ID_TEXTURE_SLICE:
 	{
-		DialogBox(_inst, MAKEINTRESOURCE(IDD_TEXTURE_SLICE), _wnd, &TextureSliceInfoProc);
+		CLevel* CurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+		GLevel_Editor* EditorLevel = dynamic_cast<GLevel_Editor*>(CurLevel);
+		assert(EditorLevel != nullptr);
+
+		EditorLevel->LoadTilePalette();
 
 		return true;
 	}
@@ -365,6 +421,11 @@ INT_PTR CALLBACK TextureSliceInfoProc(HWND hDlg, UINT message, WPARAM wParam, LP
 		// Row, Col 값을 바탕으로 타일맵을 변경시킨다.
 		if (LOWORD(wParam) == IDOK)
 		{
+			GLevel_Editor* pLevel = dynamic_cast<GLevel_Editor*>(CLevelMgr::GetInst()->GetCurrentLevel());
+
+			// 에디터 레벨에서만 작동할 수 있게 예외처리 해준다.
+			assert(pLevel != nullptr);
+
 			// 텍스쳐 불러오기
 			wchar_t Buffer[255];
 			wstring TexKey, TexPath;
@@ -442,6 +503,86 @@ INT_PTR CALLBACK TextureSliceInfoProc(HWND hDlg, UINT message, WPARAM wParam, LP
 		{
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;
+		}
+		break;
+	}
+	return (INT_PTR)FALSE;
+}
+
+// ==========================
+// 타일 팔레트 프로시저
+// ==========================
+INT_PTR CALLBACK TPAddTileInfoProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	UNREFERENCED_PARAMETER(lParam);
+	switch (message)
+	{
+	case WM_INITDIALOG:
+		return (INT_PTR)TRUE;
+
+	case WM_COMMAND:
+		// 확인
+		if (LOWORD(wParam) == IDOK)
+		{
+			
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		// 취소
+		// 아무일도 일어나지 않는다.
+		else if (LOWORD(wParam) == IDCANCEL)
+		{
+			EndDialog(hDlg, LOWORD(wParam));
+			return (INT_PTR)TRUE;
+		}
+		else if (LOWORD(wParam) == IDC_TP_ADD_TILE_BUTTON)
+		{
+			GLevel_Editor* pLevel = dynamic_cast<GLevel_Editor*>(CLevelMgr::GetInst()->GetCurrentLevel());
+
+			// 에디터 레벨에서만 작동할 수 있게 예외처리 해준다.
+			assert(pLevel != nullptr);
+			// 타일 팔레트를 가져오지 않았다면 예외처리
+			assert(pLevel->GetTilePalette() != nullptr);
+
+			wchar_t buffer[255] = {};
+			wstring Key, Path;
+			GetDlgItemTextW(hDlg, IDC_TP_ADD_TILE_KEY, buffer, 255);
+			Key = buffer;
+			GetDlgItemTextW(hDlg, IDC_TP_ADD_TILE_PATH, buffer, 255);
+			Path = buffer;
+
+			pLevel->GetTilePalette()->AddTile(Key, Path);
+			return (INT_PTR)TRUE;
+		}
+		else if (LOWORD(wParam) == IDC_TP_ALT_BUTTON)
+		{
+			GLevel_Editor* pLevel = dynamic_cast<GLevel_Editor*>(CLevelMgr::GetInst()->GetCurrentLevel());
+
+			// 에디터 레벨에서만 작동할 수 있게 예외처리 해준다.
+			assert(pLevel != nullptr);
+
+			wchar_t buffer[255] = {};
+			wstring Key, Path;
+			GetDlgItemTextW(hDlg, IDC_TP_ALT_KEY, buffer, 255);
+			Key = buffer;
+			GetDlgItemTextW(hDlg, IDC_TP_ALT_PATH, buffer, 255);
+			Path = buffer;
+
+			int StartIndex, Num;
+			StartIndex = GetDlgItemInt(hDlg, IDC_TP_ALT_START_INDEX, nullptr, true);
+			Num = GetDlgItemInt(hDlg, IDC_TP_ALT_NUM, nullptr, true);
+
+			assert(0 < Num);
+
+			for (int i = StartIndex; i < StartIndex + Num; ++i)
+			{
+				wstring LKey = Key + L"_" + std::to_wstring(i);
+				wstring LPath = Path + Key + L"_" + std::to_wstring(i) + L".tile";
+
+				pLevel->GetTilePalette()->AddTile(LKey, LPath);
+			}
+			return (INT_PTR)TRUE;
+			
 		}
 		break;
 	}

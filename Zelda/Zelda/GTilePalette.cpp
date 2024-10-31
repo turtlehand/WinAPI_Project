@@ -17,18 +17,11 @@ GTilePalette::~GTilePalette()
 
 }
 
-int GTilePalette::AddTile(const wstring& Key, const wstring& _RelativePath)
+int GTilePalette::AddTile(const wstring& Key, const wstring& _FullPath)
 {
 	GTile* pTile;
 
-	if (_RelativePath == L"")
-	{
-		pTile = GAssetManager::GetInst()->FindTile(Key);
-	}
-	else
-	{
-		pTile = GAssetManager::GetInst()->LoadTile(Key, _RelativePath);
-	}
+	pTile = GAssetManager::GetInst()->LoadTile(Key, _FullPath);
 
 	assert(pTile != nullptr);
 
@@ -40,8 +33,6 @@ int GTilePalette::AddTile(const wstring& Key, const wstring& _RelativePath)
 
 	m_vecTile.push_back(pTile);
 
-	Save(GetRelativePath());
-
 	return S_OK;
 
 }
@@ -51,25 +42,23 @@ GTile* const GTilePalette::GetTile(Vec2 _MousePos)
 	return nullptr;
 }
 
-int GTilePalette::Save(const wstring& _RelativePath)
+int GTilePalette::Save(const wstring& _FullPath)
 {
-	wstring RelativePath = _RelativePath;
-	CheckExt(L".tp", RelativePath);
+	wstring FullPath = _FullPath;
+	CheckExt(L".tp", FullPath);
 
 	// 에셋이 자신이 어디에 저장되는지 알게 함
-	SetRelativePath(RelativePath);
-
-	wstring strFilePath = GPathManager::GetContentPath() + RelativePath;
+	SetRelativePath(FullPath);
 
 	FILE* File = nullptr;
-	_wfopen_s(&File, strFilePath.c_str(), L"w");
+	_wfopen_s(&File, FullPath.c_str(), L"w");
 	assert(File);
 
 	fwprintf_s(File, L"[ASSETTYPE]\n");
 	fwprintf_s(File, L"%d\n\n", (int)GetAssetType());
 
 	fwprintf_s(File, L"[TILESIZE]\n");
-	fwprintf_s(File, L"%d\n\n", m_vecTile.size());
+	fwprintf_s(File, L"%d\n\n", (int)m_vecTile.size());
 
 	for (int i = 0; i < m_vecTile.size(); ++i)
 	{
@@ -98,9 +87,9 @@ int GTilePalette::Save(const wstring& _RelativePath)
 	return S_OK;
 }
 
-int GTilePalette::Load(const wstring& _RelativePath)
+int GTilePalette::Load(const wstring& _FullPath)
 {
-	wstring strFilePath = _RelativePath;
+	wstring strFilePath = _FullPath;
 
 	FILE* File = nullptr;
 	_wfopen_s(&File, strFilePath.c_str(), L"r");
