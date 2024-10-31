@@ -221,7 +221,6 @@ GSound* GAssetManager::LoadSound(const wstring& _Key, const wstring& _RelativePa
 
 #pragma endregion
 
-
 #pragma region Tile
 
 GTile* GAssetManager::FindTile(const wstring& _Key)
@@ -256,15 +255,29 @@ GTile* GAssetManager::LoadTile(const wstring& _Key, const wstring& _RelativePath
 	return (GTile*)pTile;
 }
 
-void GAssetManager::AddTile(const wstring& _Key, GTile* _Tile)
+GTile* GAssetManager::CreateTile(const wstring& _Key, const wstring& _RelativePath, GSprite* _Sprite)
 {
-	// Sprite가 없다면 중지
-	assert(!FindTile(_Key));
+	GTile* pTile = FindTile(_Key);
+	assert(!pTile);
 
-	// 스프라이트에 키를 설정해주고 컨테이너에 스프라이트 등록
-	_Tile->SetKey(_Key);
-	m_mapTile.insert(make_pair(_Key, _Tile));
+	pTile = new GTile;
+	pTile->Create(_Sprite);
+
+	// 에셋에, 자신이 에셋매니저에 등록될 때 사용된 키 값을 세팅해준다.
+	pTile->SetKey(_Key);
+	pTile->SetRelativePath(_RelativePath);
+
+	// 컨테이너에 텍스쳐 등록
+	m_mapTile.insert(make_pair(_Key, (GTile*)pTile));
+	pTile->Save(_RelativePath + _Key);
+	return pTile;
+
+	return nullptr;
 }
+
+#pragma endregion
+
+#pragma region TilePalette
 
 GTilePalette* GAssetManager::FindTilePalette(const wstring& _Key)
 {
@@ -298,6 +311,9 @@ GTilePalette* GAssetManager::LoadTilePalette(const wstring& _Key, const wstring&
 	return (GTilePalette*)pTilePalette;
 }
 
-
 #pragma endregion
+
+
+
+
 

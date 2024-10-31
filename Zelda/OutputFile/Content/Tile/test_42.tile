@@ -1,0 +1,10 @@
+[ASSETTYPE]
+4
+
+[SPRITE]
+[SPRITE_KEY]
+test_42
+
+[SPRITE_PATH]
+Sprite\test_42.sprite
+

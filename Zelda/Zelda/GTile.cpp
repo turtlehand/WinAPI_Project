@@ -16,10 +16,9 @@ GTile::~GTile()
 {
 }
 
-void GTile::Create(GSprite* _Sprite, bool _Collider)
+void GTile::Create(GSprite* _Sprite)
 {
 	m_Sprite = _Sprite;
-	m_Collider = _Collider;
 }
 
 int GTile::Save(const wstring& _RelativePath)

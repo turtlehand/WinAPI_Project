@@ -16,7 +16,7 @@ public:
 public:
 	virtual int Save(const wstring& _RelativePath) override;
 	virtual int Load(const wstring& _RelativePath) override;
-	void Create(GSprite* _Sprite, bool _Collider);
+	void Create(GSprite* _Sprite);
 
 public:
 	GTile();

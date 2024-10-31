@@ -17,6 +17,7 @@
 #define IDD_TILE_PALETTE                131
 #define IDD_TILE_CREATE1                132
 #define IDD_TILE_PALETTE_CREATE         132
+#define IDD_TILE_CREATE                 132
 #define IDC_STATIC_ROW                  1000
 #define IDC_COL                         1001
 #define IDC_STATIC_COL                  1001
@@ -27,14 +28,23 @@
 #define IDC_STATIC_ROW6                 1004
 #define IDC_STATIC_TITLE                1005
 #define IDC_STATIC_TITLE2               1006
+#define IDC_STATIC_COL8                 1006
 #define IDC_STATIC_TITLE3               1007
+#define IDC_EDIT_SCALEX                 1007
+#define IDC_EDIT_SCALE_X                1007
 #define IDC_STATIC_COL2                 1008
 #define IDC_STATIC_COL7                 1008
+#define IDC_EDIT_SCALE_Y                1008
 #define IDC_TEXTURE_SLCIE_SIZE_X        1009
+#define IDC_STATIC_TITLE9               1009
 #define IDC_TEXTURE_SLCIE_SIZE_Y        1010
+#define IDC_STATIC_ROW7                 1010
 #define IDC_STATIC_TITLE4               1011
+#define IDC_STATIC_ROW8                 1011
 #define IDC_TEXTURE_SLCIE_START_X       1012
+#define IDC_STATIC_ROW9                 1012
 #define IDC_TEXTURE_SLCIE_START_Y       1013
+#define IDC_STATIC_ROW10                1013
 #define IDC_TEXTURE_SLCIE_COL           1014
 #define IDC_TEXTURE_SLCIE_ROW           1015
 #define IDC_TP_ADD_TILE_BUTTON          1016
@@ -52,7 +62,20 @@
 #define IDC_TP_ALT_START_INDEX          1022
 #define IDC_STATIC_COL4                 1023
 #define IDC_TP_ALT_NUM                  1023
+#define IDC_TC_SPRITE_KEY               1024
+#define IDC_TC_SPRITE_PATH              1025
 #define IDC_STATIC_TITLE6               1026
+#define IDC_TLC_SPRITE_KEY              1026
+#define IDC_TLC_SPRITE_PATH             1027
+#define IDC_TLC_SPRITE_START_INDEX      1028
+#define IDC_TLC_SPRITE_NUM              1029
+#define IDC_TLC_BUTTON                  1030
+#define IDC_TC_BUTTON                   1031
+#define IDC_TC_NAME                     1032
+#define IDC_TLC_NAME                    1033
+#define IDC_TC_PATH                     1034
+#define IDC_TC_NAME3                    1035
+#define IDC_TLC_PATH                    1035
 #define IDC_STATIC_ROW5                 1037
 #define IDC_STATIC_COL5                 1038
 #define IDC_TEXTURE_SLCIE_KEY           1039
@@ -85,6 +108,10 @@
 #define ID_32793                        32793
 #define IDM_TILE_PALETTE_LOAD           32794
 #define IDM_TILE_PALETTE_SAVE           32795
+#define IDM_TEXTURE_SLICE               32796
+#define ID_32797                        32797
+#define ID_32798                        32798
+#define ID_32799                        32799
 #define IDC_STATIC                      -1
 
 // Next default values for new objects
@@ -93,8 +120,8 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NO_MFC                     1
 #define _APS_NEXT_RESOURCE_VALUE        130
-#define _APS_NEXT_COMMAND_VALUE         32796
-#define _APS_NEXT_CONTROL_VALUE         1019
+#define _APS_NEXT_COMMAND_VALUE         32800
+#define _APS_NEXT_CONTROL_VALUE         1032
 #define _APS_NEXT_SYMED_VALUE           110
 #endif
 #endif
