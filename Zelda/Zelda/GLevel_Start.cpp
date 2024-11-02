@@ -13,7 +13,8 @@
 #include "GAssetManager.h"
 #include "GSound.h"
 
-GLevel_Start::GLevel_Start()
+GLevel_Start::GLevel_Start() :
+	m_Player(nullptr)
 {
 }
 
@@ -34,10 +35,16 @@ void GLevel_Start::Begin()
 
 	// Player 생성하기
 	Player* player = new Player;
+	m_Player = player;
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetName(L"Player");
 	player->SetPos(0.f, 0.f);
 	player->SetScale(0, 0);
+	player->GetInfo().MaxHP = 12;
+	player->GetInfo().HP = 12;
+	player->GetInfo().AttackPower = 0.f;
+	player->GetInfo().Speed = 64;
+	player->GetInfo().Direction = Vec2::down();
 	
 
 	// Monster 생성하기
@@ -46,7 +53,7 @@ void GLevel_Start::Begin()
 	monster->SetName(L"Monster");
 	monster->SetPos(300.f, 200.f);
 	monster->SetScale(100, 100);
-	monster->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
+	//monster->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
 	
 
 	Monster* monster2 = new Monster;
@@ -54,7 +61,7 @@ void GLevel_Start::Begin()
 	monster2->SetName(L"Monster2");
 	monster2->SetPos(-300.f, 200.f);
 	monster2->SetScale(100, 100);
-	monster2->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
+	//monster2->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
 	
 
 	// TileMap Object 추가
@@ -98,4 +105,5 @@ void GLevel_Start::Render()
 	CLevel::Render();
 
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Start Level", wcslen(L"Start Level"));
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, m_Player->GetCurrentState().c_str(), m_Player->GetCurrentState().size());
 }

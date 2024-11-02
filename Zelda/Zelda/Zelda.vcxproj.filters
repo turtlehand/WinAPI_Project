@@ -318,6 +318,15 @@
     <ClInclude Include="GTilePalette.h">
       <Filter>Game\07. Asset\06. TilePalette</Filter>
     </ClInclude>
+    <ClInclude Include="GPIdleState.h">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GPMoveState.h">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GPAttackState.h">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -472,6 +481,15 @@
     </ClCompile>
     <ClCompile Include="GTilePalette.cpp">
       <Filter>Game\07. Asset\06. TilePalette</Filter>
+    </ClCompile>
+    <ClCompile Include="GPIdleState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GPMoveState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GPAttackState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

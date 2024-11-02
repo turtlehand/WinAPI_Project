@@ -3,13 +3,18 @@
 
 #include "GState.h"
 
+const wstring& GFSM::GetCurrentState()
+{
+	return m_CurState->GetName();
+}
+
 void GFSM::AddState(const wstring& _Key, GState* _State)
 {
 	assert(FindState(_Key) == nullptr);
 
 	m_mapState.insert(make_pair(_Key, _State));
 	_State->m_Owner = this;
-
+	_State->SetName(_Key);
 	_State->Awake();
 }
 

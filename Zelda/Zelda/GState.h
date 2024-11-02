@@ -1,6 +1,7 @@
 #pragma once
 #include "CBase.h"
 #include "GFSM.h"
+
 class GState :
     public CBase
 {

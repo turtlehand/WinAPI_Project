@@ -14,11 +14,12 @@
 GFlipBookPlayer::GFlipBookPlayer() :
 	GComponent(COMPONENT_TYPE::FILPBOOKPLAYER),
 	m_vecFlipBook(),
-	m_CurFlipBook(nullptr),
+	m_CurFlipBookIndex(-1),
 	m_SpriteIdx(0),
 	m_FPS(0.f),
 	m_Time(0.f),
 	m_Repeat(true),
+	m_Play(false),
 	m_Finish(false),
 
 	m_RenderTexture(nullptr),
@@ -87,7 +88,7 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
-	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
 
 	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * m_Scale.x, _Textrue->GetHeight() * m_Scale.y);
 
@@ -124,8 +125,8 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x
-		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y
+		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x * m_Scale.x
+		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y * m_Scale.y
 		, TempTexture->GetWidth()
 		, TempTexture->GetHeight()
 		, TempTexture->GetDC()
@@ -142,12 +143,12 @@ void GFlipBookPlayer::DeleteColor(GTexture*& _Textrue)
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
-	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
 
 	// 스프라이트 배경 없애고 텍스쳐에 그리기
 	TransparentBlt(hBackDC
-		, vPos.x - _Textrue->GetWidth() * m_Scale.x / 2 + Sprite->GetOffset().x
-		, vPos.y - _Textrue->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y
+		, vPos.x - _Textrue->GetWidth() * m_Scale.x / 2 + Sprite->GetOffset().x * m_Scale.x
+		, vPos.y - _Textrue->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y * m_Scale.y
 		, _Textrue->GetWidth() * m_Scale.x
 		, _Textrue->GetHeight() * m_Scale.y
 		, _Textrue->GetDC()
@@ -162,7 +163,7 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
-	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
 
 	BLENDFUNCTION blend = {};
 
@@ -172,8 +173,8 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - _Texture->GetWidth() * m_Scale.x / 2  + Sprite->GetOffset().x
-		, vPos.y - _Texture->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y
+		, vPos.x - _Texture->GetWidth() * m_Scale.x / 2  + Sprite->GetOffset().x * m_Scale.x
+		, vPos.y - _Texture->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y * m_Scale.y
 		, _Texture->GetWidth() * m_Scale.x
 		, _Texture->GetHeight() * m_Scale.y
 		, _Texture->GetDC()
@@ -186,7 +187,7 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 void GFlipBookPlayer::FinalTick()
 {
 	//현재 재생준인 FlipBook이 없으면 끝
-	if (nullptr == m_CurFlipBook)
+	if (-1 == m_CurFlipBookIndex)
 	{
 		return;
 	}
@@ -205,27 +206,31 @@ void GFlipBookPlayer::FinalTick()
 
 	// FPS 에 따른 시간체크
 
-	m_Time += DT;
-	if (1.f / m_FPS <= m_Time)
+	if (m_Play)
 	{
-		m_Time -= 1.f / m_FPS;
-		++m_SpriteIdx;
-
-		// 마지막 Sprite에 도달했다면
-		if (m_CurFlipBook->GetMaxSpriteCount() <= m_SpriteIdx)
+		m_Time += DT;
+		if (1.f / m_FPS <= m_Time)
 		{
-			m_Finish = true;
-			--m_SpriteIdx;
+			m_Time -= 1.f / m_FPS;
+			++m_SpriteIdx;
+
+			// 마지막 Sprite에 도달했다면
+			if (m_vecFlipBook[m_CurFlipBookIndex]->GetMaxSpriteCount() <= m_SpriteIdx)
+			{
+				m_Finish = true;
+				--m_SpriteIdx;
+			}
 		}
 	}
+	
 }
 
 void GFlipBookPlayer::Render()
 {
-	if (nullptr == m_CurFlipBook)
+	if (-1 == m_CurFlipBookIndex)
 		return;
 
-	GSprite* Sprite = m_CurFlipBook->GetSprite(m_SpriteIdx);
+	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
 
 	// 각종 연산을 위한 임시 텍스쳐
 	m_RenderTexture = GAssetManager::GetInst()->CreateTexture(L"Temp", Sprite->GetSlice().x, Sprite->GetSlice().y);

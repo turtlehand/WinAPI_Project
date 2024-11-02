@@ -110,3 +110,14 @@ enum class LEVEL_TYPE
 	END,
 
 };
+
+enum class PLAYER_ANIM_STATE
+{
+	UP,
+	DOWN,
+	RIGHT,
+
+	ATTACK_UP,
+	ATTACK_DOWN,
+	ATTACK_RIGHT,
+};

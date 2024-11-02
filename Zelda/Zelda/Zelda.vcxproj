@@ -171,7 +171,10 @@
     <ClInclude Include="GMIdleState.h" />
     <ClInclude Include="GPanel.h" />
     <ClInclude Include="GPathManager.h" />
+    <ClInclude Include="GPAttackState.h" />
+    <ClInclude Include="GPIdleState.h" />
     <ClInclude Include="GPlatform.h" />
+    <ClInclude Include="GPMoveState.h" />
     <ClInclude Include="GRigidBody.h" />
     <ClInclude Include="GSound.h" />
     <ClInclude Include="GSoundManager.h" />
@@ -225,7 +228,10 @@
     <ClCompile Include="GMIdleState.cpp" />
     <ClCompile Include="GPanel.cpp" />
     <ClCompile Include="GPathManager.cpp" />
+    <ClCompile Include="GPAttackState.cpp" />
+    <ClCompile Include="GPIdleState.cpp" />
     <ClCompile Include="GPlatform.cpp" />
+    <ClCompile Include="GPMoveState.cpp" />
     <ClCompile Include="GRigidBody.cpp" />
     <ClCompile Include="GSound.cpp" />
     <ClCompile Include="GSoundManager.cpp" />

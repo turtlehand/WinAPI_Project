@@ -1,9 +1,14 @@
 #pragma once
 #include "CLevel.h"
 
+class Player;
+
 class GLevel_Start :
     public CLevel
 {
+private:
+	Player* m_Player;
+
 public:
 	GLevel_Start();
 	virtual ~GLevel_Start() override;

@@ -55,6 +55,7 @@ class CKeyMgr
 	SINGLE(CKeyMgr);
 private:
 	vector<KeyInfo>			m_vecKeyInfo;			// 키의 정보를 저장하는 배열
+
 	int						m_MouseWheel;
 	bool					m_MouseWheelPrevPressed;
 	Vec2					m_MousePos;

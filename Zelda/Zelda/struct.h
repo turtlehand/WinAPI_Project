@@ -105,6 +105,45 @@ public:
 		y /= _Other;
 		return *this;
 	}
+
+	bool operator==(const Vec2& _Other)
+	{
+		if (this->x == _Other.x && this->y == _Other.y)
+			return true;
+		return false;
+	}
+
+	bool operator!=(const Vec2& _Other)
+	{
+		if (this->x == _Other.x && this->y == _Other.y)
+			return false;
+		return true;
+	}
+
+	Vec2 static right()
+	{
+		return Vec2(1, 0);
+	}
+
+	Vec2 static left()
+	{
+		return Vec2(-1, 0);
+	}
+
+	Vec2 static up()
+	{
+		return Vec2(0, 1);
+	}
+
+	Vec2 static down()
+	{
+		return Vec2(0, -1);
+	}
+
+	Vec2 static zero()
+	{
+		return Vec2(0, 0);
+	}
 };
 
 struct Task
@@ -124,14 +163,23 @@ struct DeBugRenderInfo
 	float Time;			// 진행 시간
 };
 
-struct MonsterInfo
+
+struct DefaultStatsInfo
 {
-	float MaxHP;
-	float HP;
+	int MaxHP;
+	int HP;
 
 	float AttackPower;
 	float Speed;
+};
 
+struct MonsterInfo : public DefaultStatsInfo
+{
 	float DetectRange;
 	float AttackRange;
+};
+
+struct PlayerInfo : public DefaultStatsInfo
+{
+	Vec2 Direction;		// 현재 바라보고 있는 방향
 };
