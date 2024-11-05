@@ -5,8 +5,6 @@
 #include "GCamera.h"
 
 GUI::GUI() :
-	m_ParentUI(nullptr),
-	m_vecChild(),
 	m_MouseHover(false),
 	m_LBtnDown(false),
 	m_PenType(PEN_TYPE::BLACK),

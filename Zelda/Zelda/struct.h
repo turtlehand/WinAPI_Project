@@ -166,11 +166,15 @@ struct DeBugRenderInfo
 
 struct DefaultStatsInfo
 {
+	MATERIAL_TYPE Material;
+
 	int MaxHP;
 	int HP;
 
 	float AttackPower;
 	float Speed;
+
+	bool IsDead;
 };
 
 struct MonsterInfo : public DefaultStatsInfo

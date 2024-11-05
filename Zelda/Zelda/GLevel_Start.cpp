@@ -6,6 +6,9 @@
 #include "Player.h"
 #include "Monster.h"
 #include "GPlatform.h"
+#include "GHitBox.h"
+#include "GRock.h"
+
 #include "GPathManager.h"
 
 #include "GMap.h"
@@ -33,19 +36,34 @@ void GLevel_Start::Begin()
 
 	}
 
+	GHitBox* pAttackBox = new GHitBox;
+	AddObject(pAttackBox, LAYER_TYPE::PLAYER_OBJECT);
+	pAttackBox->SetName(L"Player_AttackBox");
+	pAttackBox->SetPos(0.f, 0.f);
+	pAttackBox->SetScale(0, 0);
+
+	// Player 스탯
+	PlayerInfo* pInfo = new PlayerInfo;
+	pInfo->Material = MATERIAL_TYPE::LIFE;
+	pInfo->MaxHP = 12;
+	pInfo->HP = 12;
+	pInfo->AttackPower = 0;
+	pInfo->Speed = 128;
+	pInfo->Direction = Vec2::down();
+	pInfo->IsDead = false;
+
 	// Player 생성하기
 	Player* player = new Player;
+	player->AddChild(pAttackBox);
+	player->SetStatInfo(pInfo);
 	m_Player = player;
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetName(L"Player");
 	player->SetPos(0.f, 0.f);
 	player->SetScale(0, 0);
-	player->GetInfo().MaxHP = 12;
-	player->GetInfo().HP = 12;
-	player->GetInfo().AttackPower = 0.f;
-	player->GetInfo().Speed = 64;
-	player->GetInfo().Direction = Vec2::down();
-	
+
+
+
 
 	// Monster 생성하기
 	Monster* monster = new Monster;
@@ -56,11 +74,10 @@ void GLevel_Start::Begin()
 	//monster->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
 	
 
-	Monster* monster2 = new Monster;
-	AddObject(monster2, LAYER_TYPE::MONSTER);
-	monster2->SetName(L"Monster2");
-	monster2->SetPos(-300.f, 200.f);
-	monster2->SetScale(100, 100);
+	GRock* pRock = new GRock;
+	AddObject(pRock, LAYER_TYPE::OBJECT);
+	pRock->SetName(L"Rock");
+	pRock->SetPos(-300.f, 200.f);
 	//monster2->GetInfo() = { 100.f,100.f, 0.f, 100.f, 200.f,50.f };
 	
 
@@ -82,6 +99,7 @@ void GLevel_Start::Begin()
 	
 
 	CollisionManager::GetInst()->CollisionCheckClear();
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);

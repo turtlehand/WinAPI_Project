@@ -14,11 +14,8 @@ class GUI :
     public CObj
 {
 private:
-    GUI* m_ParentUI;              // 자신을 소유한 부모UI 를 가리키는 포인터, nullptr, 인 경우 본인이 최상위 부모 UI라는 뜻
-    vector<GUI*> m_vecChild;    // 소유하고 있는 자식 UI들 포인터
-
-    bool m_MouseHover;          // UI 위에 마우스가 올라왔는지 체크
-    bool m_LBtnDown;            // UI 위에서 마우스 왼쪽 버튼이 눌리고 있는지 체크
+    bool m_MouseHover;              // UI 위에 마우스가 올라왔는지 체크
+    bool m_LBtnDown;                // UI 위에서 마우스 왼쪽 버튼이 눌리고 있는지 체크
 
     PEN_TYPE m_PenType;
     BRUSH_TYPE m_BrushType;
@@ -26,16 +23,16 @@ private:
 public:
     bool IsMouseHover() { return m_MouseHover; }
     bool IsLBtnDown() { return m_LBtnDown; }
-    Vec2 GetGlobalPos() { 
-        if(m_ParentUI)
-            return m_ParentUI->GetGlobalPos() + this->GetPos();
-        return this->GetPos();
-    }
+
     void AddChildUI(GUI* _ChildUI)
     {
         m_vecChild.push_back(_ChildUI);
-        _ChildUI->m_ParentUI = this;
+        _ChildUI->m_Parent = this;
     }
+
+    // UI에서는 오직 UI만 자식으로 추가할 수 있게 변경한다.
+    void SetParent(CObj* _Parent) = delete;
+    void AddChild(CObj* _Child) = delete;
 
     void SetPenType(PEN_TYPE _Type) { m_PenType = _Type; }
     void SetBrushType(BRUSH_TYPE _Type) { m_BrushType = _Type; }

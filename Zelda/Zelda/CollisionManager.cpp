@@ -98,8 +98,11 @@ void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _Rig
 	// 두 충돌체 중 1개라도 삭제 예정 오브젝트라면
 	bool IsDead = _LeftCol->GetOwner()->IsDead() || _RightCol->GetOwner()->IsDead();
 
+	// 두 충돌체 중 모두 활성활 상태임
+	bool IsActive = _LeftCol->GetOwner()->GetActive() && _RightCol->GetOwner()->GetActive();
+
 	// 충돌해 있다.
-	if (!IsDead && IsCollision(_LeftCol, _RightCol))
+	if (IsActive && !IsDead && IsCollision(_LeftCol, _RightCol))
 	{
 		// 이전에 충돌한 적 없다.
 		if (iter->second == false)

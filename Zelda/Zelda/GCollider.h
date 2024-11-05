@@ -25,7 +25,7 @@ public:
 	void SetPos(Vec2 _Offset) { m_Offset = _Offset; }
 	Vec2 GetPos( ) const { return m_Offset; }
 
-	Vec2 GetGlobalPos()  { return (GetOwner()->GetPos() + m_Offset); }
+	Vec2 GetGlobalPos()  { return (GetOwner()->GetGlobalPos() + m_Offset); }
 
 	bool GetCollision() const { return m_OverlapCount; }
 

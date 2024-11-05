@@ -48,7 +48,9 @@ void GFSM::FinalTick()
 }
 
 GFSM::GFSM() :
-	GComponent(COMPONENT_TYPE::FSM)
+	GComponent(COMPONENT_TYPE::FSM),
+	m_mapState{},
+	m_CurState(nullptr)
 {
 }
 

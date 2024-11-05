@@ -33,7 +33,7 @@ GUI* GUIManager::GetPriorityUI(GUI* _ParentUI)
 
 		for (size_t i = 0; i < pUI->m_vecChild.size(); ++i)
 		{
-			queue.push_back(pUI->m_vecChild[i]);
+			queue.push_back((GUI*)pUI->m_vecChild[i]);
 		}
 
 		if (pUI->IsMouseHover())
@@ -61,7 +61,7 @@ void GUIManager::ReleaseCheck(GUI* _UI)
 
 		for (size_t i = 0; i < pUI->m_vecChild.size(); ++i)
 		{
-			queue.push_back(pUI->m_vecChild[i]);
+			queue.push_back((GUI*)pUI->m_vecChild[i]);
 		}
 
 		if (GETKEYUP(KEY::LBTN))

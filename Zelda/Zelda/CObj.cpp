@@ -4,11 +4,14 @@
 #include "GCollider.h"
 #include "GCamera.h"
 
+#include "TaskManager.h"
+
 CObj::CObj() :
 	m_Pos(),
 	m_Scale(),
 	m_Component(),
 	m_LayerType(LAYER_TYPE::END),
+	m_Active(true),
 	m_Dead(false)
 {
 }
@@ -38,9 +41,36 @@ void CObj::ExitOverlap(GCollider* _Collider)
 {
 }
 
-Vec2 CObj::GetRenderPos() const
+Vec2 CObj::GetRenderPos()
 {
-	return GCamera::GetInst()->GetRenderPos(m_Pos);
+	return GCamera::GetInst()->GetRenderPos(GetGlobalPos());
+}
+
+void CObj::SetActive(bool _Active)
+{
+	Task task = { TASK_TYPE::ACTIVE_OBJECT,(DWORD_PTR)this,(DWORD_PTR)_Active };
+
+	TaskManager::GetInst()->AddTask(task);
+}
+
+/// <summary>
+/// 부모를 설정한다.
+/// </summary>
+/// <param name="_Parent"></param>
+void CObj::SetParent(CObj* _Parent)
+{
+	if (m_Parent)
+	{
+		vector<CObj*>::iterator iter = std::find(m_Parent->m_vecChild.begin(), m_Parent->m_vecChild.end(), this);
+		
+		assert(iter != m_Parent->m_vecChild.end());
+
+		m_Parent->m_vecChild.erase(iter);
+		m_Parent = nullptr;
+	}
+
+	m_Parent = _Parent;
+	m_Parent->m_vecChild.push_back(this);
 }
 
 

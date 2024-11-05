@@ -3,6 +3,7 @@
 
 class Player;
 class GFlipBook;
+class GHitBox;
 
 class GPAttackState :
     public GState
@@ -10,6 +11,7 @@ class GPAttackState :
 private:
     Player* m_Player;
     PlayerInfo* m_PlayerInfo;
+    GHitBox* m_AttackBox;
 
     PLAYER_ANIM_STATE m_PrevAnim;
 

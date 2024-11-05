@@ -22,7 +22,7 @@ void GPMoveState::Awake()
 	m_Player = dynamic_cast<Player*>(GetOwnerObj());
 	assert(m_Player != nullptr);
 
-	m_PlayerInfo = &(m_Player->m_PlayerInfo);
+	m_PlayerInfo = (PlayerInfo*)m_Player->GetPlayerStatInfo();
 }
 
 void GPMoveState::Enter()

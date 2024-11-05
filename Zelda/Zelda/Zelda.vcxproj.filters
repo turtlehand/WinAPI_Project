@@ -91,12 +91,6 @@
     <Filter Include="Game\04. Level\00. Editor">
       <UniqueIdentifier>{a29994dc-132f-4b61-a9e5-423fd5e0583a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\01. Player">
-      <UniqueIdentifier>{1078d3d9-08c7-4456-a3ec-a1eac920c1ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\02. Monster">
-      <UniqueIdentifier>{13ce8029-8c73-4b89-ac02-0e49b86e6294}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\05. Object\03. Missile">
       <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
     </Filter>
@@ -144,6 +138,21 @@
     </Filter>
     <Filter Include="Game\07. Asset\06. TilePalette">
       <UniqueIdentifier>{f248232a-d33e-477a-82a0-e7b0a52596d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\07. HitBox">
+      <UniqueIdentifier>{b9a217bb-5d4b-43f0-b416-12cfeea6ad79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature">
+      <UniqueIdentifier>{7b97412d-525c-4204-82fa-f020ee652d16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\01. Player">
+      <UniqueIdentifier>{1078d3d9-08c7-4456-a3ec-a1eac920c1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\02. Monster">
+      <UniqueIdentifier>{13ce8029-8c73-4b89-ac02-0e49b86e6294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\03. Obstacle">
+      <UniqueIdentifier>{726cb0fe-8bcd-451d-80f1-6815686cffdd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,10 +208,10 @@
       <Filter>Game\01. Header</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Game\05. Object\01. Player</Filter>
+      <Filter>Game\05. Object\01.Creature\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Game\05. Object\02. Monster</Filter>
+      <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
     </ClInclude>
     <ClInclude Include="Missile.h">
       <Filter>Game\05. Object\03. Missile</Filter>
@@ -327,6 +336,15 @@
     <ClInclude Include="GPAttackState.h">
       <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
+    <ClInclude Include="GHitBox.h">
+      <Filter>Game\05. Object\07. HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="GCreature.h">
+      <Filter>Game\05. Object\01.Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="GRock.h">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -365,10 +383,10 @@
       <Filter>Game\03. Manager\03. Level</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Game\05. Object\01. Player</Filter>
+      <Filter>Game\05. Object\01.Creature\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Game\05. Object\02. Monster</Filter>
+      <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
     </ClCompile>
     <ClCompile Include="Missile.cpp">
       <Filter>Game\05. Object\03. Missile</Filter>
@@ -490,6 +508,15 @@
     </ClCompile>
     <ClCompile Include="GPAttackState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GHitBox.cpp">
+      <Filter>Game\05. Object\07. HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="GCreature.cpp">
+      <Filter>Game\05. Object\01.Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="GRock.cpp">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -46,6 +46,9 @@ void CLevel::Tick()
 	{
 		for (size_t j = 0; j < m_vecObjects[i].size(); ++j)
 		{
+			// 이전과 현재 모두 비활성화 상태였다면 작동시키지 않는다.
+			if (!(m_vecObjects[i][j]->m_PrevActive || m_vecObjects[i][j]->m_Active))
+				continue;
 			m_vecObjects[i][j]->Tick();
 		}
 	}
@@ -58,6 +61,9 @@ void CLevel::FinalTick()
 	{
 		for (size_t j = 0; j < m_vecObjects[i].size(); ++j)
 		{
+			// 이전과 현재 모두 비활성화 상태였다면 작동시키지 않는다.
+			if (!(m_vecObjects[i][j]->m_PrevActive || m_vecObjects[i][j]->m_Active))
+				continue;
 			m_vecObjects[i][j]->FinalTick();
 		}
 	}
@@ -77,6 +83,16 @@ void CLevel::Render()
 			}
 			else
 			{
+				// 이전과 현재 모두 비활성화 상태였다면 작동시키지 않는다.
+				if (!((*iter)->m_PrevActive || (*iter)->m_Active))
+				{
+					++iter;
+					continue;
+				}
+				// 현재 활성화 상태를 이전활성화 상태에 저장한다.
+				(*iter)->m_PrevActive = (*iter)->m_Active;
+
+
 				(*iter)->Render();
 				++iter;
 			}

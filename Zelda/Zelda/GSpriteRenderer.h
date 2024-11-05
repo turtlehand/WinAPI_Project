@@ -20,7 +20,7 @@ private:
     GTexture*           m_RenderTexture;        // Render Ω√≈≥ Texture
     
 public:
-    void SetSprite(GSprite* _Sprite) { m_Sprite = m_Sprite; }
+    void SetSprite(GSprite* _Sprite) { m_Sprite = _Sprite; }
     const GSprite* GetSprite() { return m_Sprite; }
 
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }

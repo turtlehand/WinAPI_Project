@@ -206,7 +206,7 @@ void GSpriteRenderer::Render()
 	{
 		DeleteColor(m_RenderTexture);
 	}
-	else if (m_Alpha != 255)
+	else
 	{
 		Alpha(m_RenderTexture);
 	}

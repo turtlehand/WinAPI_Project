@@ -31,6 +31,9 @@ enum class BRUSH_TYPE
 
 enum class TASK_TYPE
 {
+	// Param0 : Object Address, Param1 : bool
+	ACTIVE_OBJECT,
+	
 	// Param0 : Object Address, Param1 : Layer Index
 	CREATE_OBJECT,
 
@@ -46,6 +49,7 @@ enum class LAYER_TYPE
 	BACKGROUND,
 	TILE,
 	DEFAULT,
+	OBJECT,
 	PLAYER,
 	PLAYER_OBJECT,
 	MONSTER,
@@ -120,4 +124,24 @@ enum class PLAYER_ANIM_STATE
 	ATTACK_UP,
 	ATTACK_DOWN,
 	ATTACK_RIGHT,
+};
+
+enum class ATTACK_TYPE
+{
+	SLASH,
+	STRIKE,
+	THRUSHT,
+	FIRE,
+	ICE,
+	LIGHTNING,
+	NONE,
+};
+
+enum class MATERIAL_TYPE
+{
+	WOOD,
+	METAL,
+	STONE,
+	LIFE,
+	NONE,
 };

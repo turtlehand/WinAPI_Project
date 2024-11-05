@@ -17,6 +17,7 @@
 
 #include "Missile.h"
 #include "GuidedMissile.h"
+#include "GHitBox.h"
 
 #include "GTexture.h"
 #include "GFlipBook.h"
@@ -36,10 +37,24 @@ Player::Player() :
 	m_FSM(nullptr),
 	m_Collider(nullptr),
 	m_FlipBookPlayer(nullptr),
-	m_RigidBody(nullptr)
+	m_RigidBody(nullptr),
+	m_AttackBox(nullptr)
 {
 
+}
+
+Player::~Player()
+{
+
+}
+
+
+void Player::Awake()
+{
 	CreateAnimator();
+
+	m_AttackBox = GetChildObj<GHitBox>();
+	m_AttackBox->SetActive(false);
 
 	m_FSM = AddComponent<GFSM>();
 	m_FSM->SetName(L"Player_FSM");
@@ -58,15 +73,7 @@ Player::Player() :
 	m_RigidBody->SetName(L"Player_RigidBody");
 	m_RigidBody->SetMass(1.f);
 	m_RigidBody->SetFriction(900.f);
-
-	
 }
-
-Player::~Player()
-{
-
-}
-
 
 void Player::Begin()
 {
@@ -82,6 +89,14 @@ void Player::Tick()
 void Player::Render()
 {
 	m_FlipBookPlayer->Render();
+}
+
+void Player::EnterOverlap(GCollider* _Collider)
+{
+}
+
+void Player::Overlap(GCollider* _Collider)
+{
 }
 
 const wstring& Player::GetCurrentState()
@@ -100,9 +115,9 @@ void Player::CreateAnimator()
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_DOWN", L"FlipBook\\Link_16\\LINK_DOWN.flip"));
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_RIGHT", L"FlipBook\\Link_16\\LINK_RIGHT.flip"));
 
-	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_UP", L"FlipBook\\Link_16\\Wooden_Sword\\LINK_UP_WOODEN_SWORD.flip"));
-	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_DOWN", L"FlipBook\\Link_16\\Wooden_Sword\\LINK_DOWN_WOODEN_SWORD.flip"));
-	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_RIGHT", L"FlipBook\\Link_16\\Wooden_Sword\\LINK_RIGHT_WOODEN_SWORD.flip"));
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_UP", L"FlipBook\\Link_16\\Attack\\LINK_UP_ATTACK.flip"));
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_DOWN", L"FlipBook\\Link_16\\Attack\\LINK_DOWN_ATTACK.flip"));
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_RIGHT", L"FlipBook\\Link_16\\Attack\\LINK_RIGHT_ATTACK.flip"));
 
 
 	m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::DOWN, 5, true);

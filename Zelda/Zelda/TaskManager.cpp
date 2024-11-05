@@ -26,6 +26,25 @@ void TaskManager::Tick()
 	{
 		switch (m_Task[i].Type)
 		{
+		case TASK_TYPE::ACTIVE_OBJECT:
+		{
+			CObj* pObject = (CObj*)m_Task[i].Param0;
+			bool Active = (bool)m_Task[i].Param1;
+
+			if (pObject->m_Active && !Active)
+			{
+				// 오브젝트가 활성화 된 상태에서 비활성화 할 때
+				pObject->m_Active = false;
+				pObject->OnDisable();
+			}
+			else if (!pObject->m_Active && Active)
+			{
+				// 오브젝트가 비활성화 된 상태에서 활성화 할 때
+				pObject->m_Active = true;
+				pObject->OnEnable();
+			}
+		}
+		break;
 		case TASK_TYPE::CREATE_OBJECT:
 		{
    			CObj* pObject = (CObj*)m_Task[i].Param0;
