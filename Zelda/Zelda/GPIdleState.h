@@ -1,15 +1,15 @@
 #pragma once
 #include "GState.h"
 
-class Player;
+class GPlayer;
 
 class GPIdleState : public GState
 {
 private:
-    Player* m_Player;
+    GPlayer* m_Player;
 
 public:
-    virtual void Awake() override;
+    virtual void Begin() override;
     virtual void Enter() override;
     virtual void FinalTick() override;
     virtual void Exit() override;

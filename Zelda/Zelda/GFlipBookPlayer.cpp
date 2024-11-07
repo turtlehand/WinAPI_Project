@@ -186,6 +186,7 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 
 void GFlipBookPlayer::FinalTick()
 {
+	wstring Name = GetOwner()->GetName();
 	//현재 재생준인 FlipBook이 없으면 끝
 	if (-1 == m_CurFlipBookIndex)
 	{

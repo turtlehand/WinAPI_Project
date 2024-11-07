@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GPMoveState.h"
 
-#include "Player.h"
+#include "GPlayer.h"
 
 #include "GFlipBookPlayer.h"
 #include "GRigidBody.h"
@@ -17,9 +17,9 @@ GPMoveState::~GPMoveState()
 {
 }
 
-void GPMoveState::Awake()
+void GPMoveState::Begin()
 {
-	m_Player = dynamic_cast<Player*>(GetOwnerObj());
+	m_Player = dynamic_cast<GPlayer*>(GetOwnerObj());
 	assert(m_Player != nullptr);
 
 	m_PlayerInfo = (PlayerInfo*)m_Player->GetPlayerStatInfo();

@@ -1,0 +1,19 @@
+[ASSETTYPE]
+2
+
+[LEFTTOP]
+82, 28
+
+[SLICE]
+16, 16
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+Overworld_Enemies.png
+
+[ATLAS_PATH]
+Texture\Overworld_Enemies.png
+

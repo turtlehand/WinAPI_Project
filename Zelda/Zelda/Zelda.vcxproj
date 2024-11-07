@@ -168,9 +168,11 @@
     <ClInclude Include="GLevel_Editor.h" />
     <ClInclude Include="GLevel_Start.h" />
     <ClInclude Include="global.h" />
+    <ClInclude Include="GLog.h" />
     <ClInclude Include="GMap.h" />
     <ClInclude Include="GMChaseState.h" />
     <ClInclude Include="GMIdleState.h" />
+    <ClInclude Include="GMoblin.h" />
     <ClInclude Include="GPanel.h" />
     <ClInclude Include="GPathManager.h" />
     <ClInclude Include="GPAttackState.h" />
@@ -187,13 +189,14 @@
     <ClInclude Include="GTile.h" />
     <ClInclude Include="GTileMap.h" />
     <ClInclude Include="GTilePalette.h" />
+    <ClInclude Include="GTree.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="GuidedMissile.h" />
     <ClInclude Include="GUIManager.h" />
-    <ClInclude Include="Missile.h" />
-    <ClInclude Include="Monster.h" />
+    <ClInclude Include="GArrow.h" />
+    <ClInclude Include="GMonster.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="GPlayer.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="GSpriteRenderer.h" />
     <ClInclude Include="struct.h" />
@@ -228,9 +231,11 @@
     <ClCompile Include="GHitBox.cpp" />
     <ClCompile Include="GLevel_Editor.cpp" />
     <ClCompile Include="GLevel_Start.cpp" />
+    <ClCompile Include="GLog.cpp" />
     <ClCompile Include="GMap.cpp" />
     <ClCompile Include="GMChaseState.cpp" />
     <ClCompile Include="GMIdleState.cpp" />
+    <ClCompile Include="GMoblin.cpp" />
     <ClCompile Include="GPanel.cpp" />
     <ClCompile Include="GPathManager.cpp" />
     <ClCompile Include="GPAttackState.cpp" />
@@ -247,15 +252,16 @@
     <ClCompile Include="GTile.cpp" />
     <ClCompile Include="GTileMap.cpp" />
     <ClCompile Include="GTilePalette.cpp" />
+    <ClCompile Include="GTree.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="GuidedMissile.cpp" />
     <ClCompile Include="GUIManager.cpp" />
-    <ClCompile Include="Missile.cpp" />
-    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="GArrow.cpp" />
+    <ClCompile Include="GMonster.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="GPlayer.cpp" />
     <ClCompile Include="GSpriteRenderer.cpp" />
     <ClCompile Include="TaskManager.cpp" />
     <ClCompile Include="main.cpp" />

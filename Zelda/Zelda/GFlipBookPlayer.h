@@ -61,6 +61,7 @@ public:
 		m_Repeat = _Repeat;
 		m_Finish = false;
 		m_Time = 0.f;
+		m_Play = true;
 	}
 
 	bool IsFinish() { return m_Finish; }

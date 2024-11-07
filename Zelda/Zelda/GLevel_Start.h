@@ -1,13 +1,13 @@
 #pragma once
 #include "CLevel.h"
 
-class Player;
+class GPlayer;
 
 class GLevel_Start :
     public CLevel
 {
 private:
-	Player* m_Player;
+	GPlayer* m_Player;
 
 public:
 	GLevel_Start();

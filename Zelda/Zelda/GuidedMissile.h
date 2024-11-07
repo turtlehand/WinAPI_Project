@@ -1,9 +1,9 @@
 #pragma once
-#include "Missile.h"
+#include "GArrow.h"
 
 class CObj;
 
-class GuidedMissile : public Missile
+class GuidedMissile : public GArrow
 {
 private:
 	CObj* m_Target;

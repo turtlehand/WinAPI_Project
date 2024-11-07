@@ -7,10 +7,12 @@
 #include "TaskManager.h"
 
 CObj::CObj() :
+	m_Parent(nullptr),
 	m_Pos(),
 	m_Scale(),
 	m_Component(),
 	m_LayerType(LAYER_TYPE::END),
+	m_PrevActive(true),
 	m_Active(true),
 	m_Dead(false)
 {
@@ -49,7 +51,6 @@ Vec2 CObj::GetRenderPos()
 void CObj::SetActive(bool _Active)
 {
 	Task task = { TASK_TYPE::ACTIVE_OBJECT,(DWORD_PTR)this,(DWORD_PTR)_Active };
-
 	TaskManager::GetInst()->AddTask(task);
 }
 

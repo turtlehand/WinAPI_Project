@@ -1,8 +1,8 @@
 #pragma once
 #include "CObj.h"
 
+class GRigidBody;
 class GSpriteRenderer;
-class GFlipBookPlayer;
 class GCollider;
 
 class GHitBox :
@@ -10,18 +10,18 @@ class GHitBox :
 {
     ATTACK_TYPE m_AttackType;
     MATERIAL_TYPE m_MaterialType;
+    ElementalEffect m_Effect;
+
     int m_Damage;
     bool m_IsProjectile;
 
     GCollider* m_Collider;
+    GSpriteRenderer* m_SpriteRenderer;
 
 public:
-    virtual void Awake() override;
     virtual void Begin() override;
     virtual void Tick() override;
     virtual void Render() override;
-    virtual void OnEnable() override;
-    virtual void OnDisable() override;
 
 public:
     void SetAttackType(ATTACK_TYPE _AttackType) { m_AttackType = _AttackType; };
@@ -29,6 +29,9 @@ public:
 
     void SetMaterialType(MATERIAL_TYPE _MaterialType) { m_MaterialType = _MaterialType; };
     MATERIAL_TYPE GetMaterialType() { return m_MaterialType; };
+
+    void SetEffect(ElementalEffect _Effect) { m_Effect = _Effect; };
+    ElementalEffect GetEffect() { return m_Effect; };
 
     void SetDamage(int _Damage) { m_Damage = _Damage; };
     int GetDamage() { return m_Damage; };

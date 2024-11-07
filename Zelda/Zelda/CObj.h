@@ -24,7 +24,6 @@ private:
 
 
 public:
-	virtual void Awake() {};
 	virtual void Begin() = 0;			// 레벨이 시작될 때
 	virtual void Tick() = 0;			// 오브젝트가 할 일
 	void FinalTick();					// 오브젝트가 소유한 Component가 할 일
@@ -60,15 +59,17 @@ public:
 		m_vecChild.push_back(_Child);
 		_Child->m_Parent = this;
 	}
+	vector<CObj*>& GetChilds() { return m_vecChild; }
 
-	template<typename T>
-	T* GetChildObj();
 
 	Vec2 GetGlobalPos() {
 		if (m_Parent)
 			return m_Parent->GetGlobalPos() + this->GetPos();
 		return this->GetPos();
 	}
+
+	template<typename T>
+	T* GetChildObj();
 
 	template<typename T>
 	T* AddComponent();

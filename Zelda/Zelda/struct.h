@@ -38,6 +38,8 @@ public:
 
 	Vec2 Normalize()
 	{
+		if (Length() == 0.f)
+			return Vec2::zero();
 		return Vec2(x / Length(), y / Length());
 	}
 
@@ -163,10 +165,17 @@ struct DeBugRenderInfo
 	float Time;			// 진행 시간
 };
 
+struct ElementalEffect
+{
+	ELEMENT_TYPE ElementType = ELEMENT_TYPE::NONE;
+	float Duration = 0.f;
+	float Time = 0.f;
+};
 
 struct DefaultStatsInfo
 {
 	MATERIAL_TYPE Material;
+	ElementalEffect Effect;
 
 	int MaxHP;
 	int HP;
@@ -181,9 +190,11 @@ struct MonsterInfo : public DefaultStatsInfo
 {
 	float DetectRange;
 	float AttackRange;
+	Vec2 Direction;
 };
 
 struct PlayerInfo : public DefaultStatsInfo
 {
 	Vec2 Direction;		// 현재 바라보고 있는 방향
 };
+

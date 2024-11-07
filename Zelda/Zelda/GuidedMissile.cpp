@@ -31,7 +31,7 @@ void GuidedMissile::Tick()
 
 	DrawDebugCircle(PEN_TYPE::GREEN, 0.1f, GetPos(), m_DetectRange);
 
-	Missile::Tick();
+	GArrow::Tick();
 }
 
 void GuidedMissile::FindTarget()
@@ -78,7 +78,7 @@ void GuidedMissile::TraceTarget_Rotate()
 	if (1.f < Scale)
 		Scale = 1.f;
 	Scale = (1.f - Scale) * 0.5f + 0.5f;
-	SetVelocityScale(Scale);
+	//SetVelocityScale(Scale);
 
 	// Velocity가 0에 가까워지면 nan이 뜸 ???
 
@@ -96,7 +96,7 @@ void GuidedMissile::TraceTarget_Accel()
 {
 	Vec2 vDir = m_Target->GetPos() - GetPos();
 	vDir = vDir.Normalize();
-	AddForce(vDir * 1000.f);
+	//AddForce(vDir * 1000.f);
 }
 
 void GuidedMissile::Render()

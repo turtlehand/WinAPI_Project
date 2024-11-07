@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GPIdleState.h"
 
-#include "Player.h"
+#include "GPlayer.h"
 
 #include "GFlipBookPlayer.h"
 
@@ -14,9 +14,9 @@ GPIdleState::~GPIdleState()
 {
 }
 
-void GPIdleState::Awake()
+void GPIdleState::Begin()
 {
-	m_Player = dynamic_cast<Player*>(GetOwnerObj());
+	m_Player = dynamic_cast<GPlayer*>(GetOwnerObj());
 	assert(m_Player != nullptr);
 }
 

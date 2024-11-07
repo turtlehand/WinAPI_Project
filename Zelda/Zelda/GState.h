@@ -13,7 +13,7 @@ public:
     CObj* GetOwnerObj() { return m_Owner->GetOwner(); }
 
 public:
-    virtual void Awake() {};
+    virtual void Begin() {};
     virtual void Enter() = 0;
     virtual void FinalTick() = 0;
     virtual void Exit() = 0;

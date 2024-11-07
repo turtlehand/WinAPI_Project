@@ -8,8 +8,12 @@
 
 #include "GAssetManager.h"
 
-void GRock::Awake()
+GRock::GRock() :
+	m_Collider(nullptr),
+	m_Sprite(nullptr)
 {
+	SetName(L"Rock");
+
 	// ¹ÙÀ§ ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::STONE;
@@ -29,36 +33,31 @@ void GRock::Awake()
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
 }
 
+GRock::~GRock()
+{
+}
+
 void GRock::Begin()
 {
 }
 
 void GRock::Tick()
 {
+	GCreature::Tick();
 }
 
 void GRock::Render()
 {
 	m_Sprite->Render();
+	RenderEffect();
 }
 
 void GRock::EnterOverlap(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-
-	BeAttacked(HitBox);
+	if(HitBox != nullptr)
+		Interaction(HitBox);
 }
 
-void GRock::Overlap(GCollider* _Collider)
-{
-}
 
-GRock::GRock() :
-	m_Collider(nullptr),
-	m_Sprite(nullptr)
-{
-}
 
-GRock::~GRock()
-{
-}

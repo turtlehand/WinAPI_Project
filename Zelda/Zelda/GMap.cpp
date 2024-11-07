@@ -7,16 +7,11 @@
 GMap::GMap() :
 	m_TileMap(nullptr)
 {
-
+	m_TileMap = AddComponent<GTileMap>();
 }
 
 GMap::~GMap()
 {
-}
-
-void GMap::Awake()
-{
-	m_TileMap = AddComponent<GTileMap>();
 }
 
 void GMap::Begin()

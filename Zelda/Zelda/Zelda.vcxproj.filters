@@ -91,9 +91,6 @@
     <Filter Include="Game\04. Level\00. Editor">
       <UniqueIdentifier>{a29994dc-132f-4b61-a9e5-423fd5e0583a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\03. Missile">
-      <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\05. Object\04. Platform">
       <UniqueIdentifier>{c556b062-4539-44e7-8016-3a1251f366da}</UniqueIdentifier>
     </Filter>
@@ -154,6 +151,12 @@
     <Filter Include="Game\05. Object\01.Creature\03. Obstacle">
       <UniqueIdentifier>{726cb0fe-8bcd-451d-80f1-6815686cffdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\05. Object\01.Creature\02. Monster\01. Moblin">
+      <UniqueIdentifier>{0721467d-2b81-4708-bf60-2696f1bdbff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\03. Arrow">
+      <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -207,14 +210,14 @@
     <ClInclude Include="func_template.h">
       <Filter>Game\01. Header</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="GPlayer.h">
       <Filter>Game\05. Object\01.Creature\01. Player</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="GMonster.h">
       <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
     </ClInclude>
-    <ClInclude Include="Missile.h">
-      <Filter>Game\05. Object\03. Missile</Filter>
+    <ClInclude Include="GArrow.h">
+      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClInclude>
     <ClInclude Include="TaskManager.h">
       <Filter>Game\03. Manager\04. Task</Filter>
@@ -235,7 +238,7 @@
       <Filter>Game\03. Manager\06. Collision</Filter>
     </ClInclude>
     <ClInclude Include="GuidedMissile.h">
-      <Filter>Game\05. Object\03. Missile</Filter>
+      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClInclude>
     <ClInclude Include="GAsset.h">
       <Filter>Game\07. Asset</Filter>
@@ -345,6 +348,15 @@
     <ClInclude Include="GRock.h">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="GMoblin.h">
+      <Filter>Game\05. Object\01.Creature\02. Monster\01. Moblin</Filter>
+    </ClInclude>
+    <ClInclude Include="GTree.h">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GLog.h">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -382,14 +394,14 @@
     <ClCompile Include="CLevelMgr.cpp">
       <Filter>Game\03. Manager\03. Level</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="GPlayer.cpp">
       <Filter>Game\05. Object\01.Creature\01. Player</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="GMonster.cpp">
       <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
     </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>Game\05. Object\03. Missile</Filter>
+    <ClCompile Include="GArrow.cpp">
+      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Game\03. Manager\04. Task</Filter>
@@ -410,7 +422,7 @@
       <Filter>Game\03. Manager\06. Collision</Filter>
     </ClCompile>
     <ClCompile Include="GuidedMissile.cpp">
-      <Filter>Game\05. Object\03. Missile</Filter>
+      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClCompile>
     <ClCompile Include="GAsset.cpp">
       <Filter>Game\07. Asset</Filter>
@@ -516,6 +528,15 @@
       <Filter>Game\05. Object\01.Creature</Filter>
     </ClCompile>
     <ClCompile Include="GRock.cpp">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GMoblin.cpp">
+      <Filter>Game\05. Object\01.Creature\02. Monster\01. Moblin</Filter>
+    </ClCompile>
+    <ClCompile Include="GTree.cpp">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GLog.cpp">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClCompile>
   </ItemGroup>

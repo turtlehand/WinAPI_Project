@@ -30,6 +30,12 @@ void DeleteGameObject(CObj* _DestroyObject)
 {
 	Task task = { TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)_DestroyObject };
 	TaskManager::GetInst()->AddTask(task);
+
+	// 자식 오브젝트들을 삭제한다.
+	for (size_t i = 0; i < _DestroyObject->GetChilds().size(); ++i)
+	{
+		DeleteGameObject(_DestroyObject->GetChilds()[i]);
+	}
 }
 
 void ChangeLevel(LEVEL_TYPE _Level)

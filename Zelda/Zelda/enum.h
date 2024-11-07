@@ -115,25 +115,11 @@ enum class LEVEL_TYPE
 
 };
 
-enum class PLAYER_ANIM_STATE
-{
-	UP,
-	DOWN,
-	RIGHT,
-
-	ATTACK_UP,
-	ATTACK_DOWN,
-	ATTACK_RIGHT,
-};
-
 enum class ATTACK_TYPE
 {
 	SLASH,
 	STRIKE,
 	THRUSHT,
-	FIRE,
-	ICE,
-	LIGHTNING,
 	NONE,
 };
 
@@ -144,4 +130,13 @@ enum class MATERIAL_TYPE
 	STONE,
 	LIFE,
 	NONE,
+};
+
+enum class ELEMENT_TYPE
+{
+	FIRE,
+	ICE,
+	LIGHTNING,
+	WATER,
+	NONE
 };
