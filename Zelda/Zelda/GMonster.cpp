@@ -38,7 +38,7 @@ GMonster::~GMonster()
 {
 }
 
-void GMonster::EnterOverlap(GCollider* _Collider)
+void GMonster::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)

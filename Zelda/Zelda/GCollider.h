@@ -32,9 +32,13 @@ public:
 	COLLIDER_TYPE GetColliderType() const { return m_ColliderType; }
 
 public:
-	void EnterOverlap(GCollider* _Other);
-	void Overlap(GCollider* _Other);
-	void ExitOverlap(GCollider* _Other);
+	void OnCollisionEnter(GCollider* _Other);
+	void OnCollision(GCollider* _Other);
+	void OnCollisionExit(GCollider* _Other);
+
+	void OnTriggerEnter(GCollider* _Other);
+	void OnTrigger(GCollider* _Other);
+	void OnTriggerExit(GCollider* _Other);
 
 };
 

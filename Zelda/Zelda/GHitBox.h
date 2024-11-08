@@ -39,7 +39,7 @@ public:
     void SetIsProjectile(bool _IsProjectile) { m_IsProjectile = _IsProjectile; };
     bool GetIsProjectile() { return m_IsProjectile; };
 
-    virtual void EnterOverlap(GCollider* _Collider) override;
+    virtual void OnTriggerEnter(GCollider* _Collider) override;
 
 public:
     GHitBox();

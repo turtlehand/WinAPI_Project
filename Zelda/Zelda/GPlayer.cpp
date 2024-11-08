@@ -98,11 +98,21 @@ void GPlayer::Render()
 	RenderEffect();
 }
 
-void GPlayer::EnterOverlap(GCollider* _Collider)
+void GPlayer::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
 		Interaction(HitBox);
+}
+
+void GPlayer::OnCollisionEnter(GCollider* _Collider)
+{
+	GetPlayerStatInfo()->Speed /= 2;
+}
+
+void GPlayer::OnCollisionExit(GCollider* _Collider)
+{
+	GetPlayerStatInfo()->Speed *= 2;
 }
 
 const wstring& GPlayer::GetCurrentState()

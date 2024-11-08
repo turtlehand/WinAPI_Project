@@ -52,7 +52,7 @@ void GRock::Render()
 	RenderEffect();
 }
 
-void GRock::EnterOverlap(GCollider* _Collider)
+void GRock::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if(HitBox != nullptr)

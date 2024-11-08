@@ -19,7 +19,7 @@ public:
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 
-	//virtual void EnterOverlap(GCollider* _Collider) override;
+	//virtual void OnTriggerEnter(GCollider* _Collider) override;
 
 public:
 	void SetVelocity(Vec2 _Velocity) { m_Velocity =_Velocity; }

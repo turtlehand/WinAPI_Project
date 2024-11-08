@@ -25,7 +25,7 @@ private:
 	GHitBox* m_AttackBox;
 
 public:
-	virtual void EnterOverlap(GCollider* _Collider) override;
+	virtual void OnTriggerEnter(GCollider* _Collider) override;
 
 public:
 	MonsterInfo* GetMonsterStatInfo() { return (MonsterInfo*)GetStatInfo(); }

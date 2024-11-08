@@ -107,26 +107,35 @@ void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _Rig
 		// 이전에 충돌한 적 없다.
 		if (iter->second == false)
 		{
-			_LeftCol->EnterOverlap(_RightCol);
-			_RightCol->EnterOverlap(_LeftCol);
-			iter->second = true;
-
-			/*
-			if (!(_LeftCol->GetTrigger() || _RightCol->GetTrigger()))
+			// 하나라도 Trigger 상태
+			if (_LeftCol->GetTrigger() || _RightCol->GetTrigger())
 			{
-				GRigidBody* LeftRigid = _LeftCol->GetOwner()->GetComponent<GRigidBody>();
-				GRigidBody* RightRigid = _RightCol->GetOwner()->GetComponent<GRigidBody>();
-
-				Collision(LeftRigid, RightRigid);
+				_LeftCol->OnTriggerEnter(_RightCol);
+				_RightCol->OnTriggerEnter(_LeftCol);
 			}
-			*/
+			else
+			{
+				_LeftCol->OnCollisionEnter(_RightCol);
+				_RightCol->OnCollisionEnter(_LeftCol);
+			}
+
+			iter->second = true;
 		}
 		
 		// 이전에 충돌하였다.
 		else if (iter->second == true)
 		{
-			_LeftCol->Overlap(_RightCol);
-			_RightCol->Overlap(_LeftCol);
+			// 하나라도 Trigger 상태
+			if (_LeftCol->GetTrigger() || _RightCol->GetTrigger())
+			{
+				_LeftCol->OnTrigger(_RightCol);
+				_RightCol->OnTrigger(_LeftCol);
+			}
+			else
+			{
+				_LeftCol->OnCollision(_RightCol);
+				_RightCol->OnCollision(_LeftCol);
+			}
 		}
 	}
 	// 충돌하지 않았다.
@@ -134,8 +143,17 @@ void CollisionManager::CollisionBtwCollider(GCollider* _LeftCol, GCollider* _Rig
 	{
 		if (iter->second == true)
 		{
-			_LeftCol->ExitOverlap(_RightCol);
-			_RightCol->ExitOverlap(_LeftCol);
+			// 하나라도 Trigger 상태
+			if (_LeftCol->GetTrigger() || _RightCol->GetTrigger())
+			{
+				_LeftCol->OnTriggerExit(_RightCol);
+				_RightCol->OnTriggerExit(_LeftCol);
+			}
+			else
+			{
+				_LeftCol->OnCollisionExit(_RightCol);
+				_RightCol->OnCollisionExit(_LeftCol);
+			}
 			iter->second = false;
 		}
 	}
@@ -151,9 +169,10 @@ bool CollisionManager::IsCollision(GCollider* _LeftCol, GCollider* _RightCol)
 	{
 		if(_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
 			CollisionBool = IsCollision_BoxBtwBox(_LeftCol, _RightCol);
-		else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
-			CollisionBool = IsCollision_BoxBtwCircle(_LeftCol, _RightCol);
+		//else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
+			//CollisionBool = IsCollision_BoxBtwCircle(_LeftCol, _RightCol);
 	}
+	/*
 	else if (_LeftCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
 	{
 		if (_RightCol->GetColliderType() == COLLIDER_TYPE::BOX)
@@ -161,7 +180,7 @@ bool CollisionManager::IsCollision(GCollider* _LeftCol, GCollider* _RightCol)
 		else if (_RightCol->GetColliderType() == COLLIDER_TYPE::CIRCLE)
 			CollisionBool = IsCollision_CircleBtwCircle(_LeftCol, _RightCol);
 	}
-
+	*/
 	return CollisionBool;
 }
 
@@ -169,6 +188,9 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 {
 	GBoxCollider* _LeftBox = dynamic_cast<GBoxCollider*>(_LeftCol);
 	GBoxCollider* _RightBox = dynamic_cast<GBoxCollider*>(_RightCol);
+
+	GRigidBody* _LeftRigid = _LeftBox->GetOwner()->GetComponent<GRigidBody>();
+	GRigidBody* _RightRigid = _RightBox->GetOwner()->GetComponent<GRigidBody>();
 
 	assert(_LeftBox != nullptr && _RightBox != nullptr);
 
@@ -184,12 +206,64 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 	if (fabs(Distance.x) < (LScale.x + RScale.x ) / 2.f &&
 		fabs(Distance.y) < (LScale.y + RScale.y ) / 2.f)
 	{
+		// 하나라도 Trigger 상태가 아니라면 서로 밀어낸다.
+		if (!(_LeftCol->GetTrigger() || _RightCol->GetTrigger()))
+		{
+			Vec2 Pull;
+			Pull.x = ((LScale.x + RScale.x) / 2.f - fabs(Distance.x)) / 2;
+			Pull.y = ((LScale.y + RScale.y) / 2.f - fabs(Distance.y)) / 2;
+
+			// 접촉한 면적이 적은 x축을 서로 민다.
+			if (Pull.x < Pull.y)
+			{
+				// 왼쪽 콜라이더가 왼쪽에 있고 오른쪽 콜라이더가 오른쪽에 있을 때
+				if (LPos.x < RPos.x)
+				{
+					if(_LeftRigid != nullptr)
+						_LeftCol->GetOwner()->AddPos(-Pull.x,0);
+					if (_RightRigid != nullptr)
+						_RightCol->GetOwner()->AddPos(Pull.x,0);
+				}
+				// 왼쪽 콜라이더가 오른쪽에 있고 오른쪽 콜라이더가 왼쪽에 있을 때
+				else if (LPos.x > RPos.x)
+				{
+					if (_LeftRigid != nullptr)
+						_LeftCol->GetOwner()->AddPos(Pull.x, 0);
+					if (_RightRigid != nullptr)
+						_RightCol->GetOwner()->AddPos(-Pull.x, 0);
+				}
+			}
+			
+			// 접촉한 면적이 적은 y축을 서로 민다.
+			else if (Pull.y < Pull.x)
+			{
+				// 왼쪽 콜라이더가 아래에 있고 오른쪽 콜라이더가 위에 있을 때
+				if (LPos.y < RPos.y)
+				{
+					if (_LeftRigid != nullptr)
+						_LeftCol->GetOwner()->AddPos(0, -Pull.y);
+					if (_RightRigid != nullptr)
+						_RightCol->GetOwner()->AddPos(0, Pull.y);
+				}
+				// 왼쪽 콜라이더가 위에 있고 오른쪽 콜라이더가 아래에 있을 때
+				else if (LPos.y > RPos.y)
+				{
+					if (_LeftRigid != nullptr)
+						_LeftCol->GetOwner()->AddPos(0, Pull.y);
+					if (_RightRigid != nullptr)
+						_RightCol->GetOwner()->AddPos(0, -Pull.y);
+				}
+			}
+			
+		}
+
 		return true;
 	}
 
 	return false;
 }
 
+/*
 bool CollisionManager::IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol)
 {
 	GBoxCollider* _LeftBox = dynamic_cast<GBoxCollider*>(_LeftCol);
@@ -278,6 +352,7 @@ bool CollisionManager::IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollide
 
 	return false;
 }
+*/
 
 void CollisionManager::Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid)
 {

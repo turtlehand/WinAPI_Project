@@ -31,17 +31,30 @@ void CObj::FinalTick()
 	}
 }
 
-void CObj::EnterOverlap(GCollider* _Collider)
+void CObj::OnCollisionEnter(GCollider* _Collider)
 {
 }
 
-void CObj::Overlap(GCollider* _Collider)
+void CObj::OnCollision(GCollider* _Collider)
 {
 }
 
-void CObj::ExitOverlap(GCollider* _Collider)
+void CObj::OnCollisionExit(GCollider* _Collider)
 {
 }
+
+void CObj::OnTriggerEnter(GCollider* _Collider)
+{
+}
+
+void CObj::OnTrigger(GCollider* _Collider)
+{
+}
+
+void CObj::OnTriggerExit(GCollider* _Collider)
+{
+}
+
 
 Vec2 CObj::GetRenderPos()
 {

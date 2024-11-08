@@ -29,19 +29,36 @@ void GCollider::FinalTick()
 	CLevelMgr::GetInst()->GetCurrentLevel()->RegisterCollider(this, LayerType);
 }
 
-void GCollider::EnterOverlap(GCollider* _Other)
+void GCollider::OnCollisionEnter(GCollider* _Other)
 {
 	m_OverlapCount++;
-	GetOwner()->EnterOverlap(_Other);
+	GetOwner()->OnCollisionEnter(_Other);
 }
 
-void GCollider::Overlap(GCollider* _Other)
+void GCollider::OnCollision(GCollider* _Other)
 {
-	GetOwner()->Overlap(_Other);
+	GetOwner()->OnCollision(_Other);
 }
 
-void GCollider::ExitOverlap(GCollider* _Other)
+void GCollider::OnCollisionExit(GCollider* _Other)
 {
-	GetOwner()->ExitOverlap(_Other);
+	GetOwner()->OnCollisionExit(_Other);
+	m_OverlapCount--;
+}
+
+void GCollider::OnTriggerEnter(GCollider* _Other)
+{
+	m_OverlapCount++;
+	GetOwner()->OnTriggerEnter(_Other);
+}
+
+void GCollider::OnTrigger(GCollider* _Other)
+{
+	GetOwner()->OnTrigger(_Other);
+}
+
+void GCollider::OnTriggerExit(GCollider* _Other)
+{
+	GetOwner()->OnTriggerExit(_Other);
 	m_OverlapCount--;
 }

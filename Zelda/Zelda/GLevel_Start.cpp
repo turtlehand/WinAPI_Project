@@ -67,6 +67,10 @@ void GLevel_Start::Begin()
 	GMap* pTileMap = new GMap;
 	AddObject(pTileMap, LAYER_TYPE::TILE);
 	pTileMap->SetPos(Vec2(0.f, 0.f));
+
+	GRock* pRock2 = new GRock;
+	AddObject(pRock2, LAYER_TYPE::OBJECT);
+	pRock2->SetPos(0, 0);
 	
 
 	// TileMap Object Ãß°¡
@@ -79,6 +83,7 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
 }

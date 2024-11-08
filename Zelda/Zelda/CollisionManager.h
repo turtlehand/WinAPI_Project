@@ -31,13 +31,13 @@ private:
 	bool IsCollision(GCollider* _LeftCol, GCollider* _RightCol);
 
 	bool IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _RightCol);
-	bool IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
-	bool IsCollision_BoxBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
+	//bool IsCollision_BoxBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
+	//bool IsCollision_BoxBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
 
-	bool IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
-	bool IsCollision_CircleBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
+	//bool IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollider* _RightCol);
+	//bool IsCollision_CircleBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
 	
-	bool IsCollision_EdgeBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
+	//bool IsCollision_EdgeBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
 
 	void Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid);
 

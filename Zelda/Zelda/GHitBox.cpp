@@ -14,6 +14,7 @@ GHitBox::GHitBox() :
 	m_SpriteRenderer(nullptr)
 {
 	m_Collider = AddComponent<GBoxCollider>();
+	m_Collider->SetTrigger(true);
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
 }
 
@@ -35,7 +36,7 @@ void GHitBox::Render()
 	m_SpriteRenderer->Render();
 }
 
-void GHitBox::EnterOverlap(GCollider* _Collider)
+void GHitBox::OnTriggerEnter(GCollider* _Collider)
 {
 	if (m_IsProjectile)
 	{

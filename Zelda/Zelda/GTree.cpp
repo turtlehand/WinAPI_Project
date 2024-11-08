@@ -60,7 +60,7 @@ void GTree::Render()
 	RenderEffect();
 }
 
-void GTree::EnterOverlap(GCollider* _Collider)
+void GTree::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)

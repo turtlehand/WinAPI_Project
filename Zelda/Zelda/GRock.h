@@ -15,7 +15,7 @@ public:
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 
-	virtual void EnterOverlap(GCollider* _Collider);
+	virtual void OnTriggerEnter(GCollider* _Collider);
 
 public:
 	GRock();

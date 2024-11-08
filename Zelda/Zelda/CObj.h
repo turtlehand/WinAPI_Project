@@ -31,11 +31,18 @@ public:
 	virtual void OnDisable() {};		// 오브젝트가 비활성화 될 때
 	virtual void Render() = 0;			// 오브젝트를 그리기
 
-	virtual void EnterOverlap(GCollider* _Collider);
-	virtual void Overlap(GCollider* _Collider);
-	virtual void ExitOverlap(GCollider* _Collider);
+	virtual void OnCollisionEnter(GCollider* _Collider);
+	virtual void OnCollision(GCollider* _Collider);
+	virtual void OnCollisionExit(GCollider* _Collider);
+
+	virtual void OnTriggerEnter(GCollider* _Collider);
+	virtual void OnTrigger(GCollider* _Collider);
+	virtual void OnTriggerExit(GCollider* _Collider);
 
 public:
+	void AddPos(Vec2 _Pos) { m_Pos += _Pos; }
+	void AddPos(POINT _Pos) { m_Pos += _Pos; }
+	void AddPos(float _PosX, float _PosY) { m_Pos += Vec2(_PosX, _PosY); }
 	void SetPos(Vec2 _Pos) { m_Pos = _Pos; }
 	void SetPos(POINT _Pos) { m_Pos = _Pos; }
 	void SetPos(float _PosX, float _PosY) { m_Pos = Vec2(_PosX, _PosY); }
