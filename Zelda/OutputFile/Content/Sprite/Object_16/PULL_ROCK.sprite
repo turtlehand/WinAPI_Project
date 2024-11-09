@@ -1,0 +1,19 @@
+[ASSETTYPE]
+2
+
+[LEFTTOP]
+65, 91
+
+[SLICE]
+16, 16
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+Dungeon_Tileset
+
+[ATLAS_PATH]
+Texture\Dungeon_Tileset.png
+

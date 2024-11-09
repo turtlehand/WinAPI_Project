@@ -21,3 +21,22 @@ MOBLIN_RIGHT_1
 
 [PATH]
 Sprite\Overworld_Enemies\MOBLIN_RIGHT_1.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

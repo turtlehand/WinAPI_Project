@@ -3,6 +3,7 @@
 
 class GRigidBody;
 class GSpriteRenderer;
+class GFlipBookPlayer;
 class GCollider;
 
 class GHitBox :
@@ -17,6 +18,7 @@ class GHitBox :
 
     GCollider* m_Collider;
     GSpriteRenderer* m_SpriteRenderer;
+    GFlipBookPlayer* m_FlipBookPlayer;
 
 public:
     virtual void Begin() override;
@@ -40,6 +42,9 @@ public:
     bool GetIsProjectile() { return m_IsProjectile; };
 
     virtual void OnTriggerEnter(GCollider* _Collider) override;
+
+    GSpriteRenderer* GetSpriteRenderer() { return m_SpriteRenderer; }
+    GFlipBookPlayer* GetFlipBookPlayer() { return m_FlipBookPlayer; }
 
 public:
     GHitBox();

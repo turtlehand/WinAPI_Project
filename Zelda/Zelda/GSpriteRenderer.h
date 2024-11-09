@@ -5,47 +5,44 @@ class GSprite;
 class GTexture;
 
 class GSpriteRenderer :
-    public GComponent
+	public GComponent
 {
 private:
-    GSprite* m_Sprite;
+	GSprite*			m_Sprite;
 
-    Vec2				m_Scale;
-    int					m_Alpha;
-    COLORREF			m_DeleteColor;
+	RenderInfo			m_RenderInfo;
 
-    bool				m_XFlip;
-    bool				m_YFlip;
-
-    GTexture*           m_RenderTexture;        // Render 시킬 Texture
-    
+	GTexture*           m_RenderTexture;        // Render 시킬 Texture
+	
 public:
-    void SetSprite(GSprite* _Sprite) { m_Sprite = _Sprite; }
-    const GSprite* GetSprite() { return m_Sprite; }
+	void SetSprite(GSprite* _Sprite) { m_Sprite = _Sprite; }
+	const GSprite* GetSprite() { return m_Sprite; }
 
-    void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
+	void SetOffset(Vec2 _Offset) { m_RenderInfo.Offset = _Offset; }
 
-    void SetAlpha(int _Alpha) { m_Alpha = _Alpha; }
+	void SetScale(Vec2 _Scale) { m_RenderInfo.Scale = _Scale; }
 
-    void SetDeleteColor(COLORREF _DeleteColor) { m_DeleteColor = _DeleteColor; }
+	void SetAlpha(int _Alpha) { m_RenderInfo.Alpha = _Alpha; }
 
-    void SetXFlip(bool _XFlip) { m_XFlip = _XFlip; }
+	void SetDeleteColor(COLORREF _DeleteColor) { m_RenderInfo.DeleteColor = _DeleteColor; }
 
-    void SetYFlip(bool _YFlip) { m_YFlip = _YFlip; }
+	void SetXFlip(bool _XFlip) { m_RenderInfo.XFlip = _XFlip; }
+
+	void SetYFlip(bool _YFlip) { m_RenderInfo.YFlip = _YFlip; }
 
 private:
-    void XFlip(GTexture*& _Texture);
-    void YFlip(GTexture*& _Texture);
-    void DeleteColor(GTexture*& _Texture);
-    void Alpha(GTexture*& _Texture);
-    void DeleteColorAlpha(GTexture*& _Texture);
+	void XFlip(GTexture*& _Texture);
+	void YFlip(GTexture*& _Texture);
+	void DeleteColor(GTexture*& _Texture);
+	void Alpha(GTexture*& _Texture);
+	void DeleteColorAlpha(GTexture*& _Texture);
 
 public:
-    virtual void FinalTick() override;
-    virtual void Render();
+	virtual void FinalTick() override;
+	virtual void Render();
 public:
-    GSpriteRenderer();
-    virtual ~GSpriteRenderer() override;
+	GSpriteRenderer();
+	virtual ~GSpriteRenderer() override;
 
 };
 

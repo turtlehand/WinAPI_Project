@@ -3,6 +3,7 @@
 
 #include "GBoxCollider.h"
 #include "GSpriteRenderer.h"
+#include "GFlipBookPlayer.h"
 
 GHitBox::GHitBox() :
 	m_AttackType(ATTACK_TYPE::NONE),
@@ -16,6 +17,7 @@ GHitBox::GHitBox() :
 	m_Collider = AddComponent<GBoxCollider>();
 	m_Collider->SetTrigger(true);
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
+	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
 }
 
 GHitBox::~GHitBox()
@@ -34,6 +36,7 @@ void GHitBox::Tick()
 void GHitBox::Render()
 {
 	m_SpriteRenderer->Render();
+	m_FlipBookPlayer->Render();
 }
 
 void GHitBox::OnTriggerEnter(GCollider* _Collider)

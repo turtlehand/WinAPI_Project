@@ -9,11 +9,7 @@
 GSpriteRenderer::GSpriteRenderer() :
 	GComponent(COMPONENT_TYPE::SPRITERENDERER),
 	m_Sprite(nullptr),
-	m_Scale(Vec2(1.f, 1.f)),
-	m_Alpha(255),
-	m_DeleteColor(RGB(-1, -1, -1)),
-	m_XFlip(false),
-	m_YFlip(false),
+	m_RenderInfo{Vec2(0.f,0.f),Vec2(1.f, 1.f),255,RGB(-1, -1, -1) ,false,false},
 	m_RenderTexture(nullptr)
 {
 
@@ -71,7 +67,7 @@ void GSpriteRenderer::DeleteColorAlpha(GTexture*& _Textrue)
 	HDC hBackDC = CEngine::GetInst()->GetSecondDC();
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
-	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * m_Scale.x, _Textrue->GetHeight() * m_Scale.y);
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * m_RenderInfo.Scale.x, _Textrue->GetHeight() * m_RenderInfo.Scale.y);
 
 	// 임시 텍스쳐에 배경 복사
 	BitBlt(TempTexture->GetDC()
@@ -95,19 +91,19 @@ void GSpriteRenderer::DeleteColorAlpha(GTexture*& _Textrue)
 		, 0
 		, _Textrue->GetWidth()
 		, _Textrue->GetHeight()
-		, m_DeleteColor);
+		, m_RenderInfo.DeleteColor);
 
 	// 텍스쳐를 배경에 반투명하게 그리기
 	BLENDFUNCTION blend = {};
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = m_Alpha;
+	blend.SourceConstantAlpha = m_RenderInfo.Alpha;
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - TempTexture->GetWidth() / 2 + m_Sprite->GetOffset().x
-		, vPos.y - TempTexture->GetHeight() / 2 + m_Sprite->GetOffset().y
+		, vPos.x - TempTexture->GetWidth() / 2 + m_Sprite->GetOffset().x * m_RenderInfo.Scale.x + (m_RenderInfo.XFlip ? -m_RenderInfo.Offset.x * m_RenderInfo.Scale.x : m_RenderInfo.Offset.x * m_RenderInfo.Scale.x)
+		, vPos.y - TempTexture->GetHeight() / 2 + m_Sprite->GetOffset().y * m_RenderInfo.Scale.y + (m_RenderInfo.YFlip ? m_RenderInfo.Offset.y * m_RenderInfo.Scale.y : -m_RenderInfo.Offset.y * m_RenderInfo.Scale.y)
 		, TempTexture->GetWidth()
 		, TempTexture->GetHeight()
 		, TempTexture->GetDC()
@@ -126,15 +122,15 @@ void GSpriteRenderer::DeleteColor(GTexture*& _Textrue)
 
 	// 스프라이트 배경 없애고 텍스쳐에 그리기
 	TransparentBlt(hBackDC
-		, vPos.x - _Textrue->GetWidth() * m_Scale.x / 2 + m_Sprite->GetOffset().x
-		, vPos.y - _Textrue->GetHeight() * m_Scale.y / 2 + m_Sprite->GetOffset().y
-		, _Textrue->GetWidth() * m_Scale.x
-		, _Textrue->GetHeight() * m_Scale.y
+		, vPos.x - _Textrue->GetWidth() * m_RenderInfo.Scale.x / 2 + m_Sprite->GetOffset().x * m_RenderInfo.Scale.x + (m_RenderInfo.XFlip ? -m_RenderInfo.Offset.x * m_RenderInfo.Scale.x : m_RenderInfo.Offset.x * m_RenderInfo.Scale.x)
+		, vPos.y - _Textrue->GetHeight() * m_RenderInfo.Scale.y / 2 + m_Sprite->GetOffset().y * m_RenderInfo.Scale.y + (m_RenderInfo.YFlip ? m_RenderInfo.Offset.y * m_RenderInfo.Scale.y : -m_RenderInfo.Offset.y * m_RenderInfo.Scale.y)
+		, _Textrue->GetWidth() * m_RenderInfo.Scale.x
+		, _Textrue->GetHeight() * m_RenderInfo.Scale.y
 		, _Textrue->GetDC()
 		, 0, 0
 		, _Textrue->GetWidth()
 		, _Textrue->GetHeight()
-		, m_DeleteColor);
+		, m_RenderInfo.DeleteColor);
 }
 
 void GSpriteRenderer::Alpha(GTexture*& _Texture)
@@ -146,14 +142,14 @@ void GSpriteRenderer::Alpha(GTexture*& _Texture)
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = m_Alpha;
+	blend.SourceConstantAlpha = m_RenderInfo.Alpha;
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - _Texture->GetWidth() * m_Scale.x / 2 + m_Sprite->GetOffset().x
-		, vPos.y - _Texture->GetHeight() * m_Scale.y / 2 + m_Sprite->GetOffset().y
-		, _Texture->GetWidth() * m_Scale.x
-		, _Texture->GetHeight() * m_Scale.y
+		, vPos.x - _Texture->GetWidth() * m_RenderInfo.Scale.x / 2 + m_Sprite->GetOffset().x * m_RenderInfo.Scale.x + (m_RenderInfo.XFlip ? -m_RenderInfo.Offset.x * m_RenderInfo.Scale.x : m_RenderInfo.Offset.x * m_RenderInfo.Scale.x)
+		, vPos.y - _Texture->GetHeight() * m_RenderInfo.Scale.y / 2 + m_Sprite->GetOffset().y + (m_RenderInfo.YFlip ? m_RenderInfo.Offset.y * m_RenderInfo.Scale.y : -m_RenderInfo.Offset.y * m_RenderInfo.Scale.y)
+		, _Texture->GetWidth() * m_RenderInfo.Scale.x
+		, _Texture->GetHeight() * m_RenderInfo.Scale.y
 		, _Texture->GetDC()
 		, 0, 0
 		, _Texture->GetWidth()
@@ -185,24 +181,24 @@ void GSpriteRenderer::Render()
 
 
 	// 반전
-	if (m_XFlip)
+	if (m_RenderInfo.XFlip)
 	{
 		XFlip(m_RenderTexture);
 
 	}
-	if (m_YFlip)
+	if (m_RenderInfo.YFlip)
 	{
 		YFlip(m_RenderTexture);
 	}
 
 	// 없애고 싶은 색도 있고 알파값도 수정하고 싶다면
 	// 복봍을 여러번 하므로 자제할 것
-	if (RGB(-1, -1, -1) != m_DeleteColor && m_Alpha != 255)
+	if (RGB(-1, -1, -1) != m_RenderInfo.DeleteColor && m_RenderInfo.Alpha != 255)
 	{
 		DeleteColorAlpha(m_RenderTexture);
 	}
 	//없애고 싶은 색만 있다면
-	else if (RGB(-1, -1, -1) != m_DeleteColor)
+	else if (RGB(-1, -1, -1) != m_RenderInfo.DeleteColor)
 	{
 		DeleteColor(m_RenderTexture);
 	}

@@ -23,11 +23,12 @@ public:
 public:
 	void Interaction(GHitBox* _HitBox);
 
-	void Damaged(int _Damage);
-	void KnockBack();
-	virtual void DropItem() {};
+	void Damaged(int _Damage);					// 피해
+	void KnockBack();							// 밀려남 
+	virtual void InteractionEffect() {};		// 상호작용 시 효과
 
 	void Dead();
+	virtual void DropItem() {};					// 죽었을 시 떨어트리는 오브젝트
 
 public:
 	// 소재 - 공격 반응

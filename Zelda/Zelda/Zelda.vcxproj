@@ -164,6 +164,7 @@
     <ClInclude Include="GFlipBook.h" />
     <ClInclude Include="GFlipBookPlayer.h" />
     <ClInclude Include="GFSM.h" />
+    <ClInclude Include="GGrass.h" />
     <ClInclude Include="GHitBox.h" />
     <ClInclude Include="GLevel_Editor.h" />
     <ClInclude Include="GLevel_Start.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="GPIdleState.h" />
     <ClInclude Include="GPlatform.h" />
     <ClInclude Include="GPMoveState.h" />
+    <ClInclude Include="GPullRock.h" />
     <ClInclude Include="GRigidBody.h" />
     <ClInclude Include="GRock.h" />
     <ClInclude Include="GSound.h" />
@@ -228,6 +230,7 @@
     <ClCompile Include="GFlipBook.cpp" />
     <ClCompile Include="GFlipBookPlayer.cpp" />
     <ClCompile Include="GFSM.cpp" />
+    <ClCompile Include="GGrass.cpp" />
     <ClCompile Include="GHitBox.cpp" />
     <ClCompile Include="GLevel_Editor.cpp" />
     <ClCompile Include="GLevel_Start.cpp" />
@@ -242,6 +245,7 @@
     <ClCompile Include="GPIdleState.cpp" />
     <ClCompile Include="GPlatform.cpp" />
     <ClCompile Include="GPMoveState.cpp" />
+    <ClCompile Include="GPullRock.cpp" />
     <ClCompile Include="GRigidBody.cpp" />
     <ClCompile Include="GRock.cpp" />
     <ClCompile Include="GSound.cpp" />

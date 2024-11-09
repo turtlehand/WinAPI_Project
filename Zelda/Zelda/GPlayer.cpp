@@ -123,7 +123,7 @@ const wstring& GPlayer::GetCurrentState()
 void GPlayer::CreateAnimator()
 {
 	m_FlipBookPlayer->SetName(L"Player_FlipBookPlayer");
-	m_FlipBookPlayer->SetScale(Vec2(4.f, 4.f));
+	//m_FlipBookPlayer->SetScale(Vec2(4.f, 4.f));
 
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_UP", L"FlipBook\\Link_16\\LINK_UP.flip"));
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_DOWN", L"FlipBook\\Link_16\\LINK_DOWN.flip"));
@@ -136,5 +136,5 @@ void GPlayer::CreateAnimator()
 
 	m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::DOWN, 5, true);
 
-	m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
+	//m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
 }

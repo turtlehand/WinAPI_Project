@@ -12,3 +12,22 @@ LINK_UP_ATTACK_0
 
 [PATH]
 Sprite\Link_16\LINK_UP_ATTACK_0.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

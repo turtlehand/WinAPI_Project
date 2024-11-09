@@ -23,9 +23,11 @@ GFlipBookPlayer::GFlipBookPlayer() :
 	m_Finish(false),
 
 	m_RenderTexture(nullptr),
+	/*
 	m_Scale(1.f, 1.f),
 	m_Alpha(255),
 	m_DeleteColor(RGB(-1, -1, -1)),
+	*/
 	m_XFlip(false),
 	m_YFlip(false)
 {
@@ -89,8 +91,9 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
 	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
+	RenderInfo& Info = m_vecFlipBook[m_CurFlipBookIndex]->GetRenderInfo(m_SpriteIdx);
 
-	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * m_Scale.x, _Textrue->GetHeight() * m_Scale.y);
+	GTexture* TempTexture = GAssetManager::GetInst()->CreateTexture(L"DeleteColorAlpha", _Textrue->GetWidth() * Info.Scale.x, _Textrue->GetHeight() * Info.Scale.y);
 
 	// 임시 텍스쳐에 배경 복사
 	BitBlt(TempTexture->GetDC()
@@ -114,19 +117,19 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 		, 0
 		, _Textrue->GetWidth()
 		, _Textrue->GetHeight()
-		, m_DeleteColor);
+		, Info.DeleteColor);
 
 	// 텍스쳐를 배경에 반투명하게 그리기
 	BLENDFUNCTION blend = {};
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = m_Alpha;
+	blend.SourceConstantAlpha = Info.Alpha;
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x * m_Scale.x
-		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y * m_Scale.y
+		, vPos.x - TempTexture->GetWidth() / 2 + Sprite->GetOffset().x * Info.Scale.x + (m_XFlip != Info.XFlip ? - Info.Offset.x * Info.Scale.x : Info.Offset.x * Info.Scale.x)
+		, vPos.y - TempTexture->GetHeight() / 2 + Sprite->GetOffset().y * Info.Scale.y + (m_YFlip != Info.YFlip ? Info.Offset.y * Info.Scale.y : - Info.Offset.y * Info.Scale.y)
 		, TempTexture->GetWidth()
 		, TempTexture->GetHeight()
 		, TempTexture->GetDC()
@@ -144,18 +147,19 @@ void GFlipBookPlayer::DeleteColor(GTexture*& _Textrue)
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
 	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
+	RenderInfo& Info = m_vecFlipBook[m_CurFlipBookIndex]->GetRenderInfo(m_SpriteIdx);
 
 	// 스프라이트 배경 없애고 텍스쳐에 그리기
 	TransparentBlt(hBackDC
-		, vPos.x - _Textrue->GetWidth() * m_Scale.x / 2 + Sprite->GetOffset().x * m_Scale.x
-		, vPos.y - _Textrue->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y * m_Scale.y
-		, _Textrue->GetWidth() * m_Scale.x
-		, _Textrue->GetHeight() * m_Scale.y
+		, vPos.x - _Textrue->GetWidth() * Info.Scale.x / 2 + Sprite->GetOffset().x * Info.Scale.x + (m_XFlip != Info.XFlip ? -Info.Offset.x * Info.Scale.x : Info.Offset.x * Info.Scale.x)
+		, vPos.y - _Textrue->GetHeight() * Info.Scale.y / 2 + Sprite->GetOffset().y * Info.Scale.y + (m_YFlip != Info.YFlip ? Info.Offset.y * Info.Scale.y : -Info.Offset.y * Info.Scale.y)
+		, _Textrue->GetWidth() * Info.Scale.x
+		, _Textrue->GetHeight() * Info.Scale.y
 		, _Textrue->GetDC()
 		, 0, 0
 		, _Textrue->GetWidth()
 		, _Textrue->GetHeight()
-		, m_DeleteColor);
+		, Info.DeleteColor);
 }
 
 void GFlipBookPlayer::Alpha(GTexture*& _Texture)
@@ -164,19 +168,20 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 	Vec2 vPos = GetOwner()->GetRenderPos();
 
 	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
+	RenderInfo& Info = m_vecFlipBook[m_CurFlipBookIndex]->GetRenderInfo(m_SpriteIdx);
 
 	BLENDFUNCTION blend = {};
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = m_Alpha;
+	blend.SourceConstantAlpha = Info.Alpha;
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
-		, vPos.x - _Texture->GetWidth() * m_Scale.x / 2  + Sprite->GetOffset().x * m_Scale.x
-		, vPos.y - _Texture->GetHeight() * m_Scale.y / 2 + Sprite->GetOffset().y * m_Scale.y
-		, _Texture->GetWidth() * m_Scale.x
-		, _Texture->GetHeight() * m_Scale.y
+		, vPos.x - _Texture->GetWidth() * Info.Scale.x / 2  + Sprite->GetOffset().x * Info.Scale.x + (m_XFlip != Info.XFlip ? -Info.Offset.x * Info.Scale.x : Info.Offset.x * Info.Scale.x)
+		, vPos.y - _Texture->GetHeight() * Info.Scale.y / 2 + Sprite->GetOffset().y * Info.Scale.y + (m_YFlip != Info.YFlip ? Info.Offset.y * Info.Scale.y : -Info.Offset.y * Info.Scale.y)
+		, _Texture->GetWidth() * Info.Scale.x
+		, _Texture->GetHeight() * Info.Scale.y
 		, _Texture->GetDC()
 		, 0, 0
 		, _Texture->GetWidth()
@@ -232,6 +237,7 @@ void GFlipBookPlayer::Render()
 		return;
 
 	GSprite* Sprite = m_vecFlipBook[m_CurFlipBookIndex]->GetSprite(m_SpriteIdx);
+	RenderInfo& Info = m_vecFlipBook[m_CurFlipBookIndex]->GetRenderInfo(m_SpriteIdx);
 
 	// 각종 연산을 위한 임시 텍스쳐
 	m_RenderTexture = GAssetManager::GetInst()->CreateTexture(L"Temp", Sprite->GetSlice().x, Sprite->GetSlice().y);
@@ -248,24 +254,24 @@ void GFlipBookPlayer::Render()
 
 
 	// 반전
-	if (m_XFlip)
+	if (m_XFlip != Info.XFlip)
 	{
 		XFlip(m_RenderTexture);
 		
 	}
-	if (m_YFlip)
+	if (m_YFlip != Info.YFlip)
 	{
 		YFlip(m_RenderTexture);
 	}
 
 	// 업애고 싶은 색도 있고 알파값도 수정하고 싶다면
 	// 복봍을 여러번 하므로 자제할 것
-	if (RGB(-1, -1, -1) != m_DeleteColor && m_Alpha != 255)
+	if (RGB(-1, -1, -1) != Info.DeleteColor && Info.Alpha != 255)
 	{
 		DeleteColorAlpha(m_RenderTexture);
 	}
 	// 없애고 싶은 색만 있다면
-	else if (RGB(-1, -1, -1) != m_DeleteColor)
+	else if (RGB(-1, -1, -1) != Info.DeleteColor)
 	{
 		DeleteColor(m_RenderTexture);
 	}

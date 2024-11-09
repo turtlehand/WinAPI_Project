@@ -13,6 +13,25 @@ LINK_DOWN_0
 [PATH]
 Sprite\Link_16\LINK_DOWN_0.sprite
 
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0
+
 [INDEX]
 1
 
@@ -21,3 +40,22 @@ LINK_DOWN_1
 
 [PATH]
 Sprite\Link_16\LINK_DOWN_1.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

@@ -13,6 +13,25 @@ FIRE_0
 [PATH]
 Sprite\NPC_16\FIRE_0.sprite
 
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0
+
 [INDEX]
 1
 
@@ -21,3 +40,22 @@ FIRE_1
 
 [PATH]
 Sprite\NPC_16\FIRE_1.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

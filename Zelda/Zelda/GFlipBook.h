@@ -6,11 +6,12 @@ class GSprite;
 class GFlipBook : public GAsset
 {
 private:
-	vector<GSprite*>    m_Sprites;
+	vector<pair<GSprite*,RenderInfo>>    m_Sprites;
 
 public:
-	void AddSprite(GSprite* _Sprite) { m_Sprites.push_back(_Sprite); }
-	GSprite* GetSprite(int _Idx) { return m_Sprites[_Idx]; }
+	void AddSprite(GSprite* _Sprite, const RenderInfo& _RenderInfo) { m_Sprites.push_back(make_pair(_Sprite,_RenderInfo)); }
+	GSprite* GetSprite(int _Idx) { return m_Sprites[_Idx].first; }
+	RenderInfo& GetRenderInfo(int _Idx) { return m_Sprites[_Idx].second; }
 
 	int GetMaxSpriteCount() { return m_Sprites.size(); }
 

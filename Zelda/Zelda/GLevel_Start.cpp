@@ -10,6 +10,8 @@
 #include "GHitBox.h"
 #include "GRock.h"
 #include "GTree.h"
+#include "GPullRock.h"
+#include "GGrass.h"
 
 #include "GPathManager.h"
 
@@ -47,20 +49,29 @@ void GLevel_Start::Begin()
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetPos(0.f, 0.f);
 
-
 	// Monster 생성하기
 	GMoblin* pMoblin = new GMoblin;
 	AddObject(pMoblin, LAYER_TYPE::MONSTER);
 	pMoblin->SetPos(300.f, 200.f);
-	
 
 	GRock* pRock = new GRock;
 	AddObject(pRock, LAYER_TYPE::OBJECT);
 	pRock->SetPos(-300.f, 200.f);
+	
 
 	GTree* pTree = new GTree;
 	AddObject(pTree, LAYER_TYPE::OBJECT);
 	pTree->SetPos(-300.f, 100.f);
+
+	GPullRock* pPullRock = new GPullRock;
+	AddObject(pPullRock, LAYER_TYPE::OBJECT);
+	pPullRock->SetPos(-300.f, 0.f);
+	
+
+	GGrass* pGrass = new GGrass;
+	AddObject(pGrass, LAYER_TYPE::OBJECT);
+	pGrass->SetPos(-300.f, - 100.f);
+	
 	
 
 	// TileMap Object 추가
@@ -86,6 +97,7 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::OBJECT);
 }
 
 void GLevel_Start::Tick()

@@ -357,6 +357,12 @@
     <ClInclude Include="GLog.h">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="GPullRock.h">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClInclude>
+    <ClInclude Include="GGrass.h">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -537,6 +543,12 @@
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GLog.cpp">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GPullRock.cpp">
+      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GGrass.cpp">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClCompile>
   </ItemGroup>

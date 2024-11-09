@@ -11,11 +11,11 @@ GCreature::GCreature() :
 	m_EffectAnim(nullptr)
 {
 	m_EffectAnim = AddComponent<GFlipBookPlayer>();
-	m_EffectAnim->SetScale(Vec2(4.f, 4.f));
+	//m_EffectAnim->SetScale(Vec2(4.f, 4.f));
 
 	m_EffectAnim->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
 
-	m_EffectAnim->SetDeleteColor(RGB(116, 116, 116));
+	//m_EffectAnim->SetDeleteColor(RGB(116, 116, 116));
 }
 
 GCreature::~GCreature()
@@ -95,6 +95,8 @@ void GCreature::Interaction(GHitBox* _HitBox)
 		Freeze();
 	else if (CElementType == ELEMENT_TYPE::ICE && HBElementType == ELEMENT_TYPE::FIRE)
 		Melt();
+
+	InteractionEffect();
 }
 
 void GCreature::Damaged(int _Damage)

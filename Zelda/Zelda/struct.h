@@ -165,6 +165,19 @@ struct DeBugRenderInfo
 	float Time;			// 진행 시간
 };
 
+// 렌더 시 sprite를 조작할 정보
+struct RenderInfo
+{
+	Vec2				Offset = Vec2::zero();
+	Vec2				Scale = Vec2(1.f,1.f);
+	int					Alpha = 255;
+	COLORREF			DeleteColor = RGB(-1,-1,-1);
+
+	bool				XFlip = false;
+	bool				YFlip = false;
+};
+
+
 struct ElementalEffect
 {
 	ELEMENT_TYPE ElementType = ELEMENT_TYPE::NONE;

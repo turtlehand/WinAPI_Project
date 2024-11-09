@@ -73,7 +73,7 @@ void GMoblin::Render()
 void GMoblin::CreateAnimator()
 {
 	GetFlipBookPlayer()->SetName(L"Moblin_FlipBookPlayer");
-	GetFlipBookPlayer()->SetScale(Vec2(4.f, 4.f));
+	//GetFlipBookPlayer()->SetScale(Vec2(4.f, 4.f));
 
 	GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"MOBLIN_UP", L"FlipBook\\Moblin_16\\MOBLIN_UP.flip"));
 	GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"MOBLIN_DOWN", L"FlipBook\\Moblin_16\\MOBLIN_DOWN.flip"));
@@ -81,6 +81,6 @@ void GMoblin::CreateAnimator()
 
 	GetFlipBookPlayer()->SetPlay((int)MOBLIN_ANIM_STATE::DOWN, 5, true);
 
-	GetFlipBookPlayer()->SetDeleteColor(RGB(116, 116, 116));
+	//GetFlipBookPlayer()->SetDeleteColor(RGB(116, 116, 116));
 }
 

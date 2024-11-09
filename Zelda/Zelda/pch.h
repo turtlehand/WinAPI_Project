@@ -18,5 +18,6 @@ using std::vector;
 using std::list;
 using std::map;
 using std::make_pair;
+using std::pair;
 
 #include "global.h"
