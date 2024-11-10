@@ -35,6 +35,14 @@ void GPIdleState::FinalTick()
 	{
 		m_Player->m_FSM->ChanageState(L"ATTACK");
 	}
+	else if (GETKEYDOWN(KEY::E))
+	{
+		m_Player->PickUpItem();
+	}
+	else if (GETKEYDOWN(KEY::Z))
+	{
+		m_Player->DropItem(0);
+	}
 }
 
 void GPIdleState::Exit()

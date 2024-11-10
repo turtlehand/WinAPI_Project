@@ -21,12 +21,16 @@
 #include "GPMoveState.h"
 #include "GPAttackState.h"
 
+#include "GFireWood.h"
+#include "GFlint.h"
+
 GPlayer::GPlayer() :
 	m_FSM(nullptr),
-	m_Collider(nullptr),
 	m_FlipBookPlayer(nullptr),
 	m_RigidBody(nullptr),
-	m_AttackBox(nullptr)
+	m_AttackBox(nullptr),
+	m_Inventory{},
+	m_NearbyItem(nullptr)
 {
 	SetName(L"Player");
 
@@ -55,10 +59,9 @@ GPlayer::GPlayer() :
 	m_FSM->SetName(L"Player_FSM");
 
 	// 히트박스 추가
-	m_Collider = AddComponent<GBoxCollider>();
-	m_Collider->SetName(L"Player_Hit_Box");
-	m_Collider->SetPos(Vec2(0, 0));
-	m_Collider->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetName(L"Player_Hit_Box");
+	GetHitBox()->SetPos(Vec2(0, 0));
+	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
 	// 강체 추가
 	m_RigidBody = AddComponent<GRigidBody>();
@@ -73,6 +76,8 @@ GPlayer::GPlayer() :
 	m_FSM->AddState(L"IDLE", new GPIdleState);
 	m_FSM->AddState(L"ATTACK", new GPAttackState);
 	m_FSM->ChanageState(L"IDLE");
+
+	m_Inventory.reserve(MAX_SLOT);
 }
 
 GPlayer::~GPlayer()
@@ -103,6 +108,22 @@ void GPlayer::OnTriggerEnter(GCollider* _Collider)
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
 		Interaction(HitBox);
+}
+
+void GPlayer::OnTrigger(GCollider* _Collider)
+{
+	if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::ITEM)
+	{
+		m_NearbyItem = (GItem*)_Collider->GetOwner();
+	}
+}
+
+void GPlayer::OnTriggerExit(GCollider* _Collider)
+{
+	if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::ITEM)
+	{
+		m_NearbyItem = nullptr;
+	}
 }
 
 void GPlayer::OnCollisionEnter(GCollider* _Collider)
@@ -137,4 +158,92 @@ void GPlayer::CreateAnimator()
 	m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::DOWN, 5, true);
 
 	//m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
+}
+
+void GPlayer::PickUpItem()
+{
+	// 근처 아이템이 없거나 슬롯이 꽉찼다면
+	if (!IsValid(m_NearbyItem) || m_Inventory.size() == MAX_SLOT)
+		return;
+
+	// 이 오브젝트가 아이템인지 확인한다.
+	GItem* Item = dynamic_cast<GItem*>(m_NearbyItem);
+	assert(Item != nullptr);
+
+	vector<pair<ITEM_ID, int>>::iterator iter = m_Inventory.begin();
+
+	// 인벤토리에서 아이템이 있는지 찾는다.
+	for (iter ; iter != m_Inventory.end(); ++iter)
+	{
+		if (iter->first == Item->GetItemID())
+			break;
+	}
+
+
+	// 인벤토리에서 아이템을 못 찾았다.
+	if (iter == m_Inventory.end())
+	{
+		// 인벤토리에서 아이템을 추가한다.
+		m_Inventory.push_back(make_pair(Item->GetItemID(), 1));
+	}
+	// 인벤토리에서 아이템을 찾았다.
+	else 
+	{
+		//아이템 수를 증가시킨다.
+		++((*iter).second);
+	}
+	DeleteGameObject((CObj*)(m_NearbyItem));
+	m_NearbyItem = nullptr;
+	
+}
+
+void GPlayer::DropItem(int index)
+{
+	//index가 현재 인벤토리보다 크다면 반환
+	if (index >= m_Inventory.size())
+		return;
+
+	// 인벤토리의 아이템의 개수가 1 이상이어야 한다.
+	assert(m_Inventory[index].second > 0);
+
+	// 아이템을 생성한다.
+	if (m_Inventory[index].first == ITEM_ID::Fire_Wood)
+	{
+		CObj* Fire_Wood = new GFireWood;
+		Fire_Wood->SetPos(GetPos().x, GetPos().y);
+		CreateGameObject(Fire_Wood, LAYER_TYPE::ITEM);
+	}
+	else if (m_Inventory[index].first == ITEM_ID::Flint)
+	{
+		CObj* Flint = new GFlint;
+		Flint->SetPos(GetPos().x, GetPos().y);
+		CreateGameObject(Flint, LAYER_TYPE::ITEM);
+	}
+
+
+	// 해당 인벤토리의 아이템의 개수가 1이라면 슬롯에서 지운다.
+	if (m_Inventory[index].second == 1)
+		m_Inventory.erase(m_Inventory.begin() + index);
+	else
+		m_Inventory[index].second -= 1;
+		
+}
+
+void GPlayer::UseItem(int index)
+{
+	//index가 현재 인벤토리보다 크다면 반환
+	if (index >= m_Inventory.size())
+		return;
+
+	// 인벤토리의 아이템의 개수가 1 이상이어야 한다.
+	assert(m_Inventory[index].second > 0);
+
+	// 음식일 때
+	if (200 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 300)
+	{
+		
+	}
+	// 무기일 때
+
+	// 도구일 때
 }

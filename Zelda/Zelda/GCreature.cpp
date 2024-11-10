@@ -1,19 +1,38 @@
 #include "pch.h"
 #include "GCreature.h"
 
+#include "CLevel.h"
+#include "CLevelMgr.h"
 #include "GAssetManager.h"
+
+#include "GBoxCollider.h"
 
 #include "GHitBox.h";
 #include "GFlipBookPlayer.h"
 
+
+
 GCreature::GCreature() :
 	m_StatInfo(nullptr),
-	m_EffectAnim(nullptr)
+	m_EffectAnim(nullptr),
+	m_HitBox(nullptr)
 {
 	m_EffectAnim = AddComponent<GFlipBookPlayer>();
 	//m_EffectAnim->SetScale(Vec2(4.f, 4.f));
 
 	m_EffectAnim->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
+
+	m_HitBox = AddComponent<GBoxCollider>();
+
+
+	// 상태이상 공격 박스
+	m_EffectAttackBox = new GHitBox;
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_EffectAttackBox, LAYER_TYPE::OBJECT);
+	AddChild(m_EffectAttackBox);
+	m_EffectAttackBox->SetActive(false);
+	m_EffectAttackBox->SetName(L"Effect Box");
+	(m_EffectAttackBox->GetComponent<GBoxCollider>())->SetScale(Vec2(64.f, 64.f));
+	(m_EffectAttackBox->GetComponent<GBoxCollider>())->SetTrigger(true);
 
 	//m_EffectAnim->SetDeleteColor(RGB(116, 116, 116));
 }
@@ -39,20 +58,26 @@ void GCreature::StatusEffect()
 		m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
 		m_StatInfo->Effect.Duration = 0.f;
 		m_StatInfo->Effect.Time = 0.f;
+		m_EffectAttackBox->SetActive(false);
 	}
 
 	m_StatInfo->Effect.Time -= DT;
 
 	if (m_StatInfo->Effect.ElementType == ELEMENT_TYPE::FIRE)
 	{
-		// 1초가 지날 때마다 피해를 입음
-		if (m_StatInfo->Effect.Duration - m_StatInfo->Effect.Time >= 1)
-		{
-			Damaged(1);
-			m_StatInfo->Effect.Duration = m_StatInfo->Effect.Time;
-		}
+		BurnStatusEffect();
 	}
-		
+	
+}
+
+void GCreature::BurnStatusEffect()
+{
+	// 1초가 지날 때마다 피해를 입음
+	if (m_StatInfo->Effect.Duration - m_StatInfo->Effect.Time >= 1)
+	{
+		Damaged(1);
+		m_StatInfo->Effect.Duration = m_StatInfo->Effect.Time;
+	}
 }
 
 void GCreature::Interaction(GHitBox* _HitBox)
@@ -96,7 +121,7 @@ void GCreature::Interaction(GHitBox* _HitBox)
 	else if (CElementType == ELEMENT_TYPE::ICE && HBElementType == ELEMENT_TYPE::FIRE)
 		Melt();
 
-	InteractionEffect();
+	InteractionEffect(_HitBox);
 }
 
 void GCreature::Damaged(int _Damage)
@@ -141,10 +166,21 @@ void GCreature::BeAttacked(int _Damage)
 
 void GCreature::Burn()
 {
+	if (m_StatInfo->Effect.ElementType == ELEMENT_TYPE::FIRE)
+		return;
+
+	// 불 상태이상 추가
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::FIRE;
 	m_StatInfo->Effect.Duration = 5.f;
 	m_StatInfo->Effect.Time = 5.f;
+
+	// 불 애니메이션 재생
 	m_EffectAnim->SetPlay((int)ELEMENT_TYPE::FIRE, 10, true);
+
+	// 불 효과 범위 추가
+	// 불 상태이상이 켜저도 Enter가 한번 발동 되므로 계속 불타지 않음
+	m_EffectAttackBox->SetActive(true);
+	m_EffectAttackBox->SetEffect({ ELEMENT_TYPE::FIRE,0.f,0.f });
 }
 
 void GCreature::Flow()

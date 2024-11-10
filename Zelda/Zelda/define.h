@@ -32,3 +32,5 @@
 #define PI 3.14159265
 
 #define TILE_SIZE 16
+
+#define MAX_SLOT 16

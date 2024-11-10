@@ -18,7 +18,6 @@ private:
 	CObj* m_Target;
 
 	GFSM* m_FSM;
-	GBoxCollider* m_HitBox;
 	GFlipBookPlayer* m_FlipBookPlayer;
 	GRigidBody* m_RigidBody;
 
@@ -34,8 +33,8 @@ public:
 	void SetTarget(CObj* _Target) { m_Target = _Target; }
 	CObj* GetTarget() { return m_Target; }
 
+
 	GFSM* GetFSM() { return m_FSM; }
-	GBoxCollider* GetHitBox() { return m_HitBox; }
 	GFlipBookPlayer* GetFlipBookPlayer() { return m_FlipBookPlayer; }
 	GRigidBody* GetRigidBody() { return m_RigidBody; }
 	GHitBox* GetAttackBox() { return m_AttackBox; }

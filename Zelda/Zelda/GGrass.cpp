@@ -10,14 +10,13 @@
 #include "GAssetManager.h"
 
 GGrass::GGrass() :
-	m_Collider(nullptr),
 	m_FlipBookPlayer(nullptr)
 {
 	SetName(L"Grass");
 
 	// Ç® ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
-	pInfo->Material = MATERIAL_TYPE::METAL;
+	pInfo->Material = MATERIAL_TYPE::WOOD;
 	pInfo->MaxHP = 1;
 	pInfo->HP = 1;
 	pInfo->AttackPower = 0;
@@ -25,10 +24,9 @@ GGrass::GGrass() :
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
 
-	m_Collider = AddComponent< GBoxCollider>();
-	m_Collider->SetName(L"Grass_HitBox");
-	m_Collider->SetScale(Vec2(64.f, 64.f));
-	m_Collider->SetTrigger(true);
+	GetHitBox()->SetName(L"Grass_HitBox");
+	GetHitBox()->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetTrigger(true);
 
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"GRASS", L"FlipBook\\OBJECT_16\\GRASS.flip"));
@@ -40,7 +38,7 @@ GGrass::~GGrass()
 {
 }
 
-void GGrass::InteractionEffect()
+void GGrass::InteractionEffect(GHitBox* _HitBox)
 {
 	m_FlipBookPlayer->SetPlay(0, 10, false);
 }
@@ -49,10 +47,12 @@ void GGrass::Begin()
 {
 }
 
+/*
 void GGrass::Tick()
 {
 	GCreature::Tick();
 }
+*/
 
 void GGrass::Render()
 {

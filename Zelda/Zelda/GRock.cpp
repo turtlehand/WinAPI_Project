@@ -9,7 +9,6 @@
 #include "GAssetManager.h"
 
 GRock::GRock() :
-	m_Collider(nullptr),
 	m_Sprite(nullptr)
 {
 	SetName(L"Rock");
@@ -24,9 +23,8 @@ GRock::GRock() :
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
 
-	m_Collider = AddComponent< GBoxCollider>();
-	m_Collider->SetName(L"Rock");
-	m_Collider->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetName(L"Rock");
+	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\test_18.sprite"));
@@ -41,10 +39,12 @@ void GRock::Begin()
 {
 }
 
+/*
 void GRock::Tick()
 {
 	GCreature::Tick();
 }
+*/
 
 void GRock::Render()
 {

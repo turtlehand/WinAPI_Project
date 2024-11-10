@@ -10,7 +10,6 @@
 #include "GAssetManager.h"
 
 GPullRock::GPullRock() :
-	m_Collider(nullptr),
 	m_RigidBody(nullptr),
 	m_Sprite(nullptr)
 {
@@ -26,9 +25,8 @@ GPullRock::GPullRock() :
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
 
-	m_Collider = AddComponent<GBoxCollider>();
-	m_Collider->SetName(L"PullRock_HitBox");
-	m_Collider->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetName(L"PullRock_HitBox");
+	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
 	m_RigidBody = AddComponent<GRigidBody>();
 	m_RigidBody->SetMass(1.f);
@@ -48,10 +46,12 @@ void GPullRock::Begin()
 {
 }
 
+/*
 void GPullRock::Tick()
 {
 	GCreature::Tick();
 }
+*/
 
 void GPullRock::Render()
 {

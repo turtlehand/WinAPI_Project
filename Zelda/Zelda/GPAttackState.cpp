@@ -49,7 +49,7 @@ void GPAttackState::Enter()
 
 	m_AttackBox->SetAttackType(ATTACK_TYPE::STRIKE);
 	m_AttackBox->SetMaterialType(MATERIAL_TYPE::METAL);
-	m_AttackBox->SetEffect({ ELEMENT_TYPE::FIRE,0.f,0.f });
+	//m_AttackBox->SetEffect({ ELEMENT_TYPE::FIRE,0.f,0.f });
 	m_AttackBox->SetDamage(1);
 	m_AttackBox->SetActive(true);
 

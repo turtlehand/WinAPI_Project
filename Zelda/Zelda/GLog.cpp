@@ -10,7 +10,6 @@
 #include "GAssetManager.h"
 
 GLog::GLog() :
-	m_Collider(nullptr),
 	m_RigidBody(nullptr),
 	m_Sprite(nullptr)
 {
@@ -26,9 +25,8 @@ GLog::GLog() :
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
 
-	m_Collider = AddComponent< GBoxCollider>();
-	m_Collider->SetName(L"Log_HitBox");
-	m_Collider->SetScale(Vec2(32.f, 64.f));
+	GetHitBox()->SetName(L"Log_HitBox");
+	GetHitBox()->SetScale(Vec2(32.f, 64.f));
 
 	m_RigidBody = AddComponent<GRigidBody>();
 	m_RigidBody->SetMass(1.f);
@@ -54,10 +52,12 @@ void GLog::Begin()
 {
 }
 
+/*
 void GLog::Tick()
 {
 	GCreature::Tick();
 }
+*/
 
 void GLog::Render()
 {

@@ -15,7 +15,6 @@
 GMonster::GMonster() :
 	m_Target(nullptr),
 	m_FSM(nullptr),
-	m_HitBox(nullptr),
 	m_FlipBookPlayer(nullptr),
 	m_RigidBody(nullptr),
 	m_AttackBox(nullptr)
@@ -26,8 +25,6 @@ GMonster::GMonster() :
 	AddChild(m_AttackBox);
 
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
-
-	m_HitBox = AddComponent<GBoxCollider>();
 
 	m_RigidBody = AddComponent<GRigidBody>();
 

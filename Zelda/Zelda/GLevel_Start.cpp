@@ -13,6 +13,9 @@
 #include "GPullRock.h"
 #include "GGrass.h"
 
+#include "GFireWood.h"
+#include "GFlint.h"
+
 #include "GPathManager.h"
 
 #include "GMap.h"
@@ -71,6 +74,14 @@ void GLevel_Start::Begin()
 	GGrass* pGrass = new GGrass;
 	AddObject(pGrass, LAYER_TYPE::OBJECT);
 	pGrass->SetPos(-300.f, - 100.f);
+
+	GFireWood* pFireWood = new GFireWood;
+	AddObject(pFireWood, LAYER_TYPE::ITEM);
+	pFireWood->SetPos(-300.f, -200.f);
+
+	GFlint* pFlint = new GFlint;
+	AddObject(pFlint, LAYER_TYPE::ITEM);
+	pFlint->SetPos(-300.f, -300.f);
 	
 	
 
@@ -93,11 +104,16 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheckClear();
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::ITEM);
+
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::MONSTER_OBJECT);
-	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::TILE);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER, LAYER_TYPE::ITEM);
+
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::MONSTER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::ITEM);
 }
 
 void GLevel_Start::Tick()

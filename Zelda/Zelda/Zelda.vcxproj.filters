@@ -157,6 +157,24 @@
     <Filter Include="Game\05. Object\03. Arrow">
       <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item">
+      <UniqueIdentifier>{383c2bfd-0f3d-427e-81b2-83367fd1b99c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material">
+      <UniqueIdentifier>{fd1fe06e-2f5c-49e8-8ad9-2b88d4217c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material\102. Flint">
+      <UniqueIdentifier>{ee695eff-c6ed-44e2-ab24-a8ad566fb261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood">
+      <UniqueIdentifier>{51a8c034-143a-4f6b-ac35-36c67c0df0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food">
+      <UniqueIdentifier>{087e9d9a-726c-4807-bcdc-b51d99f7f7a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit">
+      <UniqueIdentifier>{5c60255e-1faf-4bb4-b519-fcee1e403192}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -363,6 +381,18 @@
     <ClInclude Include="GGrass.h">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
     </ClInclude>
+    <ClInclude Include="GItem.h">
+      <Filter>Game\05. Object\01.Creature\04. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="GFireWood.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood</Filter>
+    </ClInclude>
+    <ClInclude Include="GFlint.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
+    </ClInclude>
+    <ClInclude Include="GFruit.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -550,6 +580,18 @@
     </ClCompile>
     <ClCompile Include="GGrass.cpp">
       <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+    </ClCompile>
+    <ClCompile Include="GItem.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="GFireWood.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood</Filter>
+    </ClCompile>
+    <ClCompile Include="GFlint.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
+    </ClCompile>
+    <ClCompile Include="GFruit.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

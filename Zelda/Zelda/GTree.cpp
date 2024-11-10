@@ -10,7 +10,6 @@
 #include "GAssetManager.h"
 
 GTree::GTree() :
-	m_Collider(nullptr),
 	m_Sprite(nullptr)
 {
 	SetName(L"Tree");
@@ -25,9 +24,8 @@ GTree::GTree() :
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
 
-	m_Collider = AddComponent< GBoxCollider>();
-	m_Collider->SetName(L"Tree_HitBox");
-	m_Collider->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetName(L"Tree_HitBox");
+	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Tree", L"Sprite\\test_19.sprite"));
@@ -48,12 +46,12 @@ void GTree::DropItem()
 void GTree::Begin()
 {
 }
-
+/*
 void GTree::Tick()
 {
 	GCreature::Tick();
 }
-
+*/
 void GTree::Render()
 {
 	m_Sprite->Render();

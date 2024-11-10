@@ -161,8 +161,11 @@
     <ClInclude Include="GButton.h" />
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="GCreature.h" />
+    <ClInclude Include="GFireWood.h" />
+    <ClInclude Include="GFlint.h" />
     <ClInclude Include="GFlipBook.h" />
     <ClInclude Include="GFlipBookPlayer.h" />
+    <ClInclude Include="GFruit.h" />
     <ClInclude Include="GFSM.h" />
     <ClInclude Include="GGrass.h" />
     <ClInclude Include="GHitBox.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="GUIManager.h" />
     <ClInclude Include="GArrow.h" />
     <ClInclude Include="GMonster.h" />
+    <ClInclude Include="GItem.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="GPlayer.h" />
     <ClInclude Include="Resource.h" />
@@ -227,8 +231,11 @@
     <ClCompile Include="GButton.cpp" />
     <ClCompile Include="GCamera.cpp" />
     <ClCompile Include="GCreature.cpp" />
+    <ClCompile Include="GFireWood.cpp" />
+    <ClCompile Include="GFlint.cpp" />
     <ClCompile Include="GFlipBook.cpp" />
     <ClCompile Include="GFlipBookPlayer.cpp" />
+    <ClCompile Include="GFruit.cpp" />
     <ClCompile Include="GFSM.cpp" />
     <ClCompile Include="GGrass.cpp" />
     <ClCompile Include="GHitBox.cpp" />
@@ -262,6 +269,7 @@
     <ClCompile Include="GUIManager.cpp" />
     <ClCompile Include="GArrow.cpp" />
     <ClCompile Include="GMonster.cpp" />
+    <ClCompile Include="GItem.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
     </ClCompile>
