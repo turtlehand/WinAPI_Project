@@ -17,6 +17,16 @@ GFlipBook::~GFlipBook()
 {
 }
 
+void GFlipBook::ChangeSprite(int index, GSprite* _Sprite)
+{
+	m_Sprites[index].first = _Sprite;
+}
+
+void GFlipBook::ChangeRednerInfo(int index, const RenderInfo& _RenderInfo)
+{
+	m_Sprites[index].second = _RenderInfo;
+}
+
 int GFlipBook::Save(const wstring& _RelativePath)
 {
 	wstring RelativePath = _RelativePath;

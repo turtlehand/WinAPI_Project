@@ -25,7 +25,7 @@ GMoblin::GMoblin()
 	pMInfo->AttackPower = 4;
 	pMInfo->Speed = 64;
 	pMInfo->Direction = Vec2::down();
-	pMInfo->DetectRange = 256;
+	pMInfo->DetectRange = 128;
 	pMInfo->AttackRange = 0;
 	pMInfo->IsDead = false;
 	SetStatInfo(pMInfo);

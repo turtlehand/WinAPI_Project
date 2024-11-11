@@ -15,6 +15,11 @@
 
 #include "GFireWood.h"
 #include "GFlint.h"
+#include "GFruit.h"
+#include "GRoastFruit.h"
+#include "GWeapon.h"
+
+#include "GInventory.h"
 
 #include "GPathManager.h"
 
@@ -43,24 +48,21 @@ void GLevel_Start::Begin()
 
 	}
 
-	// Player 스탯
+	//
+	GInventory* pInven = new GInventory;
+	AddObject(pInven, LAYER_TYPE::UI);
 
 
 	// Player 생성하기
 	GPlayer* player = new GPlayer;
 	m_Player = player;
+	player->SetInvenUI(pInven);
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetPos(0.f, 0.f);
-
-	// Monster 생성하기
-	GMoblin* pMoblin = new GMoblin;
-	AddObject(pMoblin, LAYER_TYPE::MONSTER);
-	pMoblin->SetPos(300.f, 200.f);
 
 	GRock* pRock = new GRock;
 	AddObject(pRock, LAYER_TYPE::OBJECT);
 	pRock->SetPos(-300.f, 200.f);
-	
 
 	GTree* pTree = new GTree;
 	AddObject(pTree, LAYER_TYPE::OBJECT);
@@ -69,7 +71,6 @@ void GLevel_Start::Begin()
 	GPullRock* pPullRock = new GPullRock;
 	AddObject(pPullRock, LAYER_TYPE::OBJECT);
 	pPullRock->SetPos(-300.f, 0.f);
-	
 
 	GGrass* pGrass = new GGrass;
 	AddObject(pGrass, LAYER_TYPE::OBJECT);
@@ -82,17 +83,32 @@ void GLevel_Start::Begin()
 	GFlint* pFlint = new GFlint;
 	AddObject(pFlint, LAYER_TYPE::ITEM);
 	pFlint->SetPos(-300.f, -300.f);
+
+	// Monster 생성하기
+	GMoblin* pMoblin = new GMoblin;
+	AddObject(pMoblin, LAYER_TYPE::MONSTER);
+	pMoblin->SetPos(300.f, 200.f);
 	
-	
+	GFruit* pFruit = new GFruit;
+	AddObject(pFruit, LAYER_TYPE::ITEM);
+	pFruit->SetPos(300.f, 0.f);
+
+	GWeapon* pWoodenSword = new GWeapon(ITEM_ID::Wooden_Sword);
+	AddObject(pWoodenSword, LAYER_TYPE::ITEM);
+	pWoodenSword->SetPos(300.f, -100.f);
+
+	GWeapon* pMetalSword = new GWeapon(ITEM_ID::Iron_Sword);
+	AddObject(pMetalSword, LAYER_TYPE::ITEM);
+	pMetalSword->SetPos(300.f, -200.f);
+
+	//GRoastFruit* pRoastFruit = new GRoastFruit;
+	//AddObject(pRoastFruit, LAYER_TYPE::ITEM);
+	//pRoastFruit->SetPos(300.f, 1.f);
 
 	// TileMap Object 추가
 	GMap* pTileMap = new GMap;
 	AddObject(pTileMap, LAYER_TYPE::TILE);
 	pTileMap->SetPos(Vec2(0.f, 0.f));
-
-	GRock* pRock2 = new GRock;
-	AddObject(pRock2, LAYER_TYPE::OBJECT);
-	pRock2->SetPos(0, 0);
 	
 
 	// TileMap Object 추가

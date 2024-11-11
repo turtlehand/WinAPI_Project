@@ -15,8 +15,8 @@ public:
 
 	virtual void OnTriggerEnter(GCollider* _Collider) override;
 
-public:
-	virtual void UseItem() override;
+
+	virtual void UseItem(GCreature* _User) override;
 	virtual void DropItem() override;
 
 public:

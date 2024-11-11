@@ -1,6 +1,8 @@
 #pragma once
 #include "GCreature.h"
 
+#include "GSprite.h"
+
 enum class ITEM_ID
 {
 	NONE = 0,
@@ -21,7 +23,7 @@ enum class ITEM_ID
 	Stone_Hammer,
 	Iron_Hammer,
 	Wooden_Spear,
-	Spear,
+	Iron_Spear,
 	Korok_Leaf,
 
 
@@ -35,11 +37,16 @@ class GItem :
 	public GCreature
 {
 	const ITEM_ID m_ItemID;
+	GSprite* m_ItemImage;
 public:
 	ITEM_ID GetItemID() { return m_ItemID; }
 
+	void SetItemImage(GSprite* _Image) { m_ItemImage = _Image; }
+	GSprite* GetItemImage() { return m_ItemImage; }
+
+
 public:
-	virtual void UseItem() = 0;
+	virtual void UseItem(GCreature* _User) = 0;
 
 public:
 	GItem(ITEM_ID _ItemID);

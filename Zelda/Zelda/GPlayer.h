@@ -6,9 +6,11 @@
 class GBoxCollider;
 class GFlipBookPlayer;
 class GTexture;
+class GSprite;
 class GRigidBody;
 class GFSM;
 class GHitBox;
+class GInventory;
 
 
 class GPlayer :
@@ -21,9 +23,15 @@ private:
 	GRigidBody* m_RigidBody;
 
 	// 공격 관련
+	ITEM_ID m_WeaponEquip;
 	GHitBox* m_AttackBox;
 
+	// 도구 관련
+	ITEM_ID m_ToolEquip;
+
 	// 아이템 관련
+	GInventory* m_InventoryUI;
+	int m_InvenIndex;
 	vector<pair<ITEM_ID, int>> m_Inventory;
 	CObj* m_NearbyItem;
 
@@ -43,6 +51,10 @@ public:
 	const wstring& GetCurrentState();
 	void CreateAnimator();
 
+	void SetInvenUI(GInventory* _InvenUI) { m_InventoryUI = _InvenUI; }
+
+	void SetAttackBox(ITEM_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY);
+
 private:
 	void PickUpItem();
 	void DropItem(int index);
@@ -55,6 +67,7 @@ public:
 	friend class GPIdleState;
 	friend class GPMoveState;
 	friend class GPAttackState;
+	friend class GPUseToolState;
 };
 
 enum class PLAYER_ANIM_STATE

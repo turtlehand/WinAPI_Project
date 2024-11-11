@@ -33,15 +33,19 @@ void GPIdleState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::SPACE))
 	{
-		m_Player->m_FSM->ChanageState(L"ATTACK");
+		m_Player->m_FSM->ChanageState(L"TOOL");
 	}
-	else if (GETKEYDOWN(KEY::E))
+	else if (GETKEYDOWN(KEY::C))
 	{
 		m_Player->PickUpItem();
 	}
 	else if (GETKEYDOWN(KEY::Z))
 	{
-		m_Player->DropItem(0);
+		m_Player->UseItem(m_Player->m_InvenIndex);
+	}
+	else if (GETKEYDOWN(KEY::X))
+	{
+		m_Player->DropItem(m_Player->m_InvenIndex);
 	}
 }
 

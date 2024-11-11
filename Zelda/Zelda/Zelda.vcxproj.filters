@@ -172,8 +172,17 @@
     <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food">
       <UniqueIdentifier>{087e9d9a-726c-4807-bcdc-b51d99f7f7a7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit">
+    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit">
       <UniqueIdentifier>{5c60255e-1faf-4bb4-b519-fcee1e403192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit">
+      <UniqueIdentifier>{e6e7f0d9-3b37-4326-97b3-a59ed3fb96a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\300. Weapon">
+      <UniqueIdentifier>{14912fd3-9a82-45ca-b1a3-8d0cd700b265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\08. GameUI">
+      <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -391,7 +400,19 @@
       <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
     </ClInclude>
     <ClInclude Include="GFruit.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit</Filter>
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit</Filter>
+    </ClInclude>
+    <ClInclude Include="GRoastFruit.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit</Filter>
+    </ClInclude>
+    <ClInclude Include="GInventory.h">
+      <Filter>Game\05. Object\08. GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GWeapon.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\300. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="GPUseToolState.h">
+      <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -591,7 +612,19 @@
       <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
     </ClCompile>
     <ClCompile Include="GFruit.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. GFruit</Filter>
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit</Filter>
+    </ClCompile>
+    <ClCompile Include="GRoastFruit.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit</Filter>
+    </ClCompile>
+    <ClCompile Include="GInventory.cpp">
+      <Filter>Game\05. Object\08. GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GWeapon.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\300. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="GPUseToolState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

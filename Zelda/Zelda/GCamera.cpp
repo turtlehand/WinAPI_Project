@@ -37,6 +37,7 @@ void GCamera::Tick()
 		m_Offset = m_Target->GetPos();
 	}
 
+	/*
 	if (GETKEYPRESSED(KEY::W))
 		m_Offset.y += DT * 500.f;
 	if (GETKEYPRESSED(KEY::S))
@@ -45,7 +46,7 @@ void GCamera::Tick()
 		m_Offset.x -= DT * 500.f;
 	if (GETKEYPRESSED(KEY::D))
 		m_Offset.x += DT * 500.f;
-
+	*/
 
 }
 

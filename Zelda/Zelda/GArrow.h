@@ -22,7 +22,7 @@ public:
 	//virtual void OnTriggerEnter(GCollider* _Collider) override;
 
 public:
-	void SetVelocity(Vec2 _Velocity) { m_Velocity =_Velocity; }
+	void SetVelocity(Vec2 _Velocity);
 	Vec2 GetVelocity() { return m_Velocity; }
 
 public:

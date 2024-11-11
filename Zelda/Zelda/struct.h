@@ -199,6 +199,11 @@ struct DefaultStatsInfo
 	bool IsDead;
 };
 
+struct WeaponInfo : public DefaultStatsInfo
+{
+	ATTACK_TYPE AttackType;
+};
+
 struct MonsterInfo : public DefaultStatsInfo
 {
 	float DetectRange;

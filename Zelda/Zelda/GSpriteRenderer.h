@@ -16,7 +16,7 @@ private:
 	
 public:
 	void SetSprite(GSprite* _Sprite) { m_Sprite = _Sprite; }
-	const GSprite* GetSprite() { return m_Sprite; }
+	GSprite* GetSprite() { return m_Sprite; }
 
 	void SetOffset(Vec2 _Offset) { m_RenderInfo.Offset = _Offset; }
 

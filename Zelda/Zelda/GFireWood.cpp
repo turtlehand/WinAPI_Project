@@ -17,8 +17,8 @@ GFireWood::GFireWood() :
 	// 장작 스탯
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::WOOD;
-	pInfo->MaxHP = 4;
-	pInfo->HP = 4;
+	pInfo->MaxHP = 100;
+	pInfo->HP = 100;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 0;
 	pInfo->IsDead = false;
@@ -32,6 +32,8 @@ GFireWood::GFireWood() :
 	GetHitBox()->SetName(L"FIREWOOD_HITBOX");
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	GetHitBox()->SetTrigger(true);
+
+	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
 GFireWood::~GFireWood()
@@ -43,7 +45,7 @@ void GFireWood::BurnStatusEffect()
 	// 불에 의한 피해를 입지 않으며 지속시간이 10배가 된다.
 	if (GetStatInfo()->Effect.Duration - GetStatInfo()->Effect.Time >= 1)
 	{
-		GetStatInfo()->Effect.Time += DT / 2;
+		GetStatInfo()->Effect.Time += DT * 0.9f;
 	}
 }
 

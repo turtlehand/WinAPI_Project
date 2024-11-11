@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "GFlint.h"
+#include "GRoastFruit.h"
 
 #include "GAssetManager.h"
 
@@ -8,16 +8,15 @@
 
 #include "GHitBox.h"
 
-
-GFlint::GFlint() :
-	GItem(ITEM_ID::Flint),
+GRoastFruit::GRoastFruit() :
+	GItem(ITEM_ID::Roast_Fruit),
 	m_SpriteRenderer(nullptr)
 {
-	SetName(L"Flint");
+	SetName(L"Roast_Fruit");
 
-	// ÀåÀÛ ½ºÅÈ
+	// ±¸¿î ¿­¸Å ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
-	pInfo->Material = MATERIAL_TYPE::STONE;
+	pInfo->Material = MATERIAL_TYPE::WOOD;
 	pInfo->MaxHP = 100;
 	pInfo->HP = 100;
 	pInfo->AttackPower = 0;
@@ -26,44 +25,45 @@ GFlint::GFlint() :
 	SetStatInfo(pInfo);
 
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
-	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"FLINT", L"Sprite\\Item_16\\FLINT.sprite"));
+	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"ROAST_FRUIT", L"Sprite\\Item_16\\ROAST_FRUIT.sprite"));
 	m_SpriteRenderer->SetScale(Vec2(4.f, 4.f));
 	m_SpriteRenderer->SetDeleteColor(RGB(116, 116, 116));
 
-	GetHitBox()->SetName(L"FIREWOOD_HITBOX");
-	GetHitBox()->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetName(L"FRUIT_HITBOX");
+	GetHitBox()->SetScale(Vec2(32.f, 32.f));
 	GetHitBox()->SetTrigger(true);
 
 	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
-GFlint::~GFlint()
+GRoastFruit::~GRoastFruit()
+{
+
+}
+
+void GRoastFruit::Begin()
 {
 }
 
-void GFlint::InteractionEffect(GHitBox* _HitBox)
-{
-	if (_HitBox->GetMaterialType() == MATERIAL_TYPE::STONE ||
-		_HitBox->GetMaterialType() == MATERIAL_TYPE::METAL)
-	{
-		GetStatInfo()->HP = 1;
-		Burn();
-	}
-}
-
-void GFlint::Begin()
-{
-}
-
-void GFlint::Render()
+void GRoastFruit::Render()
 {
 	m_SpriteRenderer->Render();
 	GCreature::RenderEffect();
 }
 
-void GFlint::OnTriggerEnter(GCollider* _Collider)
+void GRoastFruit::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
 		Interaction(HitBox);
+}
+
+void GRoastFruit::UseItem(GCreature* _User)
+{
+	_User->GetStatInfo()->HP += 12;
+}
+
+void GRoastFruit::DropItem()
+{
+
 }

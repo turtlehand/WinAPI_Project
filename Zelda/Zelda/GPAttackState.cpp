@@ -37,8 +37,6 @@ void GPAttackState::Begin()
 	if (m_AttackBox == nullptr)
 	{
 		m_AttackBox = m_Player->m_AttackBox;
-		m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"SLIVERSWORDX", L"FlipBook\\Link_16\\SliverSword\\SLIVERSWORDX.flip"));
-		m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"SLIVERSWORDY", L"FlipBook\\Link_16\\SliverSword\\SLIVERSWORDY.flip"));
 	}
 	
 }
@@ -46,11 +44,6 @@ void GPAttackState::Begin()
 void GPAttackState::Enter()
 {
 	m_PrevAnim = (PLAYER_ANIM_STATE)m_Player->m_FlipBookPlayer->GetCurIndex();
-
-	m_AttackBox->SetAttackType(ATTACK_TYPE::STRIKE);
-	m_AttackBox->SetMaterialType(MATERIAL_TYPE::METAL);
-	//m_AttackBox->SetEffect({ ELEMENT_TYPE::FIRE,0.f,0.f });
-	m_AttackBox->SetDamage(1);
 	m_AttackBox->SetActive(true);
 
 	if (m_PlayerInfo->Direction == Vec2::up())

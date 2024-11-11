@@ -10,6 +10,8 @@ private:
 
 public:
 	void AddSprite(GSprite* _Sprite, const RenderInfo& _RenderInfo) { m_Sprites.push_back(make_pair(_Sprite,_RenderInfo)); }
+	void ChangeSprite(int index, GSprite* _Sprite);
+	void ChangeRednerInfo(int index, const RenderInfo& _RenderInfo);
 	GSprite* GetSprite(int _Idx) { return m_Sprites[_Idx].first; }
 	RenderInfo& GetRenderInfo(int _Idx) { return m_Sprites[_Idx].second; }
 

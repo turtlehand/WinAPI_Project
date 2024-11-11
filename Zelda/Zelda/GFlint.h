@@ -10,6 +10,7 @@ class GFlint :
 
 public:
 	virtual void InteractionEffect(GHitBox* _HitBox) override;
+	virtual void UseItem(GCreature* _User) override {};
 
 public:
 	virtual void Begin() override;
@@ -18,8 +19,6 @@ public:
 
 	virtual void OnTriggerEnter(GCollider* _Collider) override;
 
-public:
-	virtual void UseItem() override {};
 
 public:
 	GFlint();

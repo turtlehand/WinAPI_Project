@@ -3,14 +3,10 @@
 
 class GSpriteRenderer;
 
-class GFireWood :
+class GRoastFruit :
 	public GItem
 {
 	GSpriteRenderer* m_SpriteRenderer;
-
-public:
-	virtual void BurnStatusEffect();
-	virtual void UseItem(GCreature* _User) override {};
 
 public:
 	virtual void Begin() override;
@@ -19,8 +15,11 @@ public:
 
 	virtual void OnTriggerEnter(GCollider* _Collider) override;
 
-public:
-	GFireWood();
-	virtual ~GFireWood() override;
-};
 
+	virtual void UseItem(GCreature* _User) override;
+	virtual void DropItem() override;
+
+public:
+	GRoastFruit();
+	virtual ~GRoastFruit() override;
+};

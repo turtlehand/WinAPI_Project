@@ -8,14 +8,14 @@
 0
 
 [KEY]
-SLIVERSWORDX
+WOODEN_SWORD_Y
 
 [PATH]
-Sprite\Link_16\SliverSword\SLIVERSWORDX.sprite
+Sprite\Item_16\Weapon\WOODEN_SWORD_Y.sprite
 
 [RENDERINFO]
 [OFFSET]
--3, -1
+0, -3
 
 [SCALE]
 4, 4
@@ -36,14 +36,14 @@ Sprite\Link_16\SliverSword\SLIVERSWORDX.sprite
 1
 
 [KEY]
-SLIVERSWORDX
+WOODEN_SWORD_Y
 
 [PATH]
-Sprite\Link_16\SliverSword\SLIVERSWORDX.sprite
+Sprite\Item_16\Weapon\WOODEN_SWORD_Y.sprite
 
 [RENDERINFO]
 [OFFSET]
--7, -1
+0, -11
 
 [SCALE]
 4, 4
@@ -64,14 +64,14 @@ Sprite\Link_16\SliverSword\SLIVERSWORDX.sprite
 2
 
 [KEY]
-SLIVERSWORDX
+WOODEN_SWORD_Y
 
 [PATH]
-Sprite\Link_16\SliverSword\SLIVERSWORDX.sprite
+Sprite\Item_16\Weapon\WOODEN_SWORD_Y.sprite
 
 [RENDERINFO]
 [OFFSET]
--11, -1
+0, -12
 
 [SCALE]
 4, 4
