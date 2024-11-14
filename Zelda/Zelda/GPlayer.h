@@ -5,6 +5,7 @@
 
 class GBoxCollider;
 class GFlipBookPlayer;
+class GSpriteRenderer;
 class GTexture;
 class GSprite;
 class GRigidBody;
@@ -23,16 +24,16 @@ private:
 	GRigidBody* m_RigidBody;
 
 	// 공격 관련
-	ITEM_ID m_WeaponEquip;
+	CREATURE_ID m_WeaponEquip;
 	GHitBox* m_AttackBox;
 
 	// 도구 관련
-	ITEM_ID m_ToolEquip;
+	CREATURE_ID m_ToolEquip;
 
 	// 아이템 관련
 	GInventory* m_InventoryUI;
 	int m_InvenIndex;
-	vector<pair<ITEM_ID, int>> m_Inventory;
+	vector<pair<CREATURE_ID, int>> m_Inventory;
 	CObj* m_NearbyItem;
 
 public:
@@ -40,7 +41,6 @@ public:
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 
-	virtual void OnTriggerEnter(GCollider* _Collider) override;
 	virtual void OnTrigger(GCollider* _Collider) override;
 	virtual void OnTriggerExit(GCollider* _Collider) override;
 	virtual void OnCollisionEnter(GCollider* _Collider) override;
@@ -53,7 +53,8 @@ public:
 
 	void SetInvenUI(GInventory* _InvenUI) { m_InventoryUI = _InvenUI; }
 
-	void SetAttackBox(ITEM_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY);
+	void SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY);
+	void SetTool(CREATURE_ID _ToolID, const DefaultStatsInfo* _ToolInfo);
 
 private:
 	void PickUpItem();
@@ -80,4 +81,13 @@ enum class PLAYER_ANIM_STATE
 	ATTACK_DOWN,
 	ATTACK_RIGHT,
 	NONE
+};
+
+enum class ATTACK_ANIM_STATE
+{
+	WEAPON_X,
+	WEAPON_Y,
+
+	BOW_X,
+	BOW_Y,
 };

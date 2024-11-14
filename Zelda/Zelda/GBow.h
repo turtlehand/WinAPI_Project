@@ -3,22 +3,21 @@
 
 class GSpriteRenderer;
 
-class GFireWood :
+class GBow :
 	public GItem
 {
+private:
 	GSpriteRenderer* m_SpriteRenderer;
 
 public:
-	virtual void UseItem(GCreature* _User) override {};
-
-public:
 	virtual void Begin() override;
-	virtual void Tick() override;
 	virtual void Render() override;
 
+public:
+	virtual void UseItem(GCreature* _User) override;
 
 public:
-	GFireWood();
-	virtual ~GFireWood() override;
+	GBow();
+	virtual ~GBow() override;
 };
 

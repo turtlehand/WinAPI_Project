@@ -9,6 +9,7 @@
 #include "GAssetManager.h"
 
 GRock::GRock() :
+	GCreature(CREATURE_ID::Rock),
 	m_Sprite(nullptr)
 {
 	SetName(L"Rock");
@@ -49,14 +50,13 @@ void GRock::Tick()
 void GRock::Render()
 {
 	m_Sprite->Render();
-	RenderEffect();
 }
 
 void GRock::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if(HitBox != nullptr)
-		Interaction(HitBox);
+		Interaction_Attack(HitBox);
 }
 
 

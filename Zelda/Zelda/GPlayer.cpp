@@ -28,8 +28,10 @@
 #include "GFruit.h"
 #include "GRoastFruit.h"
 #include "GWeapon.h"
+#include "GBow.h"
 
 GPlayer::GPlayer() :
+	GCreature(CREATURE_ID::Player),
 	m_FSM(nullptr),
 	m_FlipBookPlayer(nullptr),
 	m_RigidBody(nullptr),
@@ -51,8 +53,8 @@ GPlayer::GPlayer() :
 	// 스탯 설정
 	PlayerInfo* pInfo = new PlayerInfo;
 	pInfo->Material = MATERIAL_TYPE::LIFE;
-	pInfo->MaxHP = 12;
-	pInfo->HP = 12;
+	pInfo->MaxHP = 120;
+	pInfo->HP = 120;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 128;
 	pInfo->Direction = Vec2::down();
@@ -69,6 +71,9 @@ GPlayer::GPlayer() :
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"WEAPON_X", L"FlipBook\\Link_16\\Weapon\\WEAPON_X.flip"));
 	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"WEAPON_Y", L"FlipBook\\Link_16\\Weapon\\WEAPON_Y.flip"));
+
+	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"BOW_X", L"FlipBook\\Link_16\\BOW\\BOW_X.flip"));
+	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"BOW_Y", L"FlipBook\\Link_16\\BOW\\BOW_Y.flip"));
 
 	// 강체 추가
 	m_RigidBody = AddComponent<GRigidBody>();
@@ -118,7 +123,7 @@ void GPlayer::Tick()
 	}
 	else
 	{
-		m_InventoryUI->SetCurItme(ITEM_ID::NONE);
+		m_InventoryUI->SetCurItme(CREATURE_ID::NONE);
 	}
 	
 }
@@ -127,18 +132,11 @@ void GPlayer::Tick()
 void GPlayer::Render()
 {
 	m_FlipBookPlayer->Render();
-	RenderEffect();
-}
-
-void GPlayer::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
 }
 
 void GPlayer::OnTrigger(GCollider* _Collider)
 {
+	GCreature::OnTrigger(_Collider);
 	if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::ITEM)
 	{
 		m_NearbyItem = (GItem*)_Collider->GetOwner();
@@ -187,13 +185,16 @@ void GPlayer::CreateAnimator()
 	//m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
 }
 
-void GPlayer::SetAttackBox(ITEM_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY)
+void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY)
 {
-	assert(300 < (int)_WeaponID && (int)_WeaponID < 400);
+	assert(4300 < (int)_WeaponID && (int)_WeaponID < 4400);
 	m_WeaponEquip = _WeaponID;
+	m_ToolEquip = CREATURE_ID::NONE;
 	m_AttackBox->SetAttackType(_WeaponInfo->AttackType);
 	m_AttackBox->SetMaterialType(_WeaponInfo->Material);
 	m_AttackBox->SetDamage(_WeaponInfo->AttackPower);
+
+	m_AttackBox->GetSpriteRenderer()->SetSprite(nullptr);
 
 	GFlipBook* AttackX = GAssetManager::GetInst()->FindFlipBook(L"WEAPON_X");
 
@@ -213,6 +214,17 @@ void GPlayer::SetAttackBox(ITEM_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSp
 
 }
 
+void GPlayer::SetTool(CREATURE_ID _ToolID, const DefaultStatsInfo* _ToolInfo)
+{
+	assert(4400 < (int)_ToolID && (int)_ToolID < 4500);
+	m_WeaponEquip = CREATURE_ID::NONE;
+	m_ToolEquip = _ToolID;
+
+	GetPlayerStatInfo()->AttackPower = _ToolInfo->AttackPower;
+
+	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
+}
+
 void GPlayer::PickUpItem()
 {
 	// 근처 아이템이 없거나 슬롯이 꽉찼다면
@@ -223,12 +235,12 @@ void GPlayer::PickUpItem()
 	GItem* Item = dynamic_cast<GItem*>(m_NearbyItem);
 	assert(Item != nullptr);
 
-	vector<pair<ITEM_ID, int>>::iterator iter = m_Inventory.begin();
+	vector<pair<CREATURE_ID, int>>::iterator iter = m_Inventory.begin();
 
 	// 인벤토리에서 아이템이 있는지 찾는다.
 	for (iter ; iter != m_Inventory.end(); ++iter)
 	{
-		if (iter->first == Item->GetItemID())
+		if (iter->first == Item->GetCreatureID())
 			break;
 	}
 
@@ -237,7 +249,7 @@ void GPlayer::PickUpItem()
 	if (iter == m_Inventory.end())
 	{
 		// 인벤토리에서 아이템을 추가한다.
-		m_Inventory.push_back(make_pair(Item->GetItemID(), 1));
+		m_Inventory.push_back(make_pair(Item->GetCreatureID(), 1));
 
 		m_InvenIndex = m_Inventory.size() - 1;
 		m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
@@ -267,22 +279,22 @@ void GPlayer::DropItem(int index)
 
 	switch (m_Inventory[index].first)
 	{
-		case ITEM_ID::Fire_Wood:
+		case CREATURE_ID::Fire_Wood:
 		{
 			DropObj = new GFireWood;
 		}
 		break;
-		case ITEM_ID::Flint:
+		case CREATURE_ID::Flint:
 		{
 			DropObj = new GFlint;
 		}
 		break;
-		case ITEM_ID::Fruit:
+		case CREATURE_ID::Fruit:
 		{
 			DropObj = new GFruit;
 		}
 		break;
-		case ITEM_ID::Roast_Fruit:
+		case CREATURE_ID::Roast_Fruit:
 		{
 			DropObj = new GRoastFruit;
 		}
@@ -290,10 +302,23 @@ void GPlayer::DropItem(int index)
 		default:
 		{
 			// 무기군일 때
-			if (300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 400)
+			if (4300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4400)
 			{
 				DropObj = new GWeapon(m_Inventory[index].first);
-				m_WeaponEquip = ITEM_ID::NONE;
+				m_WeaponEquip = CREATURE_ID::NONE;
+			}
+			// 도구군일 때
+			else if (4400 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4500)
+			{
+				switch (m_Inventory[index].first)
+				{
+				case CREATURE_ID::Bow:
+				{
+					DropObj = new GBow;
+				}
+				break;
+				}
+				m_ToolEquip = CREATURE_ID::NONE;
 			}
 		}
 		break;
@@ -327,7 +352,7 @@ void GPlayer::UseItem(int index)
 	assert(m_Inventory[index].second > 0);
 
 	// 음식일 때
-	if (200 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 300)
+	if (4200 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4300)
 	{
 		// 인벤토리에서 해당 아이템을 
 		m_InventoryUI->UseItem(m_Inventory[index].first,(GCreature*)this);
@@ -343,12 +368,16 @@ void GPlayer::UseItem(int index)
 			m_Inventory[index].second -= 1;
 	}
 	// 무기일 때
-	else if (300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 400)
+	else if (4300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4400)
 	{
 		// 인벤토리에서 해당 아이템을 
 		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);
 	}
 	// 도구일 때
-
+	else if (4400 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4500)
+	{
+		// 인벤토리에서 해당 아이템을 
+		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);
+	}
 
 }

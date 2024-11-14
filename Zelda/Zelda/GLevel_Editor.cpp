@@ -8,6 +8,7 @@
 #include "GPathManager.h"
 #include "CLevelMgr.h"
 #include "GAssetManager.h"
+#include "GCamera.h"
 
 #include "GUI.h"
 #include "GPanel.h"
@@ -69,6 +70,7 @@ void GLevel_Editor::Begin()
 	//m_MapObj->SetPos(Vec2(-CEngine::GetInst()->GetResolution().x/2, -CEngine::GetInst()->GetResolution().y/2));
 	
 
+	/*
 	GPanel* pUI = new GPanel;
 	AddObject(pUI, LAYER_TYPE::UI);
 	pUI->SetName(L"TestUI");
@@ -100,7 +102,7 @@ void GLevel_Editor::Begin()
 	pLoadTPButton->SetScale(80, 30);
 	pLoadTPButton->SetBrushType(BRUSH_TYPE::BLUE);
 	pLoadTPButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTilePalette);
-	
+	*/
 
 	CLevel::Begin();
 }
@@ -113,6 +115,17 @@ void GLevel_Editor::Tick()
 	{
 		ChangeLevel(LEVEL_TYPE::START);
 	}
+
+	Vec2 CamPos = GCamera::GetInst()->GetOffset();
+
+	if (GETKEYPRESSED(KEY::W))
+		GCamera::GetInst()->SetOffset(Vec2(CamPos.x, CamPos.y + DT * 500.f));
+	if (GETKEYPRESSED(KEY::S))
+		GCamera::GetInst()->SetOffset(Vec2(CamPos.x, CamPos.y - DT * 500.f));
+	if (GETKEYPRESSED(KEY::A))
+		GCamera::GetInst()->SetOffset(Vec2(CamPos.x - DT * 500.f, CamPos.y));
+	if (GETKEYPRESSED(KEY::D))
+		GCamera::GetInst()->SetOffset(Vec2(CamPos.x + DT * 500.f, CamPos.y));
 
 	if (m_TilePalette != nullptr)
 	{

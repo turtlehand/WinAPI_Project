@@ -9,11 +9,13 @@
 #include "GArrow.h"
 
 #include "GFlipBookPlayer.h"
+#include "GSpriteRenderer.h"
 
 
 GPUseToolState::GPUseToolState() :
 	m_Player(nullptr),
 	m_PlayerInfo(nullptr),
+	m_AttackBox(nullptr),
 	m_PrevAnim(PLAYER_ANIM_STATE::NONE)
 {
 }
@@ -35,11 +37,17 @@ void GPUseToolState::Begin()
 		m_PlayerInfo = m_Player->GetPlayerStatInfo();
 	}
 
+	if (m_AttackBox == nullptr)
+	{
+		m_AttackBox = m_Player->m_AttackBox;
+	}
+
 }
 
 void GPUseToolState::Enter()
 {
 	m_PrevAnim = (PLAYER_ANIM_STATE)m_Player->m_FlipBookPlayer->GetCurIndex();
+
 
 	if (m_PlayerInfo->Direction == Vec2::up())
 	{
@@ -76,32 +84,55 @@ void GPUseToolState::FinalTick()
 
 void GPUseToolState::Exit()
 {
+	m_Player->m_AttackBox->SetActive(false);
 	m_Player->m_FlipBookPlayer->SetPlay((int)m_PrevAnim, 5, true);
 }
 
 void GPUseToolState::Bow()
 {
 	GArrow* pArrow = new GArrow();
-	pArrow->SetDamage(2);
+	pArrow->SetDamage(m_PlayerInfo->AttackPower);
+
+	m_AttackBox->SetDamage(0);
+	m_AttackBox->SetMaterialType(MATERIAL_TYPE::NONE);
+	m_AttackBox->SetAttackType(ATTACK_TYPE::NONE);
+	m_AttackBox->SetActive(true);
+
 	if (m_PlayerInfo->Direction == Vec2::up())
 	{
+		m_AttackBox->SetPos(0.f, 32.f);
+		m_AttackBox->GetFlipBookPlayer()->SetPlay((int)ATTACK_ANIM_STATE::BOW_X, 1, false);
+		m_AttackBox->GetFlipBookPlayer()->SetYFlip(false);
+
 		pArrow->SetPos(m_Player->GetPos() + Vec2(0.f, 32.f));
-		pArrow->SetVelocity(Vec2::up() * 100.f);
+		pArrow->SetVelocity(Vec2::up() * 1280.f);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::down())
 	{
+		m_AttackBox->SetPos(0.f, -32.f);
+		m_AttackBox->GetFlipBookPlayer()->SetPlay((int)ATTACK_ANIM_STATE::BOW_X, 1, false);
+		m_AttackBox->GetFlipBookPlayer()->SetYFlip(true);
+
 		pArrow->SetPos(m_Player->GetPos() + Vec2(0.f, -32.f));
-		pArrow->SetVelocity(Vec2::down() * 100.f);
+		pArrow->SetVelocity(Vec2::down() * 1280.f);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::left())
 	{
+		m_AttackBox->SetPos(-32.f,0.f);
+		m_AttackBox->GetFlipBookPlayer()->SetPlay((int)ATTACK_ANIM_STATE::BOW_Y, 1, false);
+		m_AttackBox->GetFlipBookPlayer()->SetXFlip(true);
+
 		pArrow->SetPos(m_Player->GetPos() + Vec2(-32.f, 0.f));
-		pArrow->SetVelocity(Vec2::left() * 100.f);
+		pArrow->SetVelocity(Vec2::left() * 1280.f);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::right())
 	{
+		m_AttackBox->SetPos(32.f, 0.f);
+		m_AttackBox->GetFlipBookPlayer()->SetPlay((int)ATTACK_ANIM_STATE::BOW_Y, 1, false);
+		m_AttackBox->GetFlipBookPlayer()->SetXFlip(false);
+
 		pArrow->SetPos(m_Player->GetPos() + Vec2(32.f, 0.f));
-		pArrow->SetVelocity(Vec2::right() * 100.f);
+		pArrow->SetVelocity(Vec2::right() * 1280.f);
 
 	}
 

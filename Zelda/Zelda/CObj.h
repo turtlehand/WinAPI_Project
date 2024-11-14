@@ -62,15 +62,15 @@ public:
 	bool GetActive() { return m_Active; }
 
 	void SetParent(CObj* _Parent);
+	CObj* GetParent() { return m_Parent; }
 	void AddChild(CObj* _Child) {
 		m_vecChild.push_back(_Child);
 		_Child->m_Parent = this;
 	}
 	vector<CObj*>& GetChilds() { return m_vecChild; }
 
-
 	Vec2 GetGlobalPos() {
-		if (m_Parent)
+		if (m_Parent != nullptr)
 			return m_Parent->GetGlobalPos() + this->GetPos();
 		return this->GetPos();
 	}

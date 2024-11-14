@@ -37,6 +37,9 @@ enum class TASK_TYPE
 	// Param0 : Object Address, Param1 : Layer Index
 	CREATE_OBJECT,
 
+	// Param0 : Parent Object, Param1 : Child Object Address, Param2 : Layer Index
+	CREATE_CHILDE_OBJECT,
+
 	// Param0 : Object Address
 	DELETE_OBJECT,
 
@@ -49,14 +52,14 @@ enum class LAYER_TYPE
 	BACKGROUND,
 	TILE,
 	DEFAULT,
+	ITEM,
 	OBJECT,
 	MONSTER_OBJECT,
 	PLAYER_OBJECT,
 
-	ITEM,
-
 	MONSTER,
 	PLAYER,
+	ELEMENT,
 
 	UI = 31,
 	END = 32
@@ -132,6 +135,10 @@ enum class MATERIAL_TYPE
 	METAL,
 	STONE,
 	LIFE,
+	FIRE,
+	ICE,
+	LIGHTNING,
+	WATER,
 	NONE,
 };
 

@@ -153,6 +153,7 @@ struct Task
 	TASK_TYPE	Type;
 	DWORD_PTR	Param0;
 	DWORD_PTR	Param1;
+	DWORD_PTR	Param2;
 };
 
 struct DeBugRenderInfo
@@ -187,16 +188,16 @@ struct ElementalEffect
 
 struct DefaultStatsInfo
 {
-	MATERIAL_TYPE Material;
+	MATERIAL_TYPE Material = MATERIAL_TYPE::NONE;
 	ElementalEffect Effect;
 
-	int MaxHP;
-	int HP;
+	int MaxHP = 0;
+	int HP = 0;
 
-	float AttackPower;
-	float Speed;
+	float AttackPower = 0.f;
+	float Speed = 0.f;
 
-	bool IsDead;
+	bool IsDead = false;
 };
 
 struct WeaponInfo : public DefaultStatsInfo

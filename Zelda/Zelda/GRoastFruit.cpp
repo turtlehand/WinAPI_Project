@@ -9,7 +9,7 @@
 #include "GHitBox.h"
 
 GRoastFruit::GRoastFruit() :
-	GItem(ITEM_ID::Roast_Fruit),
+	GItem(CREATURE_ID::Roast_Fruit),
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Roast_Fruit");
@@ -17,8 +17,8 @@ GRoastFruit::GRoastFruit() :
 	// 구운 열매 스탯
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::WOOD;
-	pInfo->MaxHP = 100;
-	pInfo->HP = 100;
+	pInfo->MaxHP = 8;
+	pInfo->HP = 8;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 0;
 	pInfo->IsDead = false;
@@ -48,14 +48,13 @@ void GRoastFruit::Begin()
 void GRoastFruit::Render()
 {
 	m_SpriteRenderer->Render();
-	GCreature::RenderEffect();
 }
 
 void GRoastFruit::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
-		Interaction(HitBox);
+		Interaction_Attack(HitBox);
 }
 
 void GRoastFruit::UseItem(GCreature* _User)

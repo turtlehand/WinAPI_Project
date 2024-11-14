@@ -33,7 +33,10 @@ void GPIdleState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::SPACE))
 	{
-		m_Player->m_FSM->ChanageState(L"TOOL");
+		if(m_Player->m_WeaponEquip != CREATURE_ID::NONE)
+			m_Player->m_FSM->ChanageState(L"ATTACK");
+		else if(m_Player->m_ToolEquip != CREATURE_ID::NONE)
+			m_Player->m_FSM->ChanageState(L"TOOL");
 	}
 	else if (GETKEYDOWN(KEY::C))
 	{

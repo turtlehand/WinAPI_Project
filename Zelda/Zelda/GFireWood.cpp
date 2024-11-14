@@ -9,7 +9,7 @@
 #include "GHitBox.h"
 
 GFireWood::GFireWood() :
-	GItem(ITEM_ID::Fire_Wood),
+	GItem(CREATURE_ID::Fire_Wood),
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"FireWood");
@@ -40,28 +40,22 @@ GFireWood::~GFireWood()
 {
 }
 
-void GFireWood::BurnStatusEffect()
-{
-	// 불에 의한 피해를 입지 않으며 지속시간이 10배가 된다.
-	if (GetStatInfo()->Effect.Duration - GetStatInfo()->Effect.Time >= 1)
-	{
-		GetStatInfo()->Effect.Time += DT * 0.9f;
-	}
-}
-
 void GFireWood::Begin()
 {
+}
+
+void GFireWood::Tick()
+{
+	GCreature::Tick();
+	if (GetStatInfo()->Effect.ElementType == ELEMENT_TYPE::FIRE)
+	{
+		InstantIgnite();
+	}
+
+	GetStatInfo()->Effect.Duration = 0.f;
 }
 
 void GFireWood::Render()
 {
 	m_SpriteRenderer->Render();
-	GCreature::RenderEffect();
-}
-
-void GFireWood::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
 }

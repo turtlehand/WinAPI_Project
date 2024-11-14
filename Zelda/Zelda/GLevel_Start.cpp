@@ -18,6 +18,7 @@
 #include "GFruit.h"
 #include "GRoastFruit.h"
 #include "GWeapon.h"
+#include "GBow.h"
 
 #include "GInventory.h"
 
@@ -39,14 +40,13 @@ GLevel_Start::~GLevel_Start()
 
 void GLevel_Start::Begin()
 {
-	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Start_Level", L"Sound\\BGM_Stage1.wav");
+	//GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Start_Level", L"Sound\\BGM_Stage1.wav");
 
-	if (pSound != nullptr)
-	{
-		pSound->SetVolume(1.f);
-		pSound->PlayToBGM(true);
-
-	}
+	//if (pSound != nullptr)
+	//{
+	//	pSound->SetVolume(1.f);
+	//	pSound->PlayToBGM(true);
+	//}
 
 	//
 	GInventory* pInven = new GInventory;
@@ -82,7 +82,7 @@ void GLevel_Start::Begin()
 
 	GFlint* pFlint = new GFlint;
 	AddObject(pFlint, LAYER_TYPE::ITEM);
-	pFlint->SetPos(-300.f, -300.f);
+	pFlint->SetPos( -100.f, 0.f);
 
 	// Monster 생성하기
 	GMoblin* pMoblin = new GMoblin;
@@ -93,28 +93,21 @@ void GLevel_Start::Begin()
 	AddObject(pFruit, LAYER_TYPE::ITEM);
 	pFruit->SetPos(300.f, 0.f);
 
-	GWeapon* pWoodenSword = new GWeapon(ITEM_ID::Wooden_Sword);
+	GWeapon* pWoodenSword = new GWeapon(CREATURE_ID::Wooden_Sword);
 	AddObject(pWoodenSword, LAYER_TYPE::ITEM);
 	pWoodenSword->SetPos(300.f, -100.f);
 
-	GWeapon* pMetalSword = new GWeapon(ITEM_ID::Iron_Sword);
+	GWeapon* pMetalSword = new GWeapon(CREATURE_ID::Iron_Sword);
 	AddObject(pMetalSword, LAYER_TYPE::ITEM);
-	pMetalSword->SetPos(300.f, -200.f);
+	pMetalSword->SetPos(100.f, 0.f);
+
+	GBow* pBow = new GBow;
+	AddObject(pBow, LAYER_TYPE::ITEM);
+	pBow->SetPos(300.f, -200.f);
 
 	//GRoastFruit* pRoastFruit = new GRoastFruit;
 	//AddObject(pRoastFruit, LAYER_TYPE::ITEM);
 	//pRoastFruit->SetPos(300.f, 1.f);
-
-	// TileMap Object 추가
-	GMap* pTileMap = new GMap;
-	AddObject(pTileMap, LAYER_TYPE::TILE);
-	pTileMap->SetPos(Vec2(0.f, 0.f));
-	
-
-	// TileMap Object 추가
-	pTileMap = new GMap;
-	AddObject(pTileMap, LAYER_TYPE::TILE);
-	pTileMap->SetPos(Vec2(1000.f, 1000.f));
 	
 
 	CollisionManager::GetInst()->CollisionCheckClear();
@@ -130,6 +123,14 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::ITEM);
+
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ELEMENT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::PLAYER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::PLAYER_OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER_OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
 }
 
 void GLevel_Start::Tick()

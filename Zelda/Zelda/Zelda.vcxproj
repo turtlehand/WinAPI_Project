@@ -143,6 +143,7 @@
     <ClInclude Include="CLevel.h" />
     <ClInclude Include="CLevelMgr.h" />
     <ClInclude Include="CObj.h" />
+    <ClInclude Include="GBow.h" />
     <ClInclude Include="GBoxCollider.h" />
     <ClInclude Include="GCircleCollider.h" />
     <ClInclude Include="GCollider.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="CLevel.cpp" />
     <ClCompile Include="CLevelMgr.cpp" />
     <ClCompile Include="CObj.cpp" />
+    <ClCompile Include="GBow.cpp" />
     <ClCompile Include="GBoxCollider.cpp" />
     <ClCompile Include="GCircleCollider.cpp" />
     <ClCompile Include="GCollider.cpp" />

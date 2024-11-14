@@ -1,0 +1,33 @@
+[ASSETTYPE]
+3
+
+[SPRITESIZE]
+1
+
+[INDEX]
+0
+
+[KEY]
+BOW_Y
+
+[PATH]
+Sprite\Item_16\BOW_Y.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

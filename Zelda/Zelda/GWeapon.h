@@ -27,7 +27,7 @@ public:
 	void SpecialEffect();
 
 public:
-	GWeapon(ITEM_ID _WeaponID);
+	GWeapon(CREATURE_ID _CreatureID);
 	virtual ~GWeapon() override;
 };
 

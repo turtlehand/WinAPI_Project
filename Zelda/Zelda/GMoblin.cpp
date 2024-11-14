@@ -14,14 +14,15 @@
 #include "GMIdleState.h"
 #include "GMChaseState.h"
 
-GMoblin::GMoblin()
+GMoblin::GMoblin() :
+	GMonster(CREATURE_ID::Moblin)
 {
 	SetName(L"Moblin");
 
 	MonsterInfo* pMInfo = new MonsterInfo;
 	pMInfo->Material = MATERIAL_TYPE::LIFE;
-	pMInfo->MaxHP = 4;
-	pMInfo->HP = 4;
+	pMInfo->MaxHP = 12;
+	pMInfo->HP = 12;
 	pMInfo->AttackPower = 4;
 	pMInfo->Speed = 64;
 	pMInfo->Direction = Vec2::down();
@@ -67,7 +68,6 @@ void GMoblin::Tick()
 void GMoblin::Render()
 {
 	GetFlipBookPlayer()->Render();
-	RenderEffect();
 }
 
 void GMoblin::CreateAnimator()

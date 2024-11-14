@@ -10,6 +10,7 @@
 #include "GAssetManager.h"
 
 GPullRock::GPullRock() :
+	GCreature(CREATURE_ID::PullRock),
 	m_RigidBody(nullptr),
 	m_Sprite(nullptr)
 {
@@ -56,12 +57,11 @@ void GPullRock::Tick()
 void GPullRock::Render()
 {
 	m_Sprite->Render();
-	RenderEffect();
 }
 
 void GPullRock::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
-		Interaction(HitBox);
+		Interaction_Attack(HitBox);
 }

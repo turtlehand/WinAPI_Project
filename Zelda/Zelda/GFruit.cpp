@@ -10,7 +10,7 @@
 #include "GRoastFruit.h"
 
 GFruit::GFruit() :
-	GItem(ITEM_ID::Fruit),
+	GItem(CREATURE_ID::Fruit),
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Fruit");
@@ -18,8 +18,8 @@ GFruit::GFruit() :
 	// ¿­¸Å ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::WOOD;
-	pInfo->MaxHP = 100;
-	pInfo->HP = 100;
+	pInfo->MaxHP = 8;
+	pInfo->HP = 8;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 0;
 	pInfo->IsDead = false;
@@ -49,14 +49,13 @@ void GFruit::Begin()
 void GFruit::Render()
 {
 	m_SpriteRenderer->Render();
-	GCreature::RenderEffect();
 }
 
 void GFruit::OnTriggerEnter(GCollider* _Collider)
 {
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if (HitBox != nullptr)
-		Interaction(HitBox);
+		Interaction_Attack(HitBox);
 }
 
 void GFruit::UseItem(GCreature* _User)

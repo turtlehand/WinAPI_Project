@@ -12,7 +12,8 @@
 #include "GFlipBookPlayer.h"
 
 
-GMonster::GMonster() :
+GMonster::GMonster(CREATURE_ID _CreatureID) :
+	GCreature(_CreatureID),
 	m_Target(nullptr),
 	m_FSM(nullptr),
 	m_FlipBookPlayer(nullptr),
@@ -35,12 +36,6 @@ GMonster::~GMonster()
 {
 }
 
-void GMonster::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
-}
 
 
 const wstring& GMonster::GetCurrentState()

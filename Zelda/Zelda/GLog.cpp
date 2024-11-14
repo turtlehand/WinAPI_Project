@@ -10,6 +10,7 @@
 #include "GAssetManager.h"
 
 GLog::GLog() :
+	GCreature(CREATURE_ID::Log),
 	m_RigidBody(nullptr),
 	m_Sprite(nullptr)
 {
@@ -62,12 +63,4 @@ void GLog::Tick()
 void GLog::Render()
 {
 	m_Sprite->Render();
-	RenderEffect();
-}
-
-void GLog::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
 }

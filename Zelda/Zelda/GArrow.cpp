@@ -20,7 +20,7 @@ GArrow::GArrow() :
 	GetSpriteRenderer()->SetScale(Vec2(4.f, 4.f));
 	GetSpriteRenderer()->SetDeleteColor(RGB(116, 116, 116));
 
-	GetCollider()->SetTrigger(true);
+	GetHitBox()->SetTrigger(true);
 }
 
 GArrow::~GArrow()
@@ -44,32 +44,40 @@ void GArrow::Render()
 	GHitBox::Render();
 }
 
+void GArrow::InteractionEffect_Element(GCreature* _Creature)
+{
+	if (_Creature->GetStatInfo()->Material == MATERIAL_TYPE::FIRE)
+	{
+		InstantIgnite();
+	}
+}
+
 void GArrow::SetVelocity(Vec2 _Velocity)
 {
 	if (_Velocity.Normalize() == Vec2::up())
 	{
 		GetSpriteRenderer()->SetSprite(GAssetManager::GetInst()->LoadSprite(L"ARROW_Y", L"Sprite\\Item_16\\ARROW_Y.sprite"));
-		GetCollider()->SetScale(Vec2(32.f, 64.f));
+		GetHitBox()->SetScale(Vec2(32.f, 64.f));
 	}
 	else if (_Velocity.Normalize() == Vec2::down())
 	{
 		GetSpriteRenderer()->SetSprite(GAssetManager::GetInst()->LoadSprite(L"ARROW_Y", L"Sprite\\Item_16\\ARROW_Y.sprite"));
 		GetSpriteRenderer()->SetYFlip(true);
 
-		GetCollider()->SetScale(Vec2(32.f, 64.f));
+		GetHitBox()->SetScale(Vec2(32.f, 64.f));
 	}
 	else if (_Velocity.Normalize() == Vec2::left())
 	{
 		GetSpriteRenderer()->SetSprite(GAssetManager::GetInst()->LoadSprite(L"ARROW_X", L"Sprite\\Item_16\\ARROW_X.sprite"));
 		GetSpriteRenderer()->SetXFlip(true);
 
-		GetCollider()->SetScale(Vec2(64.f, 32.f));
+		GetHitBox()->SetScale(Vec2(64.f, 32.f));
 	}
 	else if (_Velocity.Normalize() == Vec2::right())
 	{
 		GetSpriteRenderer()->SetSprite(GAssetManager::GetInst()->LoadSprite(L"ARROW_X", L"Sprite\\Item_16\\ARROW_X.sprite"));
 
-		GetCollider()->SetScale(Vec2(64.f, 32.f));
+		GetHitBox()->SetScale(Vec2(64.f, 32.f));
 	}
 		
 

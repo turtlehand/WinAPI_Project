@@ -184,6 +184,9 @@
     <Filter Include="Game\05. Object\08. GameUI">
       <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\05. Object\01.Creature\04. Item\400. Tool">
+      <UniqueIdentifier>{293fee66-61cf-4f39-869c-cb14ad83b788}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -414,6 +417,9 @@
     <ClInclude Include="GPUseToolState.h">
       <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
+    <ClInclude Include="GBow.h">
+      <Filter>Game\05. Object\01.Creature\04. Item\400. Tool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -625,6 +631,9 @@
     </ClCompile>
     <ClCompile Include="GPUseToolState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GBow.cpp">
+      <Filter>Game\05. Object\01.Creature\04. Item\400. Tool</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

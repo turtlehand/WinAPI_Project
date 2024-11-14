@@ -12,6 +12,7 @@ class GPUseToolState :
 private:
     GPlayer* m_Player;
     PlayerInfo* m_PlayerInfo;
+    GHitBox* m_AttackBox;
 
     PLAYER_ANIM_STATE m_PrevAnim;
 

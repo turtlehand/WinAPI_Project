@@ -23,8 +23,6 @@ private:
 
 	GHitBox* m_AttackBox;
 
-public:
-	virtual void OnTriggerEnter(GCollider* _Collider) override;
 
 public:
 	MonsterInfo* GetMonsterStatInfo() { return (MonsterInfo*)GetStatInfo(); }
@@ -43,7 +41,7 @@ protected:
 	virtual void CreateAnimator() = 0;
 
 public:
-	GMonster();
+	GMonster(CREATURE_ID _CreatureID);
 	virtual ~GMonster() override;
 };
 

@@ -65,6 +65,12 @@ void CObj::SetActive(bool _Active)
 {
 	Task task = { TASK_TYPE::ACTIVE_OBJECT,(DWORD_PTR)this,(DWORD_PTR)_Active };
 	TaskManager::GetInst()->AddTask(task);
+
+	// 자식 오브젝트들도 false 시킨다.
+	for (size_t i = 0; i < m_vecChild.size(); ++i)
+	{
+		m_vecChild[i]->SetActive(_Active);
+	}
 }
 
 /// <summary>
@@ -73,7 +79,7 @@ void CObj::SetActive(bool _Active)
 /// <param name="_Parent"></param>
 void CObj::SetParent(CObj* _Parent)
 {
-	if (m_Parent)
+	if (IsValid(m_Parent))
 	{
 		vector<CObj*>::iterator iter = std::find(m_Parent->m_vecChild.begin(), m_Parent->m_vecChild.end(), this);
 		
@@ -84,7 +90,9 @@ void CObj::SetParent(CObj* _Parent)
 	}
 
 	m_Parent = _Parent;
-	m_Parent->m_vecChild.push_back(this);
+
+	if(IsValid(m_Parent))
+		m_Parent->m_vecChild.push_back(this);
 }
 
 

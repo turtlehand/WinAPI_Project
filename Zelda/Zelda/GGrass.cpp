@@ -10,6 +10,7 @@
 #include "GAssetManager.h"
 
 GGrass::GGrass() :
+	GCreature(CREATURE_ID::Grass),
 	m_FlipBookPlayer(nullptr)
 {
 	SetName(L"Grass");
@@ -30,18 +31,13 @@ GGrass::GGrass() :
 
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"GRASS", L"FlipBook\\OBJECT_16\\GRASS.flip"));
-	m_FlipBookPlayer->SetPlay(0, 5, true);
-	m_FlipBookPlayer->Pause();
+	m_FlipBookPlayer->SetPlay(0, 5, false);
 }
 
 GGrass::~GGrass()
 {
 }
 
-void GGrass::InteractionEffect(GHitBox* _HitBox)
-{
-	m_FlipBookPlayer->SetPlay(0, 10, false);
-}
 
 void GGrass::Begin()
 {
@@ -57,12 +53,17 @@ void GGrass::Tick()
 void GGrass::Render()
 {
 	m_FlipBookPlayer->Render();
-	RenderEffect();
 }
 
 void GGrass::OnTriggerEnter(GCollider* _Collider)
 {
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
+	GCreature::OnTriggerEnter(_Collider);
+
+	if (m_FlipBookPlayer->IsFinish())
+	{
+		GCreature* Creature = dynamic_cast<GCreature*>(_Collider->GetOwner());
+		if (Creature != nullptr)
+			m_FlipBookPlayer->SetPlay(0, 10, false);
+	}
+	
 }

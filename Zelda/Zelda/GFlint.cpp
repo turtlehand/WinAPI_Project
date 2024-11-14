@@ -10,7 +10,7 @@
 
 
 GFlint::GFlint() :
-	GItem(ITEM_ID::Flint),
+	GItem(CREATURE_ID::Flint),
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Flint");
@@ -41,13 +41,21 @@ GFlint::~GFlint()
 {
 }
 
-void GFlint::InteractionEffect(GHitBox* _HitBox)
+void GFlint::InteractionEffect_Element(GCreature* _Creature)
+{
+	MATERIAL_TYPE CElementType = _Creature->GetStatInfo()->Material;
+
+	if ( CElementType == MATERIAL_TYPE::FIRE )
+		Burn();
+}
+
+void GFlint::InteractionEffect_Attack(GHitBox* _HitBox)
 {
 	if (_HitBox->GetMaterialType() == MATERIAL_TYPE::STONE ||
 		_HitBox->GetMaterialType() == MATERIAL_TYPE::METAL)
 	{
 		GetStatInfo()->HP = 1;
-		Burn();
+		InstantIgnite();
 	}
 }
 
@@ -58,12 +66,4 @@ void GFlint::Begin()
 void GFlint::Render()
 {
 	m_SpriteRenderer->Render();
-	GCreature::RenderEffect();
-}
-
-void GFlint::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
 }

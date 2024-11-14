@@ -10,6 +10,7 @@
 #include "GAssetManager.h"
 
 GTree::GTree() :
+	GCreature(CREATURE_ID::Tree),
 	m_Sprite(nullptr)
 {
 	SetName(L"Tree");
@@ -55,12 +56,4 @@ void GTree::Tick()
 void GTree::Render()
 {
 	m_Sprite->Render();
-	RenderEffect();
-}
-
-void GTree::OnTriggerEnter(GCollider* _Collider)
-{
-	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
-	if (HitBox != nullptr)
-		Interaction(HitBox);
 }
