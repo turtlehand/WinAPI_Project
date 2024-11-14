@@ -14,6 +14,7 @@
 #include "GBoxCollider.h"
 #include "GCircleCollider.h"
 #include "GFlipBookPlayer.h"
+#include "GSpriteRenderer.h"
 #include "GRigidBody.h"
 #include "GFSM.h"
 
@@ -23,12 +24,7 @@
 #include "GPUseToolState.h"
 
 #include "GInventory.h"
-#include "GFireWood.h"
-#include "GFlint.h"
-#include "GFruit.h"
-#include "GRoastFruit.h"
-#include "GWeapon.h"
-#include "GBow.h"
+#include "GPrefabManager.h"
 
 GPlayer::GPlayer() :
 	GCreature(CREATURE_ID::Player),
@@ -37,12 +33,25 @@ GPlayer::GPlayer() :
 	m_RigidBody(nullptr),
 	m_AttackBox(nullptr),
 	m_Inventory{},
-	m_NearbyItem(nullptr)
+	m_NearbyItem(nullptr),
+	m_WeaponEquip(CREATURE_ID::END),
+	m_ToolEquip(CREATURE_ID::END)
 {
 	SetName(L"Player");
+}
+
+GPlayer::~GPlayer()
+{
+
+}
+
+void GPlayer::Awake()
+{
+	GCreature::Awake();
 
 	// 공격 박스 설정
 	m_AttackBox = new GHitBox;
+	m_AttackBox->Awake();
 	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_AttackBox, LAYER_TYPE::PLAYER_OBJECT);
 	AddChild(m_AttackBox);
 	m_AttackBox->SetActive(false);
@@ -93,11 +102,6 @@ GPlayer::GPlayer() :
 	m_Inventory.reserve(MAX_SLOT);
 }
 
-GPlayer::~GPlayer()
-{
-
-}
-
 void GPlayer::Begin()
 {
 	
@@ -123,7 +127,7 @@ void GPlayer::Tick()
 	}
 	else
 	{
-		m_InventoryUI->SetCurItme(CREATURE_ID::NONE);
+		m_InventoryUI->SetCurItme(CREATURE_ID::END);
 	}
 	
 }
@@ -187,9 +191,9 @@ void GPlayer::CreateAnimator()
 
 void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY)
 {
-	assert(4300 < (int)_WeaponID && (int)_WeaponID < 4400);
+	assert((int)CREATURE_ID::WEAPON < (int)_WeaponID && (int)_WeaponID < (int)CREATURE_ID::TOOLS);
 	m_WeaponEquip = _WeaponID;
-	m_ToolEquip = CREATURE_ID::NONE;
+	m_ToolEquip = CREATURE_ID::END;
 	m_AttackBox->SetAttackType(_WeaponInfo->AttackType);
 	m_AttackBox->SetMaterialType(_WeaponInfo->Material);
 	m_AttackBox->SetDamage(_WeaponInfo->AttackPower);
@@ -216,8 +220,8 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo,
 
 void GPlayer::SetTool(CREATURE_ID _ToolID, const DefaultStatsInfo* _ToolInfo)
 {
-	assert(4400 < (int)_ToolID && (int)_ToolID < 4500);
-	m_WeaponEquip = CREATURE_ID::NONE;
+	assert((int)CREATURE_ID::TOOLS < (int)_ToolID && (int)_ToolID < (int)CREATURE_ID::ETC);
+	m_WeaponEquip = CREATURE_ID::END;
 	m_ToolEquip = _ToolID;
 
 	GetPlayerStatInfo()->AttackPower = _ToolInfo->AttackPower;
@@ -275,57 +279,11 @@ void GPlayer::DropItem(int index)
 	// 인벤토리의 아이템의 개수가 1 이상이어야 한다.
 	assert(m_Inventory[index].second > 0);
 
-	CObj* DropObj = nullptr;
-
-	switch (m_Inventory[index].first)
-	{
-		case CREATURE_ID::Fire_Wood:
-		{
-			DropObj = new GFireWood;
-		}
-		break;
-		case CREATURE_ID::Flint:
-		{
-			DropObj = new GFlint;
-		}
-		break;
-		case CREATURE_ID::Fruit:
-		{
-			DropObj = new GFruit;
-		}
-		break;
-		case CREATURE_ID::Roast_Fruit:
-		{
-			DropObj = new GRoastFruit;
-		}
-		break;
-		default:
-		{
-			// 무기군일 때
-			if (4300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4400)
-			{
-				DropObj = new GWeapon(m_Inventory[index].first);
-				m_WeaponEquip = CREATURE_ID::NONE;
-			}
-			// 도구군일 때
-			else if (4400 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4500)
-			{
-				switch (m_Inventory[index].first)
-				{
-				case CREATURE_ID::Bow:
-				{
-					DropObj = new GBow;
-				}
-				break;
-				}
-				m_ToolEquip = CREATURE_ID::NONE;
-			}
-		}
-		break;
-	}
+	CObj* DropObj = GPrefabManager::GetInst()->CreatePrefab(m_Inventory[index].first);
 
 	if (DropObj != nullptr)
 	{
+		DropObj->Awake();
 		DropObj->SetPos(GetPos().x, GetPos().y);
 		CreateGameObject(DropObj, LAYER_TYPE::ITEM);
 	}
@@ -368,13 +326,13 @@ void GPlayer::UseItem(int index)
 			m_Inventory[index].second -= 1;
 	}
 	// 무기일 때
-	else if (4300 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4400)
+	else if ((int)CREATURE_ID::WEAPON < (int)m_Inventory[index].first && (int)m_Inventory[index].first < (int)CREATURE_ID::TOOLS)
 	{
 		// 인벤토리에서 해당 아이템을 
 		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);
 	}
 	// 도구일 때
-	else if (4400 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4500)
+	else if ((int)CREATURE_ID::TOOLS < (int)m_Inventory[index].first && (int)m_Inventory[index].first < (int)CREATURE_ID::ETC)
 	{
 		// 인벤토리에서 해당 아이템을 
 		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);

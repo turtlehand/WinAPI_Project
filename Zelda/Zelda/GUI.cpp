@@ -21,10 +21,6 @@ GUI::~GUI()
 	m_vecChild.clear();
 }
 
-void GUI::Begin()
-{
-}
-
 void GUI::Tick()
 {
 	MouseHoverCheck();

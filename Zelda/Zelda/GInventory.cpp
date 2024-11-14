@@ -16,6 +16,16 @@ GInventory::GInventory() :
 	m_Item{},
 	m_CurImage(nullptr)
 {
+
+}
+
+GInventory::~GInventory()
+{
+	Delete_Map(m_Item);
+}
+
+void GInventory::Awake()
+{
 	m_Item.insert(make_pair(CREATURE_ID::Fire_Wood, new GFireWood));
 	m_Item.insert(make_pair(CREATURE_ID::Flint, new GFlint));
 	m_Item.insert(make_pair(CREATURE_ID::Fruit, new GFruit));
@@ -23,11 +33,6 @@ GInventory::GInventory() :
 	m_Item.insert(make_pair(CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
 	m_Item.insert(make_pair(CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
 	m_Item.insert(make_pair(CREATURE_ID::Bow, new GBow));
-}
-
-GInventory::~GInventory()
-{
-	Delete_Map(m_Item);
 }
 
 void GInventory::UseItem(CREATURE_ID _ItemID, GCreature* _User)
@@ -49,7 +54,7 @@ const GItem* GInventory::FindItem(CREATURE_ID _ItemID)
 void GInventory::SetCurItme(CREATURE_ID _ItemID)
 {
 
-	if (_ItemID == CREATURE_ID::NONE)
+	if (_ItemID == CREATURE_ID::END)
 	{
 		m_CurImage = nullptr;
 		return;

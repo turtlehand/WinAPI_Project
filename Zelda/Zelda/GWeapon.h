@@ -13,7 +13,7 @@ private:
 	GSprite* m_SpriteY;
 
 public:
-	virtual void Begin() override;
+	virtual void Awake() override;
 	virtual void Render() override;
 
 public:

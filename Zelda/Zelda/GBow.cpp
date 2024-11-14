@@ -13,6 +13,17 @@ GBow::GBow() :
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Bow");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"BOW", L"Sprite\\Item_16\\BOW_Y.sprite"));
+	
+}
+
+GBow::~GBow()
+{
+}
+
+void GBow::Awake()
+{
+	GItem::Awake();
 
 	// ¿­¸Å ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -34,14 +45,6 @@ GBow::GBow() :
 	GetHitBox()->SetTrigger(true);
 
 	SetItemImage(m_SpriteRenderer->GetSprite());
-}
-
-GBow::~GBow()
-{
-}
-
-void GBow::Begin()
-{
 }
 
 void GBow::Render()

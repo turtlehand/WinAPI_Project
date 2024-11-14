@@ -10,7 +10,7 @@ class GGrass :
 	GFlipBookPlayer* m_FlipBookPlayer;
 
 public:
-	virtual void Begin() override;			// 레벨이 시작될 때
+	virtual void Awake() override;			// 레벨이 시작될 때
 	//virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 

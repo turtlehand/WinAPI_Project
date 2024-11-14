@@ -17,7 +17,7 @@ GCreature::GCreature(CREATURE_ID _CreatrueID) :
 	m_HitBox(nullptr),
 	m_Effect(nullptr)
 {
-	m_HitBox = AddComponent<GBoxCollider>();
+	
 
 	//m_EffectAnim->SetDeleteColor(RGB(116, 116, 116));
 }
@@ -25,6 +25,11 @@ GCreature::GCreature(CREATURE_ID _CreatrueID) :
 GCreature::~GCreature()
 {
 	delete m_StatInfo;
+}
+
+void GCreature::Awake()
+{
+	m_HitBox = AddComponent<GBoxCollider>();
 }
 
 void GCreature::Tick()

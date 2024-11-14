@@ -13,6 +13,17 @@ GRoastFruit::GRoastFruit() :
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Roast_Fruit");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"ROAST_FRUIT", L"Sprite\\Item_16\\ROAST_FRUIT.sprite"));
+}
+
+GRoastFruit::~GRoastFruit()
+{
+
+}
+
+void GRoastFruit::Awake()
+{
+	GItem::Awake();
 
 	// 구운 열매 스탯
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -34,15 +45,6 @@ GRoastFruit::GRoastFruit() :
 	GetHitBox()->SetTrigger(true);
 
 	SetItemImage(m_SpriteRenderer->GetSprite());
-}
-
-GRoastFruit::~GRoastFruit()
-{
-
-}
-
-void GRoastFruit::Begin()
-{
 }
 
 void GRoastFruit::Render()

@@ -14,6 +14,18 @@ GGrass::GGrass() :
 	m_FlipBookPlayer(nullptr)
 {
 	SetName(L"Grass");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"GRASS_0", L"Sprite\\Object_16\\GRASS_0.sprite"));
+
+}
+
+GGrass::~GGrass()
+{
+}
+
+
+void GGrass::Awake()
+{
+	GCreature::Awake();
 
 	// «Æ Ω∫≈»
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -32,15 +44,6 @@ GGrass::GGrass() :
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"GRASS", L"FlipBook\\OBJECT_16\\GRASS.flip"));
 	m_FlipBookPlayer->SetPlay(0, 5, false);
-}
-
-GGrass::~GGrass()
-{
-}
-
-
-void GGrass::Begin()
-{
 }
 
 /*

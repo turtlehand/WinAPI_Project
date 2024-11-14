@@ -39,9 +39,9 @@ void GPMoveState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::SPACE))
 	{
-		if (m_Player->m_WeaponEquip != CREATURE_ID::NONE)
+		if (m_Player->m_WeaponEquip != CREATURE_ID::END)
 			m_Player->m_FSM->ChanageState(L"ATTACK");
-		else if (m_Player->m_ToolEquip != CREATURE_ID::NONE)
+		else if (m_Player->m_ToolEquip != CREATURE_ID::END)
 			m_Player->m_FSM->ChanageState(L"TOOL");
 	}
 	else if (GETKEYDOWN(KEY::C))

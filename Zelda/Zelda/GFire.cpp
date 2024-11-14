@@ -8,12 +8,20 @@ GFire::GFire() :
 	GHitBox(CREATURE_ID::Fire)
 {
 	SetName(L"Fire");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"FIRE_0", L"Sprite\\NPC_16\\FIRE_0.sprite"));
+}
+
+GFire::~GFire()
+{
+}
+
+void GFire::Awake()
+{
+	GHitBox::Awake();
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
 	GetFlipBookPlayer()->SetPlay(0, 4, true);
 	GetStatInfo()->Material = MATERIAL_TYPE::FIRE;
 }
 
-GFire::~GFire()
-{
-}
+

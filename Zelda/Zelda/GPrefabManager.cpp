@@ -38,44 +38,45 @@ GPrefabManager::~GPrefabManager()
 void GPrefabManager::Init()
 {
 	// 몬스터
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Moblin, new GMoblin));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Moblin, new GMoblin));
 
 	// 오브젝트
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Grass, new GGrass));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Tree, new GTree));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Log, new GLog));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Rock, new GRock));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::PullRock, new GPullRock));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Grass, new GGrass));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Tree, new GTree));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Log, new GLog));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Rock, new GRock));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::PullRock, new GPullRock));
 
 	// 아이템
 	// 소재
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Fire_Wood, new GFireWood));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Flint, new GFlint));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Fire_Wood, new GFireWood));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Flint, new GFlint));
 	
 	// 음식
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Fruit, new GFruit));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Roast_Fruit, new GRoastFruit));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Fruit, new GFruit));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Roast_Fruit, new GRoastFruit));
 
 	// 무기
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
 
 	// 도구
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Bow, new GBow));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Bow, new GBow));
 
 	// 공격 박스
-	m_mapPrefab.insert(make_pair(CREATURE_ID::HitBox, new GHitBox));
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Fire, new GFire));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::HitBox, new GHitBox));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Fire, new GFire));
 
 	// 벽
-	m_mapPrefab.insert(make_pair(CREATURE_ID::Wall, new GWall));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wall, new GWall));
 
 
 }
 
+
 const CObj* GPrefabManager::FindPrefab(CREATURE_ID _Key)
 {
-	map<CREATURE_ID, CObj*>::iterator iter = m_mapPrefab.find(_Key);
+	map<UINT, CObj*>::iterator iter = m_mapPrefab.find((UINT)_Key);
 
 	if (iter == m_mapPrefab.end())
 	{
@@ -95,7 +96,7 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 	{
 		CreatureObj = new GMoblin;
 	}
-
+	break;
 	// 오브젝트
 	case CREATURE_ID::Grass:
 	{

@@ -23,7 +23,6 @@ private:
 
 	GHitBox* m_AttackBox;
 
-
 public:
 	MonsterInfo* GetMonsterStatInfo() { return (MonsterInfo*)GetStatInfo(); }
 	const wstring& GetCurrentState();
@@ -36,6 +35,9 @@ public:
 	GFlipBookPlayer* GetFlipBookPlayer() { return m_FlipBookPlayer; }
 	GRigidBody* GetRigidBody() { return m_RigidBody; }
 	GHitBox* GetAttackBox() { return m_AttackBox; }
+
+public:
+	virtual void Awake() override;
 
 protected:
 	virtual void CreateAnimator() = 0;

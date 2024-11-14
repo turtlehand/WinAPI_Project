@@ -34,13 +34,13 @@ void GMChaseState::FinalTick()
 		m_Monster->m_FSM->ChanageState(L"IDLE");
 
 	// 몬스터의 이동속도에 맞게ㅔ 플레이어를 향해서 이동한다.
-	m_Monster->GetMonsterStatInfo()->Direction = (m_Monster->m_Target->GetPos() - m_Monster->GetPos()).Normalize();
+	m_Monster->GetMonsterStatInfo()->Direction = (m_Monster->m_Target->GetGlobalPos() - m_Monster->GetGlobalPos()).Normalize();
 
 	// 해당 방향으로, 속력에 맞게 매프레임마다 이동
 	m_Monster->GetRigidBody()->SetVelocity(m_Monster->GetMonsterStatInfo()->Direction * m_Monster->GetMonsterStatInfo()->Speed);
 
 	// 인지 범위 시각화
-	DrawDebugCircle(PEN_TYPE::GREEN, 0.f, m_Monster->GetPos(), m_Monster->GetMonsterStatInfo()->DetectRange);
+	DrawDebugCircle(PEN_TYPE::GREEN, 0.f, m_Monster->GetGlobalPos(), m_Monster->GetMonsterStatInfo()->DetectRange);
 
 }
 

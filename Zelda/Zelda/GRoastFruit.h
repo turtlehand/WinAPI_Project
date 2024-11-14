@@ -9,7 +9,7 @@ class GRoastFruit :
 	GSpriteRenderer* m_SpriteRenderer;
 
 public:
-	virtual void Begin() override;
+	virtual void Awake() override;
 	//void Tick() override;
 	virtual void Render() override;
 

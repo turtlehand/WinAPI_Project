@@ -13,6 +13,16 @@ GFireWood::GFireWood() :
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"FireWood");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"FIRE_WOOD", L"Sprite\\Item_16\\FIRE_WOOD.sprite"));
+}
+
+GFireWood::~GFireWood()
+{
+}
+
+void GFireWood::Awake()
+{
+	GItem::Awake();
 
 	// ¿Â¿€ Ω∫≈»
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -25,7 +35,7 @@ GFireWood::GFireWood() :
 	SetStatInfo(pInfo);
 
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
-	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"FIRE_WOOD",L"Sprite\\Item_16\\FIRE_WOOD.sprite"));
+	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"FIRE_WOOD", L"Sprite\\Item_16\\FIRE_WOOD.sprite"));
 	m_SpriteRenderer->SetScale(Vec2(4.f, 4.f));
 	m_SpriteRenderer->SetDeleteColor(RGB(116, 116, 116));
 
@@ -34,14 +44,6 @@ GFireWood::GFireWood() :
 	GetHitBox()->SetTrigger(true);
 
 	SetItemImage(m_SpriteRenderer->GetSprite());
-}
-
-GFireWood::~GFireWood()
-{
-}
-
-void GFireWood::Begin()
-{
 }
 
 void GFireWood::Tick()

@@ -16,6 +16,7 @@ public:
 	void SetCurItme(CREATURE_ID _ItemID);
 
 public:
+	virtual void Awake() override;
 	virtual void Tick_UI() override;
 	virtual void Render_UI() override;
 

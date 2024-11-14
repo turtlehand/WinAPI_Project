@@ -37,8 +37,8 @@ void GMIdleState::FinalTick()
 
 	if (IsValid(m_Monster->m_Target))
 	{
-		Vec2 vTargetPos = m_Monster->m_Target->GetPos();
-		Vec2 vPos = m_Monster->GetPos();
+		Vec2 vTargetPos = m_Monster->m_Target->GetGlobalPos();
+		Vec2 vPos = m_Monster->GetGlobalPos();
 		float Distance = sqrtf(powf(vTargetPos.x - vPos.x, 2) + powf(vTargetPos.y - vPos.y, 2));
 
 		if (m_Monster->GetMonsterStatInfo()->DetectRange > Distance)
@@ -47,7 +47,7 @@ void GMIdleState::FinalTick()
 		}
 	}
 
-	DrawDebugCircle(PEN_TYPE::GREEN, 0.f, m_Monster->GetPos(), m_Monster->GetMonsterStatInfo()->DetectRange);
+	DrawDebugCircle(PEN_TYPE::GREEN, 0.f, m_Monster->GetGlobalPos(), m_Monster->GetMonsterStatInfo()->DetectRange);
 }
 
 void GMIdleState::Exit()

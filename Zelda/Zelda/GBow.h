@@ -10,7 +10,7 @@ private:
 	GSpriteRenderer* m_SpriteRenderer;
 
 public:
-	virtual void Begin() override;
+	virtual void Awake() override;
 	virtual void Render() override;
 
 public:

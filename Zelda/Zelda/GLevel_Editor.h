@@ -3,13 +3,22 @@
 #include "GMap.h"
 #include "GTilePalette.h"
 
+enum class DRAW_MODE_TYPE
+{
+	TILE,
+	OBJECT,
+	NONE,
+};
+
 class GLevel_Editor :
     public CLevel
 {
 private:
+	DRAW_MODE_TYPE m_DrawMode;
+
 	GMap* m_MapObj;
 	GTilePalette* m_TilePalette;
-	int m_CurTile;
+	int m_CurIndex;
 
 	HMENU m_hMenu;
 

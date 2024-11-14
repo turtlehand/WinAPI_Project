@@ -14,6 +14,17 @@ GFruit::GFruit() :
 	m_SpriteRenderer(nullptr)
 {
 	SetName(L"Fruit");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"FRUIT", L"Sprite\\Item_16\\FRUIT.sprite"));
+}
+
+GFruit::~GFruit()
+{
+
+}
+
+void GFruit::Awake()
+{
+	GItem::Awake();
 
 	// ¿­¸Å ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -35,15 +46,6 @@ GFruit::GFruit() :
 	GetHitBox()->SetTrigger(true);
 
 	SetItemImage(m_SpriteRenderer->GetSprite());
-}
-
-GFruit::~GFruit()
-{
-
-}
-
-void GFruit::Begin()
-{
 }
 
 void GFruit::Render()

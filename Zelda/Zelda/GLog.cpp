@@ -15,6 +15,21 @@ GLog::GLog() :
 	m_Sprite(nullptr)
 {
 	SetName(L"Log");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"Log", L"Sprite\\Object_16\\LOG.sprite"));
+}
+
+GLog::~GLog()
+{
+}
+
+void GLog::DropItem()
+{
+
+}
+
+void GLog::Awake()
+{
+	GCreature::Awake();
 
 	// ³ª¹« ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -38,19 +53,6 @@ GLog::GLog() :
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
 
 	m_Sprite->SetDeleteColor(RGB(116, 116, 116));
-}
-
-GLog::~GLog()
-{
-}
-
-void GLog::DropItem()
-{
-
-}
-
-void GLog::Begin()
-{
 }
 
 /*

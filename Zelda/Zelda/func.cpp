@@ -29,6 +29,7 @@ void CreateGameObject(CObj* _NewObject, LAYER_TYPE _Layer)
 {
 	Task task = { TASK_TYPE::CREATE_OBJECT,(DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
 	TaskManager::GetInst()->AddTask(task);
+	_NewObject->Awake();
 }
 
 void CreateChildGameObject(CObj* _ParentObject, CObj* _NewObject, LAYER_TYPE _Layer)
@@ -37,6 +38,7 @@ void CreateChildGameObject(CObj* _ParentObject, CObj* _NewObject, LAYER_TYPE _La
 	TaskManager::GetInst()->AddTask(task);
 
 	_ParentObject->AddChild(_NewObject);
+	_NewObject->Awake();
 }
 
 void DeleteGameObject(CObj* _DestroyObject)

@@ -7,6 +7,7 @@
 
 class GCollider;
 class GComponent;
+class GSprite;
 
 class CObj : public CBase
 {
@@ -22,10 +23,11 @@ private:
 	bool m_Active;
 	bool m_Dead;
 
+	GSprite* m_TitleSprite;
 
 public:
-	virtual void Awake() {};				// 레벨에 오브젝트를 넣을 때
-	virtual void Begin() = 0;			// 레벨이 시작될 때
+	virtual void Awake() = 0;			// 게임에 넣을 거라면 실행
+	virtual void Begin() {};			// 레벨에 오브젝트를 넣을 때
 	virtual void Tick() = 0;			// 오브젝트가 할 일
 	void FinalTick();					// 오브젝트가 소유한 Component가 할 일
 	virtual void OnEnable() {};			// 오브젝트가 활성화 될 때
@@ -88,6 +90,9 @@ public:
 	LAYER_TYPE GetLayerType() { return m_LayerType; }
 
 	bool IsDead() const { return m_Dead; }
+
+	GSprite* GetTitleSprite() const { return m_TitleSprite; }
+	void SetTitleSprite(GSprite* _TitleSprite) { m_TitleSprite = _TitleSprite; }
 
 public:
 	CObj();

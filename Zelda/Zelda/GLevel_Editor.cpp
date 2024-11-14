@@ -9,11 +9,13 @@
 #include "CLevelMgr.h"
 #include "GAssetManager.h"
 #include "GCamera.h"
+#include "GPrefabManager.h"
 
 #include "GUI.h"
 #include "GPanel.h"
 #include "GButton.h"
 
+#include "CObj.h"
 #include "GTexture.h"
 #include "GTile.h"
 #include "GSprite.h"
@@ -30,9 +32,10 @@ INT_PTR CALLBACK    TilePaletteProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    TileCreateProc(HWND, UINT, WPARAM, LPARAM);
 
 GLevel_Editor::GLevel_Editor() :
+	m_DrawMode(DRAW_MODE_TYPE::TILE),
 	m_hMenu(nullptr),
 	m_TilePalette(nullptr),
-	m_CurTile(-1),
+	m_CurIndex(-1),
 	m_MapObj(nullptr)
 {
 }
@@ -62,6 +65,7 @@ void GLevel_Editor::Begin()
 	CEngine::GetInst()->ChangeWindowSize(CEngine::GetInst()->GetResolution());
 
 	m_MapObj = new GMap;
+	m_MapObj->Awake();
 	AddObject(m_MapObj, LAYER_TYPE::TILE);
 	m_MapObj->SetName(L"Map");
 	m_MapObj->GetTileMap()->SetScale(Vec2(4.f, 4.f));
@@ -103,8 +107,6 @@ void GLevel_Editor::Begin()
 	pLoadTPButton->SetBrushType(BRUSH_TYPE::BLUE);
 	pLoadTPButton->AddDelegate(this, (DELEGATE_0)&GLevel_Editor::LoadTilePalette);
 	*/
-
-	CLevel::Begin();
 }
 
 void GLevel_Editor::Tick()
@@ -114,6 +116,19 @@ void GLevel_Editor::Tick()
 	if(GETKEYDOWN(KEY::ENTER))
 	{
 		ChangeLevel(LEVEL_TYPE::START);
+	}
+	else if (GETKEYDOWN(KEY::SPACE))
+	{
+		if (m_DrawMode == DRAW_MODE_TYPE::TILE)
+		{
+			m_DrawMode = DRAW_MODE_TYPE::OBJECT;
+			m_CurIndex = 1;
+		}
+		else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
+		{
+			m_DrawMode = DRAW_MODE_TYPE::TILE;
+			m_CurIndex = -1;
+		}
 	}
 
 	Vec2 CamPos = GCamera::GetInst()->GetOffset();
@@ -127,25 +142,66 @@ void GLevel_Editor::Tick()
 	if (GETKEYPRESSED(KEY::D))
 		GCamera::GetInst()->SetOffset(Vec2(CamPos.x + DT * 500.f, CamPos.y));
 
-	if (m_TilePalette != nullptr)
+	if (m_DrawMode == DRAW_MODE_TYPE::TILE)
 	{
+		if (m_TilePalette != nullptr)
+		{
+			if (GETKEYPRESSED(KEY::LBTN))
+			{
+				if (m_CurIndex < 0)
+					m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), nullptr);
+				else
+					m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_TilePalette->GetTile(m_CurIndex));
+			}
+			if (GETMW > 0)
+			{
+				int d = m_TilePalette->GetTileSize();
+				m_CurIndex = m_CurIndex < m_TilePalette->GetTileSize() - 1 ? ++m_CurIndex : m_TilePalette->GetTileSize() - 1;
+			}
+			else if (GETMW < 0)
+			{
+				m_CurIndex = -1 < m_CurIndex ? --m_CurIndex : -1;
+			}
+		}
+	}
+	else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
+	{
+
 		if (GETKEYPRESSED(KEY::LBTN))
 		{
-			if(m_CurTile < 0)
-				m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), nullptr);
-			else
-				m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_TilePalette->GetTile(m_CurTile));
+			m_MapObj->GetTileMap()->SetCreature(CKeyMgr::GetInst()->GetMousePos(), (CREATURE_ID)m_CurIndex);
+		}
+		else if (GETKEYPRESSED(KEY::RBTN))
+		{
+			m_MapObj->GetTileMap()->SetCreature(CKeyMgr::GetInst()->GetMousePos());
 		}
 
 		if (GETMW < 0)
 		{
-			m_CurTile = ++m_CurTile < m_TilePalette->GetTileSize() ? m_CurTile : m_TilePalette->GetTileSize() - 1;
+			int maxSize = (INT)CREATURE_ID::Player;
+			while(true)
+			{
+				m_CurIndex = ++m_CurIndex < maxSize ? m_CurIndex : maxSize - 1;
+				if (GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex) != nullptr)
+					break;
+
+			}
+			
 		}
 		else if (GETMW > 0)
 		{
-			m_CurTile = -1 < m_CurTile ? --m_CurTile : -1;
+			while (true)
+			{
+				m_CurIndex = 1 < m_CurIndex ? --m_CurIndex : 1;
+				if (GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex) != nullptr)
+					break;
+
+			}
+			
 		}
 	}
+
+
 
 }
 
@@ -160,19 +216,38 @@ void GLevel_Editor::Render()
 	swprintf_s(buff, 255, L"%d, %d", (int)MousePos.x, (int)MousePos.y);
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, buff, wcslen(buff));
 
-
-	if (m_TilePalette != nullptr && -1 < m_CurTile)
+	if (m_DrawMode == DRAW_MODE_TYPE::TILE)
 	{
-		// 현재 타일
-		GTile* Tile = m_TilePalette->GetTile(m_CurTile);
-		StretchBlt(CEngine::GetInst()->GetSecondDC(),
-			CEngine::GetInst()->GetResolution().x - 100, 50,
-			64, 64,
-			Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y,
-			Tile->GetSprite()->GetSlice().x, Tile->GetSprite()->GetSlice().y, SRCCOPY);
+		if (m_TilePalette != nullptr && -1 < m_CurIndex)
+		{
+			// 현재 타일
+			GTile* Tile = m_TilePalette->GetTile(m_CurIndex);
+			StretchBlt(CEngine::GetInst()->GetSecondDC(),
+				CEngine::GetInst()->GetResolution().x - 100, 50,
+				64, 64,
+				Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y,
+				Tile->GetSprite()->GetSlice().x, Tile->GetSprite()->GetSlice().y, SRCCOPY);
+		}
 	}
+	else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
+	{
+		if (0 < m_CurIndex)
+		{
+			// 현재 타일
+			const CObj* Obj = GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex);
+			if (Obj == nullptr)
+				return;
+			GSprite* Sprite = GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex)->GetTitleSprite();
+			if (Sprite == nullptr)
+				return;
 
-
+			StretchBlt(CEngine::GetInst()->GetSecondDC(),
+				CEngine::GetInst()->GetResolution().x - 100, 50,
+				64, 64,
+				Sprite->GetAtlas()->GetDC(), Sprite->GetLeftTop().x, Sprite->GetLeftTop().y,
+				Sprite->GetSlice().x, Sprite->GetSlice().y, SRCCOPY);
+		}
+	}
 }
 
 void GLevel_Editor::End()
@@ -291,7 +366,7 @@ void GLevel_Editor::LoadTilePalette()
 		CheckExt(L".tp", FullPath);
 		// 맵 오브젝트의 TileMap 컴포넌트 정보를 저장한다.
 		m_TilePalette = GAssetManager::GetInst()->LoadTilePalette(PathKey(FullPath), FullPath);
-		m_CurTile = -1;
+		m_CurIndex = -1;
 	}
 }
 

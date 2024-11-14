@@ -64,6 +64,7 @@ void GTileMap::SetRowCol(int _Row, int _Col)
 	for (int i = 0; i < m_Row * m_Col; ++i)
 	{
 		m_vecTile[i].first = nullptr;
+		m_vecTile[i].second = CREATURE_ID::NONE;
 	}
 }
 
@@ -99,6 +100,42 @@ void GTileMap::SetTile(Vec2 _MousePos, GTile* _Tile)
 	assert(GAssetManager::GetInst()->FindTile(_Tile->GetKey()) != nullptr);
 
 	m_vecTile[Row * m_Col + Col].first = _Tile;
+}
+
+void GTileMap::SetCreature(Vec2 _MousePos, CREATURE_ID _CreatureID)
+{
+	// 화면을 벗어났다면 무효처리
+	if (CKeyMgr::GetInst()->IsMouseOffScreen())
+		return;
+
+	// 마우스 좌표에 Object의 좌표를 빼서 Offset을 구한다. 
+	Vec2 Offset = _MousePos - GetOwner()->GetPos();
+
+	// 이렇게 나온 Offset이 음수라면 타일맵을 벗어난 것이므로 무효처리한다.
+	if (Offset.x < 0 || Offset.y < 0)
+		return;
+
+	int Row = Offset.y / (TILE_SIZE * m_Scale.y);
+	int Col = Offset.x / (TILE_SIZE * m_Scale.x);
+
+	// Row와 Col이 타일맵 보다 크다면 벗어난 것이므로 무효처리한다.
+	if (Col < 0 || Row < 0 || m_Col <= Col || m_Row <= Row)
+		return;
+
+	// 빈 타일을 설정 시 
+	if (_CreatureID == CREATURE_ID::NONE)
+	{
+		m_vecTile[Row * m_Col + Col].second = CREATURE_ID::NONE;
+		CreateCreature();
+		return;
+	}
+
+	// 존재하지 않는 타일이라면 무효처리
+	assert(GPrefabManager::GetInst()->FindPrefab(_CreatureID) != nullptr);
+
+	m_vecTile[Row * m_Col + Col].second = _CreatureID;
+
+	CreateCreature();
 }
 
 /// <summary>
@@ -286,8 +323,14 @@ void GTileMap::CreateCreature()
 			CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(CreatureID);
 			LAYER_TYPE LayerType = LAYER_TYPE::END;
 
-			if ((int)CREATURE_ID::Obstacle < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Item)
+			if ((int)CREATURE_ID::Monster < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Obstacle)
+				LayerType = LAYER_TYPE::MONSTER;
+			else if ((int)CREATURE_ID::Obstacle < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Item)
 				LayerType = LAYER_TYPE::OBJECT;
+			else if ((int)CREATURE_ID::Item < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::ELEMENT)
+				LayerType = LAYER_TYPE::ITEM;
+			else if ((int)CREATURE_ID::ELEMENT < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::ETC)
+				LayerType = LAYER_TYPE::ELEMENT;
 			else if ((int)CREATURE_ID::Wall == (int)CreatureID)
 				LayerType = LAYER_TYPE::OBJECT;
 

@@ -15,6 +15,16 @@ GPullRock::GPullRock() :
 	m_Sprite(nullptr)
 {
 	SetName(L"PullRock");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"PULL_ROCK", L"Sprite\\Object_16\\PULL_ROCK.sprite"));
+}
+
+GPullRock::~GPullRock()
+{
+}
+
+void GPullRock::Awake()
+{
+	GCreature::Awake();
 
 	// πŸ¿ß Ω∫≈»
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
@@ -36,14 +46,6 @@ GPullRock::GPullRock() :
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"PULL_ROCK", L"Sprite\\Object_16\\PULL_ROCK.sprite"));
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
-}
-
-GPullRock::~GPullRock()
-{
-}
-
-void GPullRock::Begin()
-{
 }
 
 /*

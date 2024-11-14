@@ -3,13 +3,16 @@
 
 #include "GBoxCollider.h"
 
-GWall::GWall()
+void GWall::Awake()
 {
-	SetName(L"Wall");
-
 	GBoxCollider* Collider = AddComponent<GBoxCollider>();
 	Collider->SetScale(Vec2(64.f, 64.f));
 	Collider->SetTrigger(false);
+}
+
+GWall::GWall()
+{
+	SetName(L"Wall");
 }
 
 GWall::~GWall()

@@ -13,7 +13,16 @@ GRock::GRock() :
 	m_Sprite(nullptr)
 {
 	SetName(L"Rock");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\test_18.sprite"));
+}
 
+GRock::~GRock()
+{
+}
+
+void GRock::Awake()
+{
+	GCreature::Awake();
 	// ¹ÙÀ§ ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::STONE;
@@ -30,14 +39,6 @@ GRock::GRock() :
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\test_18.sprite"));
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
-}
-
-GRock::~GRock()
-{
-}
-
-void GRock::Begin()
-{
 }
 
 /*

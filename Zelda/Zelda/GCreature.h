@@ -8,18 +8,15 @@ class GBoxCollider;
 
 enum class CREATURE_ID
 {
-	NONE = 0,
-
-	// 플레이어
-	Player = 1000,
-
+	NONE = -1,
+	
 	// 몬스터
-	Monster = 2000,
+	Monster,
 
 	Moblin,
 
 	// 장애물
-	Obstacle = 3000,
+	Obstacle,
 
 	Grass,
 	Tree,
@@ -28,21 +25,21 @@ enum class CREATURE_ID
 	PullRock,
 
 	// 아이템
-	Item = 4000,
+	Item,
 
 	// 소재
-	MATERIALS = 4100,
+	MATERIALS,
 	Fire_Wood,
 	Flint,
 	MonsterMaterial,
 
 	// 음식
-	FOOD = 4200,
+	FOOD,
 	Fruit,
 	Roast_Fruit,
 
 	// 무기
-	WEAPON = 4300,
+	WEAPON,
 	Wooden_Sword,
 	Iron_Sword,
 	Stone_Hammer,
@@ -52,16 +49,24 @@ enum class CREATURE_ID
 	Korok_Leaf,
 
 	// 도구
-	TOOLS = 4400,
+	TOOLS,
 	Bow,
 	Arrow,
 
-	// 공격 박스
-	HitBox = 5000,
+	ELEMENT,
 	Fire,
 
+	//기타
+	ETC,
+
+	// 공격 박스
+	HitBox,
 	// 벽
-	Wall = 6000,
+	Wall,
+	// 플레이어
+	Player,
+
+	END,
 };
 
 class GCreature :
@@ -89,6 +94,7 @@ public:
 	void StatusEffect();
 
 public:
+	virtual void Awake() override;
 	virtual void Tick() override;
 
 	virtual void OnTrigger(GCollider* _Collider) override;

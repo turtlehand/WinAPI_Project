@@ -9,8 +9,19 @@ GHitBox::GHitBox(CREATURE_ID _CreatureID) :
 	GCreature(CREATURE_ID::HitBox),
 	m_AttackType(ATTACK_TYPE::NONE),
 	m_IsProjectile(false),
-	m_SpriteRenderer(nullptr)
+	m_SpriteRenderer(nullptr),
+	m_FlipBookPlayer(nullptr)
 {
+
+}
+
+GHitBox::~GHitBox()
+{
+}
+
+void GHitBox::Awake()
+{
+	GCreature::Awake();
 	DefaultStatsInfo* pStat = new DefaultStatsInfo;
 	pStat->IsDead = true;
 
@@ -20,14 +31,6 @@ GHitBox::GHitBox(CREATURE_ID _CreatureID) :
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
 
 	GetHitBox()->SetTrigger(true);
-}
-
-GHitBox::~GHitBox()
-{
-}
-
-void GHitBox::Begin()
-{
 }
 
 void GHitBox::Tick()

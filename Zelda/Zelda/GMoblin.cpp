@@ -18,6 +18,16 @@ GMoblin::GMoblin() :
 	GMonster(CREATURE_ID::Moblin)
 {
 	SetName(L"Moblin");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"MOBLIN_DOWN", L"Sprite\\Overworld_Enemies\\MOBLIN_DOWN.sprite"));
+}
+
+GMoblin::~GMoblin()
+{
+}
+
+void GMoblin::Awake()
+{
+	GMonster::Awake();
 
 	MonsterInfo* pMInfo = new MonsterInfo;
 	pMInfo->Material = MATERIAL_TYPE::LIFE;
@@ -51,15 +61,6 @@ GMoblin::GMoblin() :
 	GetFSM()->AddState(L"IDLE", new GMIdleState);
 	GetFSM()->AddState(L"CHASE", new GMChaseState);
 	GetFSM()->ChanageState(L"IDLE");
-}
-
-GMoblin::~GMoblin()
-{
-}
-
-void GMoblin::Begin()
-{
-	
 }
 
 void GMoblin::Tick()
