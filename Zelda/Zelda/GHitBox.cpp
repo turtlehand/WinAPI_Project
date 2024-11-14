@@ -5,7 +5,7 @@
 #include "GSpriteRenderer.h"
 #include "GFlipBookPlayer.h"
 
-GHitBox::GHitBox() :
+GHitBox::GHitBox(CREATURE_ID _CreatureID) :
 	GCreature(CREATURE_ID::HitBox),
 	m_AttackType(ATTACK_TYPE::NONE),
 	m_IsProjectile(false),

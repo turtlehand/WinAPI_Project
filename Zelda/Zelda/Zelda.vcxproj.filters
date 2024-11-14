@@ -190,6 +190,9 @@
     <Filter Include="Game\05. Object\01.Creature\6000. Wall">
       <UniqueIdentifier>{35578f41-fb9f-44d0-9b5f-bbf57da40085}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\03. Manager\12. Prefab">
+      <UniqueIdentifier>{87fb09cf-35a1-4a5c-96fa-981b9306ca2b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">
@@ -426,6 +429,12 @@
     <ClInclude Include="GWall.h">
       <Filter>Game\05. Object\01.Creature\6000. Wall</Filter>
     </ClInclude>
+    <ClInclude Include="GFire.h">
+      <Filter>Game\05. Object\01.Creature\5000. HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="GPrefabManager.h">
+      <Filter>Game\03. Manager\12. Prefab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -525,9 +534,6 @@
     </ClCompile>
     <ClCompile Include="GTileMap.cpp">
       <Filter>Game\06. Component\04. TIleMap</Filter>
-    </ClCompile>
-    <ClCompile Include="GMap.cpp">
-      <Filter>Game\05. Object\05. Map</Filter>
     </ClCompile>
     <ClCompile Include="GLevel_Editor.cpp">
       <Filter>Game\04. Level\00. Editor</Filter>
@@ -643,6 +649,15 @@
     </ClCompile>
     <ClCompile Include="GWall.cpp">
       <Filter>Game\05. Object\01.Creature\6000. Wall</Filter>
+    </ClCompile>
+    <ClCompile Include="GMap.cpp">
+      <Filter>Game\05. Object\05. Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GFire.cpp">
+      <Filter>Game\05. Object\01.Creature\5000. HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="GPrefabManager.cpp">
+      <Filter>Game\03. Manager\12. Prefab</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -12,10 +12,15 @@ bool IsValid(CObj*& _Object)
 {
 	// 비어있거나 곧 삭제될 대상이라면 false
 	if (nullptr == _Object)
+	{
+		_Object = nullptr;
 		return false;
+	}
 	else if (_Object->IsDead())
+	{
+		_Object = nullptr;
 		return false;
-
+	}
 	// 그 외에는 유효함
 	return true;
 }

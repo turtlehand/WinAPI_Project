@@ -58,6 +58,7 @@ enum class CREATURE_ID
 
 	// 공격 박스
 	HitBox = 5000,
+	Fire,
 
 	// 벽
 	Wall = 6000,

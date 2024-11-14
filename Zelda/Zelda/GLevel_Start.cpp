@@ -105,17 +105,17 @@ void GLevel_Start::Begin()
 	AddObject(pBow, LAYER_TYPE::ITEM);
 	pBow->SetPos(300.f, -200.f);
 
-	GMap* pMap = new GMap;
-	m_Map = pMap;
-	AddObject(pMap, LAYER_TYPE::TILE);
-	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_Creature.tm";
-	pMap->SetName(L"Map");
-	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 5, TILE_SIZE * 4 * 5));
-	
-	pMap->GetTileMap()->Load(pMapPath);
-	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
-	pMap->SetActive(false);
+	//GMap* pMap = new GMap;
+	//m_Map = pMap;
+	//AddObject(pMap, LAYER_TYPE::TILE);
+	//wstring pMapPath = GPathManager::GetContentPath();
+	//pMapPath += L"TileMap\\test_Creature.tm";
+	//pMap->SetName(L"Map");
+	//pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 5, TILE_SIZE * 4 * 5));
+	//
+	//pMap->GetTileMap()->Load(pMapPath);
+	//pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
+	//pMap->SetActive(false);
 	
 	
 

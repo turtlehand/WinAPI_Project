@@ -42,7 +42,7 @@ public:
 	GFlipBookPlayer* GetFlipBookPlayer() { return m_FlipBookPlayer; }
 
 public:
-	GHitBox();
+	GHitBox(CREATURE_ID _CreatureID = CREATURE_ID::HitBox);
 	virtual ~GHitBox() override;
 
 	friend class GPAttackState;

@@ -140,7 +140,6 @@ void GPAttackState::FinalTick()
 			m_Player->m_AttackBox->GetFlipBookPlayer()->Play();
 			m_Player->m_FlipBookPlayer->Play();
 		}
-			
 	}
 	else if (m_Player->m_FlipBookPlayer->IsFinish())
 	{

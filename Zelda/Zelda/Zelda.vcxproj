@@ -162,6 +162,7 @@
     <ClInclude Include="GButton.h" />
     <ClInclude Include="GCamera.h" />
     <ClInclude Include="GCreature.h" />
+    <ClInclude Include="GFire.h" />
     <ClInclude Include="GFireWood.h" />
     <ClInclude Include="GFlint.h" />
     <ClInclude Include="GFlipBook.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="GPIdleState.h" />
     <ClInclude Include="GPlatform.h" />
     <ClInclude Include="GPMoveState.h" />
+    <ClInclude Include="GPrefabManager.h" />
     <ClInclude Include="GPullRock.h" />
     <ClInclude Include="GPUseToolState.h" />
     <ClInclude Include="GRigidBody.h" />
@@ -238,6 +240,7 @@
     <ClCompile Include="GButton.cpp" />
     <ClCompile Include="GCamera.cpp" />
     <ClCompile Include="GCreature.cpp" />
+    <ClCompile Include="GFire.cpp" />
     <ClCompile Include="GFireWood.cpp" />
     <ClCompile Include="GFlint.cpp" />
     <ClCompile Include="GFlipBook.cpp" />
@@ -260,6 +263,7 @@
     <ClCompile Include="GPIdleState.cpp" />
     <ClCompile Include="GPlatform.cpp" />
     <ClCompile Include="GPMoveState.cpp" />
+    <ClCompile Include="GPrefabManager.cpp" />
     <ClCompile Include="GPullRock.cpp" />
     <ClCompile Include="GPUseToolState.cpp" />
     <ClCompile Include="GRigidBody.cpp" />

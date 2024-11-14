@@ -34,6 +34,8 @@ GMoblin::GMoblin() :
 	GetHitBox()->SetName(L"Moblin_HitBox");
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
+	GetAttackBox()->SetName(L"Moblin_AttackBox");
+
 	GetRigidBody()->SetName(L"Moblin_RigidBody");
 	GetRigidBody()->SetMass(1.f);
 	GetRigidBody()->SetFriction(900.f);

@@ -7,6 +7,7 @@
 
 #include "GBoxCollider.h"
 
+#include "GFire.h"
 #include "GHitBox.h";
 #include "GFlipBookPlayer.h"
 
@@ -52,16 +53,18 @@ void GCreature::StatusEffect()
 	if (m_StatInfo->Effect.ElementType == ELEMENT_TYPE::NONE)
 		return;
 
+	m_StatInfo->Effect.Duration -= DT;
+
 	if (m_StatInfo->Effect.ElementType == ELEMENT_TYPE::FIRE)
 	{
 		Ignite();
 	}
 
-	m_StatInfo->Effect.Time -= DT;
-
-	if (m_StatInfo->Effect.Time < 0)
+	if (m_StatInfo->Effect.Duration < 0)
 	{
+		IsValid(m_Effect);
 		m_StatInfo->Effect.Time = 0.f;
+		m_StatInfo->Effect.Duration = 0.f;
 		m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
 	}
 
@@ -177,19 +180,19 @@ void GCreature::BeAttacked(int _Damage)
 void GCreature::Burn()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::FIRE;
-	m_StatInfo->Effect.Time += 2 * DT;
+	m_StatInfo->Effect.Duration += 2 * DT;
 }
 
 void GCreature::Flow()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::LIGHTNING;
-	m_StatInfo->Effect.Time = 1.f;
+	m_StatInfo->Effect.Duration = 1.f;
 }
 
 void GCreature::Shock()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::LIGHTNING;
-	m_StatInfo->Effect.Time = 1.f;
+	m_StatInfo->Effect.Duration = 1.f;
 
 	// 추가로 무기 떨구기
 }
@@ -197,26 +200,26 @@ void GCreature::Shock()
 void GCreature::Freeze()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::ICE;
-	m_StatInfo->Effect.Time = 30.f;
+	m_StatInfo->Effect.Duration = 30.f;
 
 }
 
 void GCreature::Wet()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::WATER;
-	m_StatInfo->Effect.Time = 30.f;
+	m_StatInfo->Effect.Duration = 30.f;
 }
 
 void GCreature::Extinguish()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
-	m_StatInfo->Effect.Time = 0.f;
+	m_StatInfo->Effect.Duration = 0.f;
 }
 
 void GCreature::Melt()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
-	m_StatInfo->Effect.Time = 0.f;
+	m_StatInfo->Effect.Duration = 0.f;
 }
 
 void GCreature::KnockBack()
@@ -227,39 +230,29 @@ void GCreature::KnockBack()
 void GCreature::Ignite()
 {
 	// 불이 나지 않았고 1초 이상 타고 있다면
-	if (m_StatInfo->Effect.Time > 0.5f && !IsValid(m_Effect))
+	if (m_StatInfo->Effect.Duration > 1.f && !IsValid(m_Effect))
 	{
 		//Damaged(1);
-		m_StatInfo->Effect.Time -= 0.5f;
+		m_StatInfo->Effect.Duration -= 1.f;
 
 		// 불 효과 범위 추가
 		// 불 상태이상이 켜저도 Enter가 한번 발동 되므로 계속 불타지 않음
 		// 상태이상 공격 박스
-		m_Effect = new GHitBox;
-		m_Effect->SetName(L"Effect Box");
-		(m_Effect->GetComponent<GBoxCollider>())->SetScale(m_HitBox->GetScale());
-		(m_Effect->GetComponent<GBoxCollider>())->SetTrigger(true);
-		((GHitBox*)m_Effect)->m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
-		((GHitBox*)m_Effect)->m_FlipBookPlayer->SetPlay(0, 4, true);
-		((GHitBox*)m_Effect)->GetStatInfo()->Material = MATERIAL_TYPE::FIRE;
-
+		m_Effect = new GFire;
 		CreateChildGameObject(this, m_Effect, LAYER_TYPE::ELEMENT);
 
 	}
 	// 불에 1초 이상 타고 있다면
-	else if (m_StatInfo->Effect.Time > 1.f)
+	else if (m_StatInfo->Effect.Duration > 1.f)
 	{
 		Damaged(1);
-		m_StatInfo->Effect.Time -= 1.f;
-		m_StatInfo->Effect.Duration += 1.f;
+		m_StatInfo->Effect.Duration -= 1.f;
+		m_StatInfo->Effect.Time += 1.f;
 	}
-	// 지속시간이 지나면 불을 끈다.
-	else if (m_StatInfo->Effect.Duration > 5.f)
+	else if (m_StatInfo->Effect.Time > 5.f && IsValid(m_Effect))
 	{
 		DeleteGameObject(m_Effect);
 		m_Effect = nullptr;
-		m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
-		m_StatInfo->Effect.Time = 0.f;
 		m_StatInfo->Effect.Duration = 0.f;
 	}
 }
@@ -272,14 +265,7 @@ void GCreature::InstantIgnite()
 		// 불 효과 범위 추가
 		// 불 상태이상이 켜저도 Enter가 한번 발동 되므로 계속 불타지 않음
 		// 상태이상 공격 박스
-		m_Effect = new GHitBox;
-		m_Effect->SetName(L"Effect Box");
-		(m_Effect->GetComponent<GBoxCollider>())->SetScale(m_HitBox->GetScale());
-		(m_Effect->GetComponent<GBoxCollider>())->SetTrigger(true);
-		((GHitBox*)m_Effect)->m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
-		((GHitBox*)m_Effect)->m_FlipBookPlayer->SetPlay(0, 4, true);
-		((GHitBox*)m_Effect)->GetStatInfo()->Material = MATERIAL_TYPE::FIRE;
-
+		m_Effect = new GFire;
 		CreateChildGameObject(this, m_Effect, LAYER_TYPE::ELEMENT);
 
 	}

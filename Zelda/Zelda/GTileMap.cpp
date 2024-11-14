@@ -4,6 +4,7 @@
 #include "CLevel.h"
 #include "CLevelMgr.h"
 #include "GAssetManager.h"
+#include "GPrefabManager.h"
 #include "GComponent.h"
 #include "GTilePalette.h"
 
@@ -282,48 +283,8 @@ void GTileMap::CreateCreature()
 			// 은근 시간을 많이 잡아먹으므로 최적화 필요
 			//assert(GAssetManager::GetInst()->FindTile(Tile->GetKey()) != nullptr);
 
-			CObj* CreatureObj = nullptr;
+			CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(CreatureID);
 			LAYER_TYPE LayerType = LAYER_TYPE::END;
-
-			switch (CreatureID)
-			{
-			case CREATURE_ID::Grass:
-			{
-				CreatureObj = new GGrass;
-			}
-			break;
-
-			case CREATURE_ID::Tree:
-			{
-				CreatureObj = new GTree;
-			}
-			break;
-
-			case CREATURE_ID::Log:
-			{
-				CreatureObj = new GLog;
-			}
-			break;
-
-			case CREATURE_ID::Rock:
-			{
-				CreatureObj = new GRock;
-			}
-			break;
-
-			case CREATURE_ID::PullRock:
-			{
-				CreatureObj = new GPullRock;
-			}
-			break;
-
-			case CREATURE_ID::Wall:
-			{
-				CreatureObj = new GWall;
-			}
-			break;
-
-			}
 
 			if ((int)CREATURE_ID::Obstacle < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Item)
 				LayerType = LAYER_TYPE::OBJECT;

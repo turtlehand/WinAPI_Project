@@ -15,6 +15,7 @@
 #include "GCamera.h"
 #include "GUIManager.h"
 #include "GSoundManager.h"
+#include "GPrefabManager.h"
 
 #include "GTexture.h"
 
@@ -102,6 +103,8 @@ int CEngine::Init(HINSTANCE _Inst, POINT _Resolution)
 	CKeyMgr::GetInst()->Init();
 	CLevelMgr::GetInst()->Init();
 	GCamera::GetInst()->Init();
+
+	GPrefabManager::GetInst()->Init();
 	
 
 	// 扩档快 积己 己傍
