@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GTileMap.h"
 
+#include "CLevel.h"
+#include "CLevelMgr.h"
 #include "GAssetManager.h"
 #include "GComponent.h"
 #include "GTilePalette.h"
@@ -10,6 +12,15 @@
 #include "GTile.h"
 #include "GSprite.h"
 #include "GTexture.h"
+#include "DeBugRenderManager.h"
+
+#include "GGrass.h"
+#include "GTree.h"
+#include "GLog.h"
+#include "GRock.h"
+#include "GPullRock.h"
+
+#include "GWall.h"
 
 GTileMap::GTileMap() :
 	GComponent(COMPONENT_TYPE::TILEMAP),
@@ -25,6 +36,23 @@ GTileMap::~GTileMap()
 }
 
 
+void GTileMap::SetScale(Vec2 _Scale)
+{
+	
+	for (size_t i = 0; i < GetOwner()->GetChilds().size(); ++i)
+	{
+		Vec2 Pos = GetOwner()->GetChilds()[i]->GetPos();
+
+		Pos.x = Pos.x / m_Scale.x * _Scale.x;
+		Pos.y = Pos.y / m_Scale.y * _Scale.y;
+		GetOwner()->GetChilds()[i]->SetPos(Pos);
+
+	}
+
+	m_Scale = _Scale;
+
+}
+
 void GTileMap::SetRowCol(int _Row, int _Col)
 {
 	m_Row = _Row;
@@ -34,7 +62,7 @@ void GTileMap::SetRowCol(int _Row, int _Col)
 
 	for (int i = 0; i < m_Row * m_Col; ++i)
 	{
-		m_vecTile[i] = nullptr;
+		m_vecTile[i].first = nullptr;
 	}
 }
 
@@ -62,14 +90,14 @@ void GTileMap::SetTile(Vec2 _MousePos, GTile* _Tile)
 	// 빈 타일을 설정 시 
 	if (_Tile == nullptr)
 	{
-		m_vecTile[Row * m_Col + Col] = nullptr;
+		m_vecTile[Row * m_Col + Col].first = nullptr;
 		return;
 	}
 		
 	// 존재하지 않는 타일이라면 무효처리
 	assert(GAssetManager::GetInst()->FindTile(_Tile->GetKey()) != nullptr);
 
-	m_vecTile[Row * m_Col + Col] = _Tile;
+	m_vecTile[Row * m_Col + Col].first = _Tile;
 }
 
 /// <summary>
@@ -126,7 +154,7 @@ int GTileMap::Save(const wstring& _FullPath)
 		fwprintf_s(File, L"[INDEX]\n");
 		fwprintf_s(File, L"%d\n\n", i);
 
-		if (m_vecTile[i] == nullptr)
+		if (m_vecTile[i].first == nullptr)
 		{
 			fwprintf_s(File, L"[KEY]\n");
 			fwprintf_s(File, L"%s\n\n", L"NULL");
@@ -137,11 +165,14 @@ int GTileMap::Save(const wstring& _FullPath)
 		else
 		{
 			fwprintf_s(File, L"[KEY]\n");
-			fwprintf_s(File, L"%s\n\n", m_vecTile[i]->GetKey().c_str());
+			fwprintf_s(File, L"%s\n\n", m_vecTile[i].first->GetKey().c_str());
 
 			fwprintf_s(File, L"[PATH]\n");
-			fwprintf_s(File, L"%s\n\n", m_vecTile[i]->GetRelativePath().c_str());
+			fwprintf_s(File, L"%s\n\n", m_vecTile[i].first->GetRelativePath().c_str());
 		}
+
+		fwprintf_s(File, L"[CREATUREID]\n");
+		fwprintf_s(File, L"%d\n\n", (int)m_vecTile[i].second);
 
 	}
 
@@ -202,23 +233,120 @@ int GTileMap::Load(const wstring& _FullPath)
 			if (TileKey == L"NULL" || TilePath == L"NULL")
 			{
 				assert(TileKey == L"NULL" && TilePath == L"NULL");
-				m_vecTile[index] = nullptr;
+				m_vecTile[index].first = nullptr;
 			}
 			else
 			{
-				m_vecTile[index] = GAssetManager::GetInst()->LoadTile(TileKey, TilePath);
+				m_vecTile[index].first = GAssetManager::GetInst()->LoadTile(TileKey, TilePath);
 			}
+
+			int CreatureID;
+
+			fwscanf_s(File, L"%s", szBuff, 255);
+			fwscanf_s(File, L"%d", &CreatureID);
+			m_vecTile[index].second = (CREATURE_ID)CreatureID;
 		}
 
 	}
 
 	fclose(File);
 
+	CreateCreature();
+
 	return true;
+}
+
+void GTileMap::CreateCreature()
+{
+	CObj* Owner = GetOwner();
+	for (size_t i = 0; i < GetOwner()->GetChilds().size(); ++i)
+	{
+		DeleteGameObject(GetOwner()->GetChilds()[i]);
+	}
+
+
+	for (int Row = 0; Row < m_Row; ++Row)
+	{
+		for (int Col = 0; Col < m_Col; ++Col)
+		{
+
+			// 반목문 회차에 맞는 행렬에 대해서 이게 몇번째 타일정보인지 1차원 인덱스로 변환
+			// 해당 타일정보에 접근한다.
+			CREATURE_ID CreatureID = m_vecTile[Row * m_Col + Col].second;
+
+			// 타일이 비어있다면 그리지 않는다.
+			if (CreatureID == CREATURE_ID::NONE)
+				continue;
+
+			// 존재하지 않는 타일이라면 어썰트
+			// 은근 시간을 많이 잡아먹으므로 최적화 필요
+			//assert(GAssetManager::GetInst()->FindTile(Tile->GetKey()) != nullptr);
+
+			CObj* CreatureObj = nullptr;
+			LAYER_TYPE LayerType = LAYER_TYPE::END;
+
+			switch (CreatureID)
+			{
+			case CREATURE_ID::Grass:
+			{
+				CreatureObj = new GGrass;
+			}
+			break;
+
+			case CREATURE_ID::Tree:
+			{
+				CreatureObj = new GTree;
+			}
+			break;
+
+			case CREATURE_ID::Log:
+			{
+				CreatureObj = new GLog;
+			}
+			break;
+
+			case CREATURE_ID::Rock:
+			{
+				CreatureObj = new GRock;
+			}
+			break;
+
+			case CREATURE_ID::PullRock:
+			{
+				CreatureObj = new GPullRock;
+			}
+			break;
+
+			case CREATURE_ID::Wall:
+			{
+				CreatureObj = new GWall;
+			}
+			break;
+
+			}
+
+			if ((int)CREATURE_ID::Obstacle < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Item)
+				LayerType = LAYER_TYPE::OBJECT;
+			else if ((int)CREATURE_ID::Wall == (int)CreatureID)
+				LayerType = LAYER_TYPE::OBJECT;
+
+			if (CreatureObj != nullptr)
+			{
+				Vec2 Pos;
+				Pos.x += m_Scale.x * TILE_SIZE * Col + m_Scale.x * TILE_SIZE/2;
+				Pos.y += m_Scale.y * TILE_SIZE * Row + m_Scale.x * TILE_SIZE/2;
+				CreatureObj->SetPos(Pos);
+				CreateChildGameObject(GetOwner(), CreatureObj, LayerType);
+			}
+		}
+	}
 }
 
 void GTileMap::FinalTick()
 {
+	if (!DeBugRenderManager::GetInst()->GetShow())
+		return;
+
 	Vec2 OwnerPos = GetOwner()->GetPos();
 	
 	for (int i = 0; i < m_Row + 1; ++i)
@@ -277,7 +405,7 @@ void GTileMap::Render()
 
 			// 반목문 회차에 맞는 행렬에 대해서 이게 몇번째 타일정보인지 1차원 인덱스로 변환
 			// 해당 타일정보에 접근한다.
-			const GTile* Tile = m_vecTile[Row * m_Col + Col];
+			const GTile* Tile = m_vecTile[Row * m_Col + Col].first;
 
 			// 타일이 비어있다면 그리지 않는다.
 			if (Tile == nullptr)

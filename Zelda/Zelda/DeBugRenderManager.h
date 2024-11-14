@@ -15,6 +15,7 @@ public:
 	}
 	
 	void ShowDeBugRender(bool _Show) { m_Show = _Show; }
+	bool GetShow() { return m_Show; }
 
 public:
 	void Progress();

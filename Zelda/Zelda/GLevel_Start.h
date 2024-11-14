@@ -2,12 +2,14 @@
 #include "CLevel.h"
 
 class GPlayer;
+class GMap;
 
 class GLevel_Start :
     public CLevel
 {
 private:
 	GPlayer* m_Player;
+	GMap* m_Map;
 
 public:
 	GLevel_Start();

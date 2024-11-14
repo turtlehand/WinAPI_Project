@@ -11,100 +11,133 @@ TILEMAP
 0
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 1
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 2
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 3
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 4
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 5
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 6
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 7
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 8
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 9
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 10
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 11
@@ -115,32 +148,44 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 12
 
 [KEY]
-test_0
+test_22
 
 [PATH]
-Tile\test_0.tile
+Tile\test_22.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 13
 
 [KEY]
-test_0
+test_23
 
 [PATH]
-Tile\test_0.tile
+Tile\test_23.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 14
 
 [KEY]
-test_0
+test_24
 
 [PATH]
-Tile\test_0.tile
+Tile\test_24.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 15
@@ -151,6 +196,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 16
 
@@ -159,6 +207,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 17
@@ -169,6 +220,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 18
 
@@ -178,23 +232,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 19
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 20
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 21
@@ -205,32 +268,44 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 22
 
 [KEY]
-test_0
+test_13
 
 [PATH]
-Tile\test_0.tile
+Tile\test_13.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 23
 
 [KEY]
-test_0
+test_14
 
 [PATH]
-Tile\test_0.tile
+Tile\test_14.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 24
 
 [KEY]
-test_0
+test_15
 
 [PATH]
-Tile\test_0.tile
+Tile\test_15.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 25
@@ -241,6 +316,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+3002
+
 [INDEX]
 26
 
@@ -249,6 +327,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 27
@@ -259,6 +340,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 28
 
@@ -268,23 +352,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 29
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 30
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 31
@@ -295,32 +388,44 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 32
 
 [KEY]
-test_0
+test_4
 
 [PATH]
-Tile\test_0.tile
+Tile\test_4.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 33
 
 [KEY]
-test_0
+test_5
 
 [PATH]
-Tile\test_0.tile
+Tile\test_5.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 34
 
 [KEY]
-test_0
+test_6
 
 [PATH]
-Tile\test_0.tile
+Tile\test_6.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 35
@@ -331,6 +436,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 36
 
@@ -339,6 +447,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 37
@@ -349,6 +460,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 38
 
@@ -358,23 +472,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 39
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 40
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 41
@@ -385,6 +508,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 42
 
@@ -393,6 +519,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 43
@@ -403,6 +532,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 44
 
@@ -411,6 +543,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 45
@@ -421,6 +556,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 46
 
@@ -429,6 +567,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 47
@@ -439,6 +580,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 48
 
@@ -448,23 +592,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 49
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 50
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 51
@@ -475,6 +628,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 52
 
@@ -483,6 +639,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 53
@@ -493,32 +652,44 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 54
 
 [KEY]
-test_0
+test_10
 
 [PATH]
-Tile\test_0.tile
+Tile\test_10.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 55
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 56
 
 [KEY]
-test_0
+test_12
 
 [PATH]
-Tile\test_0.tile
+Tile\test_12.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 57
@@ -529,6 +700,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 58
 
@@ -538,23 +712,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 59
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 60
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 61
@@ -565,6 +748,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 62
 
@@ -574,41 +760,56 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 63
-
-[KEY]
-test_10
-
-[PATH]
-Tile\test_10.tile
-
-[INDEX]
-64
-
-[KEY]
-test_11
-
-[PATH]
-Tile\test_11.tile
-
-[INDEX]
-65
-
-[KEY]
-test_12
-
-[PATH]
-Tile\test_12.tile
-
-[INDEX]
-66
 
 [KEY]
 test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
+
+[INDEX]
+64
+
+[KEY]
+test_1
+
+[PATH]
+Tile\test_1.tile
+
+[CREATUREID]
+0
+
+[INDEX]
+65
+
+[KEY]
+test_2
+
+[PATH]
+Tile\test_2.tile
+
+[CREATUREID]
+0
+
+[INDEX]
+66
+
+[KEY]
+test_3
+
+[PATH]
+Tile\test_3.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 67
@@ -619,6 +820,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 68
 
@@ -628,23 +832,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 69
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 70
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 71
@@ -655,6 +868,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 72
 
@@ -664,32 +880,44 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 73
 
 [KEY]
-test_1
+test_0
 
 [PATH]
-Tile\test_1.tile
+Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 74
 
 [KEY]
-test_2
+test_0
 
 [PATH]
-Tile\test_2.tile
+Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 75
 
 [KEY]
-test_3
+test_0
 
 [PATH]
-Tile\test_3.tile
+Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 76
@@ -700,6 +928,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 77
 
@@ -708,6 +939,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 78
@@ -718,23 +952,32 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 79
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 80
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 81
@@ -745,6 +988,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 82
 
@@ -753,6 +999,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 83
@@ -763,6 +1012,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 84
 
@@ -771,6 +1023,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 85
@@ -781,6 +1036,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 86
 
@@ -789,6 +1047,9 @@ test_0
 
 [PATH]
 Tile\test_0.tile
+
+[CREATUREID]
+0
 
 [INDEX]
 87
@@ -799,6 +1060,9 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 88
 
@@ -808,102 +1072,138 @@ test_0
 [PATH]
 Tile\test_0.tile
 
+[CREATUREID]
+0
+
 [INDEX]
 89
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 90
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 91
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 92
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 93
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 94
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 95
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 96
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 97
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 98
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 
 [INDEX]
 99
 
 [KEY]
-test_0
+test_11
 
 [PATH]
-Tile\test_0.tile
+Tile\test_11.tile
+
+[CREATUREID]
+6000
 

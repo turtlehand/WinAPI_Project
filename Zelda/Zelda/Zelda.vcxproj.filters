@@ -136,56 +136,59 @@
     <Filter Include="Game\07. Asset\06. TilePalette">
       <UniqueIdentifier>{f248232a-d33e-477a-82a0-e7b0a52596d8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\07. HitBox">
-      <UniqueIdentifier>{b9a217bb-5d4b-43f0-b416-12cfeea6ad79}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\05. Object\01.Creature">
       <UniqueIdentifier>{7b97412d-525c-4204-82fa-f020ee652d16}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\01. Player">
-      <UniqueIdentifier>{1078d3d9-08c7-4456-a3ec-a1eac920c1ab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\02. Monster">
-      <UniqueIdentifier>{13ce8029-8c73-4b89-ac02-0e49b86e6294}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\03. Obstacle">
-      <UniqueIdentifier>{726cb0fe-8bcd-451d-80f1-6815686cffdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\02. Monster\01. Moblin">
-      <UniqueIdentifier>{0721467d-2b81-4708-bf60-2696f1bdbff6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\05. Object\03. Arrow">
       <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item">
-      <UniqueIdentifier>{383c2bfd-0f3d-427e-81b2-83367fd1b99c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material">
-      <UniqueIdentifier>{fd1fe06e-2f5c-49e8-8ad9-2b88d4217c7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material\102. Flint">
-      <UniqueIdentifier>{ee695eff-c6ed-44e2-ab24-a8ad566fb261}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood">
-      <UniqueIdentifier>{51a8c034-143a-4f6b-ac35-36c67c0df0e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food">
-      <UniqueIdentifier>{087e9d9a-726c-4807-bcdc-b51d99f7f7a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit">
-      <UniqueIdentifier>{5c60255e-1faf-4bb4-b519-fcee1e403192}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit">
-      <UniqueIdentifier>{e6e7f0d9-3b37-4326-97b3-a59ed3fb96a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\300. Weapon">
-      <UniqueIdentifier>{14912fd3-9a82-45ca-b1a3-8d0cd700b265}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\05. Object\08. GameUI">
       <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\01.Creature\04. Item\400. Tool">
+    <Filter Include="Game\05. Object\01.Creature\1000. Player">
+      <UniqueIdentifier>{1078d3d9-08c7-4456-a3ec-a1eac920c1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\2000. Monster">
+      <UniqueIdentifier>{13ce8029-8c73-4b89-ac02-0e49b86e6294}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\2000. Monster\01. Moblin">
+      <UniqueIdentifier>{0721467d-2b81-4708-bf60-2696f1bdbff6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\3000. Obstacle">
+      <UniqueIdentifier>{726cb0fe-8bcd-451d-80f1-6815686cffdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item">
+      <UniqueIdentifier>{383c2bfd-0f3d-427e-81b2-83367fd1b99c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\100. Material">
+      <UniqueIdentifier>{fd1fe06e-2f5c-49e8-8ad9-2b88d4217c7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\100. Material\102. Flint">
+      <UniqueIdentifier>{ee695eff-c6ed-44e2-ab24-a8ad566fb261}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\100. Material\101. FireWood">
+      <UniqueIdentifier>{51a8c034-143a-4f6b-ac35-36c67c0df0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\200. Food">
+      <UniqueIdentifier>{087e9d9a-726c-4807-bcdc-b51d99f7f7a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\200. Food\201. Fruit">
+      <UniqueIdentifier>{5c60255e-1faf-4bb4-b519-fcee1e403192}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\200. Food\202. RoastFruit">
+      <UniqueIdentifier>{e6e7f0d9-3b37-4326-97b3-a59ed3fb96a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\300. Weapon">
+      <UniqueIdentifier>{14912fd3-9a82-45ca-b1a3-8d0cd700b265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\4000. Item\400. Tool">
       <UniqueIdentifier>{293fee66-61cf-4f39-869c-cb14ad83b788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\5000. HitBox">
+      <UniqueIdentifier>{38e77f72-7222-4531-b79f-44a1e76276da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01.Creature\6000. Wall">
+      <UniqueIdentifier>{35578f41-fb9f-44d0-9b5f-bbf57da40085}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -241,10 +244,10 @@
       <Filter>Game\01. Header</Filter>
     </ClInclude>
     <ClInclude Include="GPlayer.h">
-      <Filter>Game\05. Object\01.Creature\01. Player</Filter>
+      <Filter>Game\05. Object\01.Creature\1000. Player</Filter>
     </ClInclude>
     <ClInclude Include="GMonster.h">
-      <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
+      <Filter>Game\05. Object\01.Creature\2000. Monster</Filter>
     </ClInclude>
     <ClInclude Include="GArrow.h">
       <Filter>Game\05. Object\03. Arrow</Filter>
@@ -369,56 +372,59 @@
     <ClInclude Include="GPAttackState.h">
       <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
-    <ClInclude Include="GHitBox.h">
-      <Filter>Game\05. Object\07. HitBox</Filter>
-    </ClInclude>
     <ClInclude Include="GCreature.h">
       <Filter>Game\05. Object\01.Creature</Filter>
     </ClInclude>
     <ClInclude Include="GRock.h">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="GMoblin.h">
-      <Filter>Game\05. Object\01.Creature\02. Monster\01. Moblin</Filter>
+      <Filter>Game\05. Object\01.Creature\2000. Monster\01. Moblin</Filter>
     </ClInclude>
     <ClInclude Include="GTree.h">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="GLog.h">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="GPullRock.h">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="GGrass.h">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClInclude>
     <ClInclude Include="GItem.h">
-      <Filter>Game\05. Object\01.Creature\04. Item</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item</Filter>
     </ClInclude>
     <ClInclude Include="GFireWood.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\100. Material\101. FireWood</Filter>
     </ClInclude>
     <ClInclude Include="GFlint.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\100. Material\102. Flint</Filter>
     </ClInclude>
     <ClInclude Include="GFruit.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\200. Food\201. Fruit</Filter>
     </ClInclude>
     <ClInclude Include="GRoastFruit.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\200. Food\202. RoastFruit</Filter>
     </ClInclude>
     <ClInclude Include="GInventory.h">
       <Filter>Game\05. Object\08. GameUI</Filter>
     </ClInclude>
     <ClInclude Include="GWeapon.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\300. Weapon</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\300. Weapon</Filter>
     </ClInclude>
     <ClInclude Include="GPUseToolState.h">
       <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="GBow.h">
-      <Filter>Game\05. Object\01.Creature\04. Item\400. Tool</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\400. Tool</Filter>
+    </ClInclude>
+    <ClInclude Include="GHitBox.h">
+      <Filter>Game\05. Object\01.Creature\5000. HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="GWall.h">
+      <Filter>Game\05. Object\01.Creature\6000. Wall</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -458,10 +464,10 @@
       <Filter>Game\03. Manager\03. Level</Filter>
     </ClCompile>
     <ClCompile Include="GPlayer.cpp">
-      <Filter>Game\05. Object\01.Creature\01. Player</Filter>
+      <Filter>Game\05. Object\01.Creature\1000. Player</Filter>
     </ClCompile>
     <ClCompile Include="GMonster.cpp">
-      <Filter>Game\05. Object\01.Creature\02. Monster</Filter>
+      <Filter>Game\05. Object\01.Creature\2000. Monster</Filter>
     </ClCompile>
     <ClCompile Include="GArrow.cpp">
       <Filter>Game\05. Object\03. Arrow</Filter>
@@ -584,56 +590,59 @@
     <ClCompile Include="GPAttackState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
-    <ClCompile Include="GHitBox.cpp">
-      <Filter>Game\05. Object\07. HitBox</Filter>
-    </ClCompile>
     <ClCompile Include="GCreature.cpp">
       <Filter>Game\05. Object\01.Creature</Filter>
     </ClCompile>
     <ClCompile Include="GRock.cpp">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GMoblin.cpp">
-      <Filter>Game\05. Object\01.Creature\02. Monster\01. Moblin</Filter>
+      <Filter>Game\05. Object\01.Creature\2000. Monster\01. Moblin</Filter>
     </ClCompile>
     <ClCompile Include="GTree.cpp">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GLog.cpp">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GPullRock.cpp">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GGrass.cpp">
-      <Filter>Game\05. Object\01.Creature\03. Obstacle</Filter>
+      <Filter>Game\05. Object\01.Creature\3000. Obstacle</Filter>
     </ClCompile>
     <ClCompile Include="GItem.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item</Filter>
     </ClCompile>
     <ClCompile Include="GFireWood.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\101. FireWood</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\100. Material\101. FireWood</Filter>
     </ClCompile>
     <ClCompile Include="GFlint.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\100. Material\102. Flint</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\100. Material\102. Flint</Filter>
     </ClCompile>
     <ClCompile Include="GFruit.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\201. Fruit</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\200. Food\201. Fruit</Filter>
     </ClCompile>
     <ClCompile Include="GRoastFruit.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\200. Food\202. RoastFruit</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\200. Food\202. RoastFruit</Filter>
     </ClCompile>
     <ClCompile Include="GInventory.cpp">
       <Filter>Game\05. Object\08. GameUI</Filter>
     </ClCompile>
     <ClCompile Include="GWeapon.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\300. Weapon</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\300. Weapon</Filter>
     </ClCompile>
     <ClCompile Include="GPUseToolState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="GBow.cpp">
-      <Filter>Game\05. Object\01.Creature\04. Item\400. Tool</Filter>
+      <Filter>Game\05. Object\01.Creature\4000. Item\400. Tool</Filter>
+    </ClCompile>
+    <ClCompile Include="GHitBox.cpp">
+      <Filter>Game\05. Object\01.Creature\5000. HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="GWall.cpp">
+      <Filter>Game\05. Object\01.Creature\6000. Wall</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ GMap::~GMap()
 
 void GMap::Begin()
 {
+	
 }
 
 void GMap::Tick()

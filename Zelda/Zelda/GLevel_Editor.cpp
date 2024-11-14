@@ -44,14 +44,14 @@ GLevel_Editor::~GLevel_Editor()
 void GLevel_Editor::Begin()
 {
 	// 배경음 지정
-	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"DM_Opening", L"Sound\\DM.wav");
+	//GSound* pSound = GAssetManager::GetInst()->LoadSound(L"DM_Opening", L"Sound\\DM.wav");
 
-	if (pSound != nullptr)
-	{
-		pSound->SetVolume(1.f);
-		pSound->PlayToBGM(true);
+	//if (pSound != nullptr)
+	//{
+	//	pSound->SetVolume(1.f);
+	//	pSound->PlayToBGM(true);
 
-	}
+	//}
 
 	// 메뉴바가 없다면 새로 로드
 	if (m_hMenu == nullptr)
@@ -137,11 +137,11 @@ void GLevel_Editor::Tick()
 				m_MapObj->GetTileMap()->SetTile(CKeyMgr::GetInst()->GetMousePos(), m_TilePalette->GetTile(m_CurTile));
 		}
 
-		if (GETMW > 0)
+		if (GETMW < 0)
 		{
 			m_CurTile = ++m_CurTile < m_TilePalette->GetTileSize() ? m_CurTile : m_TilePalette->GetTileSize() - 1;
 		}
-		else if (GETMW < 0)
+		else if (GETMW > 0)
 		{
 			m_CurTile = -1 < m_CurTile ? --m_CurTile : -1;
 		}

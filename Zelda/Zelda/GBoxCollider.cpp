@@ -3,7 +3,7 @@
 
 GBoxCollider::GBoxCollider() :
 	GCollider(COLLIDER_TYPE::BOX),
-	m_Scale(0.f,0.f)
+	m_Scale(1.f,1.f)
 {
 
 }

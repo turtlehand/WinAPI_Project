@@ -36,7 +36,6 @@ GPullRock::GPullRock() :
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"PULL_ROCK", L"Sprite\\Object_16\\PULL_ROCK.sprite"));
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
-	m_Sprite->SetDeleteColor(RGB(116, 116, 116));
 }
 
 GPullRock::~GPullRock()

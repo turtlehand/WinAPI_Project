@@ -29,8 +29,9 @@ GTree::GTree() :
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 
 	m_Sprite = AddComponent< GSpriteRenderer>();
-	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Tree", L"Sprite\\test_19.sprite"));
+	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Tree", L"Sprite\\Object_16\\TREE.sprite"));
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
+	m_Sprite->SetDeleteColor(RGB(252, 216, 168));
 }
 
 GTree::~GTree()
@@ -40,7 +41,7 @@ GTree::~GTree()
 void GTree::DropItem()
 {
 	CObj* DropLog = new GLog;
-	DropLog->SetPos(GetPos().x,GetPos().y);
+	DropLog->SetPos(GetGlobalPos());
 	CreateGameObject(DropLog, LAYER_TYPE::OBJECT);
 }
 

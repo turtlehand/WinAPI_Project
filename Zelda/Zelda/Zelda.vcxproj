@@ -205,6 +205,7 @@
     <ClInclude Include="GArrow.h" />
     <ClInclude Include="GMonster.h" />
     <ClInclude Include="GItem.h" />
+    <ClInclude Include="GWall.h" />
     <ClInclude Include="GWeapon.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="GPlayer.h" />
@@ -279,6 +280,7 @@
     <ClCompile Include="GArrow.cpp" />
     <ClCompile Include="GMonster.cpp" />
     <ClCompile Include="GItem.cpp" />
+    <ClCompile Include="GWall.cpp" />
     <ClCompile Include="GWeapon.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

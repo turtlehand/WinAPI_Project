@@ -76,7 +76,7 @@ void TaskManager::Tick()
 
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject, (LAYER_TYPE)m_Task[i].Param2);
 			pObject->Begin();
-			pParent->AddChild(pObject);
+			
 		}
 		break;
 
