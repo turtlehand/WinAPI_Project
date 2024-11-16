@@ -91,6 +91,7 @@ void GPUseToolState::Exit()
 void GPUseToolState::Bow()
 {
 	GArrow* pArrow = new GArrow();
+	CreateGameObject(pArrow, LAYER_TYPE::PLAYER_OBJECT);
 	pArrow->SetDamage(m_PlayerInfo->AttackPower);
 
 	m_AttackBox->SetDamage(0);
@@ -136,5 +137,5 @@ void GPUseToolState::Bow()
 
 	}
 
-	CreateGameObject(pArrow, LAYER_TYPE::PLAYER_OBJECT);
+	
 }

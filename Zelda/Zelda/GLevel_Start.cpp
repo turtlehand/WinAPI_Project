@@ -2,6 +2,7 @@
 #include "GLevel_Start.h"
 
 #include "CollisionManager.h"
+#include "GCamera.h"
 
 #include "GPlayer.h"
 #include "GMonster.h"
@@ -33,6 +34,7 @@ GLevel_Start::GLevel_Start() :
 	m_Player(nullptr),
 	m_Map(nullptr)
 {
+	SetName(L"Start");
 }
 
 GLevel_Start::~GLevel_Start()
@@ -62,6 +64,8 @@ void GLevel_Start::Begin()
 	player->SetInvenUI(pInven);
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetPos(0.f, 0.f);
+
+	GCamera::GetInst()->SetTarget(player);
 
 	/*
 	GRock* pRock = new GRock;
@@ -93,7 +97,6 @@ void GLevel_Start::Begin()
 	pFlint->Awake();
 	AddObject(pFlint, LAYER_TYPE::ITEM);
 	pFlint->SetPos( -100.f, 0.f);
-	*/
 
 	// Monster 생성하기
 	GMoblin* pMoblin = new GMoblin;
@@ -101,12 +104,12 @@ void GLevel_Start::Begin()
 	AddObject(pMoblin, LAYER_TYPE::MONSTER);
 	pMoblin->SetPos(300.f, 200.f);
 	
-	/*
+	
 	GFruit* pFruit = new GFruit;
 	pFruit->Awake();
 	AddObject(pFruit, LAYER_TYPE::ITEM);
 	pFruit->SetPos(300.f, 0.f);
-
+	
 	GWeapon* pWoodenSword = new GWeapon(CREATURE_ID::Wooden_Sword);
 	pWoodenSword->Awake();
 	AddObject(pWoodenSword, LAYER_TYPE::ITEM);
@@ -121,23 +124,28 @@ void GLevel_Start::Begin()
 	pBow->Awake();
 	AddObject(pBow, LAYER_TYPE::ITEM);
 	pBow->SetPos(300.f, -200.f);
+	
+	GWeapon* pStoneHammer = new GWeapon(CREATURE_ID::Stone_Hammer);
+	pStoneHammer->Awake();
+	AddObject(pStoneHammer, LAYER_TYPE::ITEM);
+	pStoneHammer->SetPos(100.f, -100.f);
 
 	*/
 
+	
+	
 	GMap* pMap = new GMap;
 	m_Map = pMap;
 	pMap->Awake();
-	AddObject(pMap, LAYER_TYPE::TILE);
+	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_Creature.tm";
+	pMapPath += L"TileMap\\test_BigMap.tm";
 	pMap->SetName(L"Map");
 	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 5, TILE_SIZE * 4 * 5));
-	
-	pMap->GetTileMap()->Load(pMapPath);
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
+	pMap->GetTileMap()->Load(pMapPath);
+	
 	pMap->SetActive(true);
-	
-	
 
 	//GRoastFruit* pRoastFruit = new GRoastFruit;
 	//AddObject(pRoastFruit, LAYER_TYPE::ITEM);

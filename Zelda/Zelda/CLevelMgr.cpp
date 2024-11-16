@@ -32,6 +32,7 @@ void CLevelMgr::Init()
 
 	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::START];
 	m_CurLevel->Begin();
+	m_CurLevelType = LEVEL_TYPE::START;
 }
 
 void CLevelMgr::Progress()
@@ -59,6 +60,7 @@ void CLevelMgr::ChangeLevel(LEVEL_TYPE _Level)
 
 	// 3. 현재 레벨을 변경하려는 레벨로 변경시켜준다.
 	m_CurLevel = m_arrLevel[(UINT)_Level];
+	m_CurLevelType = _Level;
 
 	// 4. 현재 레벨을 Begin을 호출 시킨다.
 	m_CurLevel->Begin();

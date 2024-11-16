@@ -54,8 +54,8 @@ public:
 
 	void SetInvenUI(GInventory* _InvenUI) { m_InventoryUI = _InvenUI; }
 
-	void SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY);
-	void SetTool(CREATURE_ID _ToolID, const DefaultStatsInfo* _ToolInfo);
+	void SetAttackBox(CREATURE_ID _WeaponID);
+	void SetTool(CREATURE_ID _ToolID);
 
 private:
 	void PickUpItem();

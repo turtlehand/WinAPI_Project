@@ -57,7 +57,7 @@ void GPAttackState::Enter()
 		m_AttackBox->GetFlipBookPlayer()->SetYFlip(false);
 
 		// 무기에 불이 났다면 불 위치를 옮긴다.
-		CObj* EffectBoxObj = m_AttackBox->GetEffectBox();
+		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
 			EffectBoxObj->SetPos(Vec2(0.f, 32.f));
@@ -75,7 +75,7 @@ void GPAttackState::Enter()
 		m_AttackBox->GetFlipBookPlayer()->SetYFlip(true);
 
 		// 무기에 불이 났다면 불 위치를 옮긴다.
-		CObj* EffectBoxObj = m_AttackBox->GetEffectBox();
+		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
 			EffectBoxObj->SetPos(Vec2(0.f, -32.f));
@@ -95,7 +95,7 @@ void GPAttackState::Enter()
 		m_AttackBox->GetFlipBookPlayer()->SetYFlip(false);
 
 		// 무기에 불이 났다면 불 위치를 옮긴다.
-		CObj* EffectBoxObj = m_AttackBox->GetEffectBox();
+		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
 			EffectBoxObj->SetPos(Vec2(-32.f, 0.f));
@@ -115,7 +115,7 @@ void GPAttackState::Enter()
 		m_AttackBox->GetFlipBookPlayer()->SetYFlip(false);
 
 		// 무기에 불이 났다면 불 위치를 옮긴다.
-		CObj* EffectBoxObj = m_AttackBox->GetEffectBox();
+		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
 			EffectBoxObj->SetPos(Vec2(32.f, 0.f));

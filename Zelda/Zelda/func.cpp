@@ -27,35 +27,35 @@ bool IsValid(CObj*& _Object)
 
 void CreateGameObject(CObj* _NewObject, LAYER_TYPE _Layer)
 {
-	Task task = { TASK_TYPE::CREATE_OBJECT,(DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
+	Task task = { 0.f, TASK_TYPE::CREATE_OBJECT,(DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
 	TaskManager::GetInst()->AddTask(task);
 	_NewObject->Awake();
 }
 
 void CreateChildGameObject(CObj* _ParentObject, CObj* _NewObject, LAYER_TYPE _Layer)
 {
-	Task task = { TASK_TYPE::CREATE_CHILDE_OBJECT,(DWORD_PTR)_ParentObject, (DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
+	Task task = {0.f, TASK_TYPE::CREATE_CHILDE_OBJECT,(DWORD_PTR)_ParentObject, (DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
 	TaskManager::GetInst()->AddTask(task);
 
 	_ParentObject->AddChild(_NewObject);
 	_NewObject->Awake();
 }
 
-void DeleteGameObject(CObj* _DestroyObject)
+void DeleteGameObject(CObj* _DestroyObject, float _Time)
  {
-	Task task = { TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)_DestroyObject };
+	Task task = { _Time, TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)_DestroyObject};
 	TaskManager::GetInst()->AddTask(task);
 
 	// 자식 오브젝트들을 삭제한다.
 	for (size_t i = 0; i < _DestroyObject->GetChilds().size(); ++i)
 	{
-		DeleteGameObject(_DestroyObject->GetChilds()[i]);
+		DeleteGameObject(_DestroyObject->GetChilds()[i], _Time);
 	}
 }
 
 void ChangeLevel(LEVEL_TYPE _Level)
 {
-	Task task = { TASK_TYPE::CHANGE_LEVEL,(DWORD_PTR)_Level };
+	Task task = { 0.f, TASK_TYPE::CHANGE_LEVEL,(DWORD_PTR)_Level };
 	TaskManager::GetInst()->AddTask(task);
 }
 

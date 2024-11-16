@@ -28,8 +28,8 @@ void GRoastFruit::Awake()
 	// 구운 열매 스탯
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::WOOD;
-	pInfo->MaxHP = 8;
-	pInfo->HP = 8;
+	pInfo->MaxHP = 4;
+	pInfo->HP = 4;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 0;
 	pInfo->IsDead = false;
@@ -43,8 +43,6 @@ void GRoastFruit::Awake()
 	GetHitBox()->SetName(L"FRUIT_HITBOX");
 	GetHitBox()->SetScale(Vec2(32.f, 32.f));
 	GetHitBox()->SetTrigger(true);
-
-	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
 void GRoastFruit::Render()

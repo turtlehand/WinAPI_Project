@@ -42,8 +42,6 @@ void GFireWood::Awake()
 	GetHitBox()->SetName(L"FIREWOOD_HITBOX");
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	GetHitBox()->SetTrigger(true);
-
-	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
 void GFireWood::Tick()

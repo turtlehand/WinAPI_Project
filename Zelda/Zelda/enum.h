@@ -50,7 +50,6 @@ enum class TASK_TYPE
 enum class LAYER_TYPE
 {
 	BACKGROUND,
-	TILE,
 	DEFAULT,
 	ITEM,
 	OBJECT,
@@ -69,7 +68,6 @@ enum class COLLIDER_TYPE
 {
 	BOX,
 	CIRCLE,
-	EDGE,
 	TILE,
 };
 

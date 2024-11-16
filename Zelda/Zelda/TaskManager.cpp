@@ -66,6 +66,7 @@ void TaskManager::Tick()
 		{
 			CObj* pParent = (CObj*)m_Task[i].Param0;
 			CObj* pObject = (CObj*)m_Task[i].Param1;
+			LAYER_TYPE LayerType = (LAYER_TYPE)m_Task[i].Param2;
 			
 			// 부모가 유효하지 않다면 자식을 게임에 추가하지 않고 즉시 삭제한다.
 			if (!IsValid(pParent))
@@ -82,10 +83,21 @@ void TaskManager::Tick()
 
 		case TASK_TYPE::DELETE_OBJECT:
 		{
+			// Task가 너무 많아지면 버그가 생기는 듯
 			CObj* pObject = (CObj*)m_Task[i].Param0;
+			float Time = (float)m_Task[i].Time;
+
+			// 시간이 아직 남았다면 미뤄준다.
+			if (Time > 0)
+			{
+				Time -= DT;
+				Task task = { Time, TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)pObject, (DWORD_PTR)Time };
+				m_TimeTask.push_back(task);
+				break;
+			}
 			
 			// Dead 처리가 다 안된 경우에만 처리해준다.
-			// 동시 같은 오브젝트에 대해서 Delete 요청이 여러번인 경우 대처하기 위함
+			// 동시 같은 오브젝트에 대해서 Delete 요청이 여러번인 경우 대처하기 위함z
 			if (!pObject->IsDead())
 			{
 				pObject->m_Dead = true;
@@ -102,4 +114,7 @@ void TaskManager::Tick()
 		}
 	}
 	m_Task.clear();
+
+	m_Task = m_TimeTask;
+	m_TimeTask.clear();
 }

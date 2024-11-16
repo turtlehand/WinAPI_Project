@@ -15,7 +15,8 @@ private:
 	Vec2 m_Velocity;
 
 public:
-	virtual void Begin() override;			// 레벨이 시작될 때
+	virtual void Awake() override;			// 레벨이 시작될 때
+	virtual void Begin() override;
 	virtual void Tick() override;			// 오브젝트가 할 일
 	virtual void Render() override;			// 오브젝트를 그리기
 

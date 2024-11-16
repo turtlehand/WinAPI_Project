@@ -59,6 +59,7 @@ void GPrefabManager::Init()
 	// 무기
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Stone_Hammer, new GWeapon(CREATURE_ID::Stone_Hammer)));
 
 	// 도구
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Bow, new GBow));

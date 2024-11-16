@@ -150,6 +150,7 @@ public:
 
 struct Task
 {
+	float		Time;
 	TASK_TYPE	Type;
 	DWORD_PTR	Param0;
 	DWORD_PTR	Param1;

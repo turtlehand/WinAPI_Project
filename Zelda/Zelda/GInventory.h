@@ -2,16 +2,18 @@
 #include "GUI.h"
 #include "GItem.h"
 
+#define PRE 0
+#define CUR 1
+#define POST 2
+
 class GInventory :
 	public GUI
 {
 private:
-	map<CREATURE_ID, GItem*> m_Item;
-	GSprite* m_CurImage;
+	GSprite* m_CurImage[3];
 
 public:
 	void UseItem(CREATURE_ID _ItemID, GCreature* _User);
-	const GItem* FindItem(CREATURE_ID _ItemID);
 
 	void SetCurItme(CREATURE_ID _ItemID);
 

@@ -10,7 +10,7 @@ bool IsValid(CObj*& _Object);
 void CreateGameObject(CObj* _NewObject, LAYER_TYPE _Layer = LAYER_TYPE::DEFAULT);
 void CreateChildGameObject(CObj* _ParentObject, CObj* _NewObject, LAYER_TYPE _Layer = LAYER_TYPE::DEFAULT);
 
-void DeleteGameObject(CObj* _DestroyObject);
+void DeleteGameObject(CObj* _DestroyObject, float _Time = 0);
 
 #pragma endregion
 

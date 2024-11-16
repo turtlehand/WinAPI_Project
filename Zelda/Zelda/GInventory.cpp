@@ -12,43 +12,30 @@
 #include "GTexture.h"
 #include "GSprite.h"
 
+#include "GPrefabManager.h"
+
 GInventory::GInventory() :
-	m_Item{},
-	m_CurImage(nullptr)
+	m_CurImage{nullptr,nullptr,nullptr}
 {
 
 }
 
 GInventory::~GInventory()
 {
-	Delete_Map(m_Item);
+
 }
 
 void GInventory::Awake()
 {
-	m_Item.insert(make_pair(CREATURE_ID::Fire_Wood, new GFireWood));
-	m_Item.insert(make_pair(CREATURE_ID::Flint, new GFlint));
-	m_Item.insert(make_pair(CREATURE_ID::Fruit, new GFruit));
-	m_Item.insert(make_pair(CREATURE_ID::Roast_Fruit, new GRoastFruit));
-	m_Item.insert(make_pair(CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
-	m_Item.insert(make_pair(CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
-	m_Item.insert(make_pair(CREATURE_ID::Bow, new GBow));
+
 }
 
 void GInventory::UseItem(CREATURE_ID _ItemID, GCreature* _User)
 {
-	map<CREATURE_ID, GItem*>::iterator iter = m_Item.find(_ItemID);
-	assert(iter != m_Item.end());
+	const CObj* Item = GPrefabManager::GetInst()->FindPrefab(_ItemID);
+	assert(Item != nullptr);
 
-	iter->second->UseItem(_User);
-}
-
-const GItem* GInventory::FindItem(CREATURE_ID _ItemID)
-{
-	map<CREATURE_ID, GItem*>::iterator iter = m_Item.find(_ItemID);
-	assert(iter != m_Item.end());
-
-	return iter->second;
+	((GItem*)Item)->UseItem(_User);
 }
 
 void GInventory::SetCurItme(CREATURE_ID _ItemID)
@@ -56,14 +43,14 @@ void GInventory::SetCurItme(CREATURE_ID _ItemID)
 
 	if (_ItemID == CREATURE_ID::END)
 	{
-		m_CurImage = nullptr;
+		m_CurImage[CUR] = nullptr;
 		return;
 	}
 		
 
-	map<CREATURE_ID, GItem*>::iterator iter = m_Item.find(_ItemID);
-	assert(iter != m_Item.end());
-	m_CurImage = iter->second->GetItemImage();
+	const CObj* Item = GPrefabManager::GetInst()->FindPrefab(_ItemID);
+	assert(Item != nullptr);
+	m_CurImage[CUR] = Item->GetTitleSprite();
 }
 
 void GInventory::Tick_UI()
@@ -73,12 +60,12 @@ void GInventory::Tick_UI()
 
 void GInventory::Render_UI()
 {
-	if (m_CurImage == nullptr)
+	if (m_CurImage[CUR] == nullptr)
 		return;
 
 	StretchBlt(CEngine::GetInst()->GetSecondDC(),
 		CEngine::GetInst()->GetResolution().x - 100, 50,
-		64, 64,
-		m_CurImage->GetAtlas()->GetDC(), m_CurImage->GetLeftTop().x, m_CurImage->GetLeftTop().y,
-		m_CurImage->GetSlice().x, m_CurImage->GetSlice().y, SRCCOPY);
+		m_CurImage[CUR]->GetSlice().x * 4, m_CurImage[CUR]->GetSlice().y * 4,
+		m_CurImage[CUR]->GetAtlas()->GetDC(), m_CurImage[CUR]->GetLeftTop().x, m_CurImage[CUR]->GetLeftTop().y,
+		m_CurImage[CUR]->GetSlice().x, m_CurImage[CUR]->GetSlice().y, SRCCOPY);
 }

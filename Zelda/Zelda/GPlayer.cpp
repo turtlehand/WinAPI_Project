@@ -189,14 +189,66 @@ void GPlayer::CreateAnimator()
 	//m_FlipBookPlayer->SetDeleteColor(RGB(116, 116, 116));
 }
 
-void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo, GSprite* _SpriteX, GSprite* _SpriteY)
+void GPlayer::SetAttackBox(CREATURE_ID _WeaponID)
 {
+	GSprite* SpriteX = nullptr;
+	GSprite* SpriteY = nullptr;
+
 	assert((int)CREATURE_ID::WEAPON < (int)_WeaponID && (int)_WeaponID < (int)CREATURE_ID::TOOLS);
 	m_WeaponEquip = _WeaponID;
 	m_ToolEquip = CREATURE_ID::END;
-	m_AttackBox->SetAttackType(_WeaponInfo->AttackType);
-	m_AttackBox->SetMaterialType(_WeaponInfo->Material);
-	m_AttackBox->SetDamage(_WeaponInfo->AttackPower);
+
+	switch (_WeaponID)
+	{
+	case CREATURE_ID::Wooden_Sword:
+	{
+		m_AttackBox->SetAttackType(ATTACK_TYPE::SLASH);
+		m_AttackBox->SetMaterialType(MATERIAL_TYPE::WOOD);
+		m_AttackBox->SetDamage(1);
+		SpriteX = GAssetManager::GetInst()->LoadSprite(L"WOODEN_SWORD_X", L"Sprite\\Item_16\\Weapon\\WOODEN_SWORD_X.sprite");
+		SpriteY = GAssetManager::GetInst()->LoadSprite(L"WOODEN_SWORD_Y", L"Sprite\\Item_16\\Weapon\\WOODEN_SWORD_Y.sprite");
+	}
+	break;
+	case CREATURE_ID::Iron_Sword:
+	{
+		m_AttackBox->SetAttackType(ATTACK_TYPE::SLASH);
+		m_AttackBox->SetMaterialType(MATERIAL_TYPE::METAL);
+		m_AttackBox->SetDamage(3);
+		SpriteX = GAssetManager::GetInst()->LoadSprite(L"METAL_SWORD_X", L"Sprite\\Item_16\\Weapon\\METAL_SWORD_X.sprite");
+		SpriteY = GAssetManager::GetInst()->LoadSprite(L"METAL_SWORD_Y", L"Sprite\\Item_16\\Weapon\\METAL_SWORD_Y.sprite");
+	}
+	break;
+	case CREATURE_ID::Stone_Hammer:
+	{
+		m_AttackBox->SetAttackType(ATTACK_TYPE::STRIKE);
+		m_AttackBox->SetMaterialType(MATERIAL_TYPE::STONE);
+		m_AttackBox->SetDamage(4);
+		SpriteX = GAssetManager::GetInst()->LoadSprite(L"STONE_HAMMER_X", L"Sprite\\Item_16\\Weapon\\STONE_HAMMER_X.sprite");
+		SpriteY = GAssetManager::GetInst()->LoadSprite(L"STONE_HAMMER_Y", L"Sprite\\Item_16\\Weapon\\STONE_HAMMER_Y.sprite");
+	}
+	break;
+	case CREATURE_ID::Iron_Hammer:
+	{
+
+	}
+	break;
+	case CREATURE_ID::Wooden_Spear:
+	{
+
+	}
+	break;
+	case CREATURE_ID::Iron_Spear:
+	{
+
+	}
+	break;
+	case CREATURE_ID::Korok_Leaf:
+	{
+
+	}
+	break;
+	}
+
 
 	m_AttackBox->GetSpriteRenderer()->SetSprite(nullptr);
 
@@ -205,7 +257,7 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo,
 	// X 무기 스프라이트 변경
 	for (size_t i = 0; i < 3; ++i)
 	{
-		AttackX->ChangeSprite(i, _SpriteX);
+		AttackX->ChangeSprite(i, SpriteX);
 	}
 
 	GFlipBook* AttackY = GAssetManager::GetInst()->FindFlipBook(L"WEAPON_Y");
@@ -213,18 +265,18 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID, const WeaponInfo* _WeaponInfo,
 	// Y 무기 스프라이트 변경
 	for (size_t i = 0; i < 3; ++i)
 	{
-		AttackY->ChangeSprite(i, _SpriteY);
+		AttackY->ChangeSprite(i, SpriteY);
 	}
 
 }
 
-void GPlayer::SetTool(CREATURE_ID _ToolID, const DefaultStatsInfo* _ToolInfo)
+void GPlayer::SetTool(CREATURE_ID _ToolID)
 {
 	assert((int)CREATURE_ID::TOOLS < (int)_ToolID && (int)_ToolID < (int)CREATURE_ID::ETC);
 	m_WeaponEquip = CREATURE_ID::END;
 	m_ToolEquip = _ToolID;
 
-	GetPlayerStatInfo()->AttackPower = _ToolInfo->AttackPower;
+	GetPlayerStatInfo()->AttackPower = 4;
 
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
 }

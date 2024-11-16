@@ -63,7 +63,7 @@ Vec2 CObj::GetRenderPos()
 
 void CObj::SetActive(bool _Active)
 {
-	Task task = { TASK_TYPE::ACTIVE_OBJECT,(DWORD_PTR)this,(DWORD_PTR)_Active };
+	Task task = { 0.f, TASK_TYPE::ACTIVE_OBJECT,(DWORD_PTR)this,(DWORD_PTR)_Active };
 	TaskManager::GetInst()->AddTask(task);
 
 	// 자식 오브젝트들도 false 시킨다.

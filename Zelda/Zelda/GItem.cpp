@@ -2,8 +2,7 @@
 #include "GItem.h"
 
 GItem::GItem(CREATURE_ID _CreatureID) :
-	GCreature(_CreatureID),
-	m_ItemImage(nullptr)
+	GCreature(_CreatureID)
 {
 }
 

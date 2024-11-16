@@ -11,8 +11,18 @@
 GArrow::GArrow() :
 	m_RigidBody(nullptr)
 {
+
+}
+
+GArrow::~GArrow()
+{
+}
+
+void GArrow::Awake()
+{
+	GHitBox::Awake();
 	m_RigidBody = AddComponent<GRigidBody>();
-	
+
 	SetAttackType(ATTACK_TYPE::THRUSHT);
 	SetMaterialType(MATERIAL_TYPE::WOOD);
 	SetIsProjectile(true);
@@ -21,15 +31,13 @@ GArrow::GArrow() :
 	GetSpriteRenderer()->SetDeleteColor(RGB(116, 116, 116));
 
 	GetHitBox()->SetTrigger(true);
-}
-
-GArrow::~GArrow()
-{
+	
 }
 
 void GArrow::Begin()
 {
 	GHitBox::Begin();
+	DeleteGameObject(this, 0.5f);
 }
 
 void GArrow::Tick()

@@ -9,7 +9,6 @@ class GFlint :
 	GSpriteRenderer* m_SpriteRenderer;
 
 public:
-	virtual void InteractionEffect_Element(GCreature* _Creature) override;
 	virtual void InteractionEffect_Attack(GHitBox* _HitBox) override;
 	virtual void UseItem(GCreature* _User) override {};
 

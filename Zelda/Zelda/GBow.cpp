@@ -28,8 +28,8 @@ void GBow::Awake()
 	// ¿­¸Å ½ºÅÈ
 	DefaultStatsInfo* pInfo = new DefaultStatsInfo;
 	pInfo->Material = MATERIAL_TYPE::WOOD;
-	pInfo->MaxHP = 100;
-	pInfo->HP = 100;
+	pInfo->MaxHP = 4;
+	pInfo->HP = 4;
 	pInfo->AttackPower = 4;
 	pInfo->Speed = 0;
 	pInfo->IsDead = false;
@@ -43,8 +43,6 @@ void GBow::Awake()
 	GetHitBox()->SetName(L"BOW_HITBOX");
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	GetHitBox()->SetTrigger(true);
-
-	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
 void GBow::Render()
@@ -59,7 +57,7 @@ void GBow::UseItem(GCreature* _User)
 	{
 		GPlayer* pPlayer = dynamic_cast<GPlayer*>(_User);
 		assert(pPlayer != nullptr);
-		pPlayer->SetTool(GetCreatureID(), GetStatInfo());
+		pPlayer->SetTool(GetCreatureID());
 	}
 	/*
 	else if (_User->GetLayerType() == LAYER_TYPE::MONSTER)

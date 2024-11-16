@@ -1,5 +1,6 @@
 #pragma once
 #include "GCollider.h"
+
 class GBoxCollider :
     public GCollider
 {
@@ -14,7 +15,7 @@ public:
     virtual void FinalTick();
 
 public:
-    GBoxCollider();
-    ~GBoxCollider();
+    GBoxCollider(COLLIDER_TYPE _ColliderType = COLLIDER_TYPE::BOX);
+    virtual ~GBoxCollider() override;
 };
 

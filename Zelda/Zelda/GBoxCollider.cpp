@@ -1,11 +1,10 @@
 #include "pch.h"
 #include "GBoxCollider.h"
 
-GBoxCollider::GBoxCollider() :
-	GCollider(COLLIDER_TYPE::BOX),
-	m_Scale(1.f,1.f)
+GBoxCollider::GBoxCollider(COLLIDER_TYPE _ColliderType) :
+	GCollider(_ColliderType),
+	m_Scale(1.f, 1.f)
 {
-
 }
 
 GBoxCollider::~GBoxCollider()

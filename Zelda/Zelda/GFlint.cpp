@@ -21,21 +21,13 @@ GFlint::~GFlint()
 {
 }
 
-void GFlint::InteractionEffect_Element(GCreature* _Creature)
-{
-	MATERIAL_TYPE CElementType = _Creature->GetStatInfo()->Material;
-
-	if ( CElementType == MATERIAL_TYPE::FIRE )
-		Burn();
-}
-
 void GFlint::InteractionEffect_Attack(GHitBox* _HitBox)
 {
 	if (_HitBox->GetMaterialType() == MATERIAL_TYPE::STONE ||
 		_HitBox->GetMaterialType() == MATERIAL_TYPE::METAL)
 	{
-		GetStatInfo()->HP = 1;
 		InstantIgnite();
+		DeleteGameObject(this, 0.5f);
 	}
 }
 
@@ -62,7 +54,6 @@ void GFlint::Awake()
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));
 	GetHitBox()->SetTrigger(true);
 
-	SetItemImage(m_SpriteRenderer->GetSprite());
 }
 
 void GFlint::Render()

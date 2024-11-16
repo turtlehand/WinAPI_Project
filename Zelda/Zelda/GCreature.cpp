@@ -15,7 +15,8 @@ GCreature::GCreature(CREATURE_ID _CreatrueID) :
 	m_CreatureID(_CreatrueID),
 	m_StatInfo(nullptr),
 	m_HitBox(nullptr),
-	m_Effect(nullptr)
+	m_Element(nullptr),
+	m_ElementTick(nullptr)
 {
 	
 
@@ -35,6 +36,7 @@ void GCreature::Awake()
 void GCreature::Tick()
 {
 	StatusEffect();
+	m_ElementTick = false;
 }
 
 void GCreature::OnTrigger(GCollider* _Collider)
@@ -67,7 +69,7 @@ void GCreature::StatusEffect()
 
 	if (m_StatInfo->Effect.Duration < 0)
 	{
-		IsValid(m_Effect);
+		IsValid(m_Element);
 		m_StatInfo->Effect.Time = 0.f;
 		m_StatInfo->Effect.Duration = 0.f;
 		m_StatInfo->Effect.ElementType = ELEMENT_TYPE::NONE;
@@ -77,8 +79,11 @@ void GCreature::StatusEffect()
 
 void GCreature::Interaction_Element(GCreature* _Creature)
 {
-	// 현재 소재가 속성 소재와 닿는다면
+	// 현재 틱에 속성 효과를 받았다면
+	if (m_ElementTick)
+		return;
 
+	// 현재 소재가 속성 소재와 닿는다면
 	MATERIAL_TYPE TMaterialType = m_StatInfo->Material;
 
 	MATERIAL_TYPE CElementType = _Creature->GetStatInfo()->Material;
@@ -105,6 +110,7 @@ void GCreature::Interaction_Element(GCreature* _Creature)
 	else if (TMaterialType == MATERIAL_TYPE::ICE && CElementType == MATERIAL_TYPE::FIRE)
 		Melt();
 
+
 	// 현재 상태이상에서 속성과 닿는다면
 
 	ELEMENT_TYPE TElementType = m_StatInfo->Effect.ElementType;
@@ -125,6 +131,7 @@ void GCreature::Interaction_Element(GCreature* _Creature)
 
 void GCreature::Interaction_Attack(GHitBox* _HitBox)
 {
+
 	// 현재 소재에 공격이 닿는다면
 
 	ATTACK_TYPE HBAttackType = _HitBox->GetAttackType();
@@ -144,7 +151,7 @@ void GCreature::Interaction_Attack(GHitBox* _HitBox)
 
 void GCreature::Damaged(int _Damage)
 {
-	if (m_StatInfo->IsDead)
+	if ((int)CREATURE_ID::Item < (int)GetCreatureID())
 		return;
 
 	m_StatInfo->HP -= _Damage;
@@ -155,23 +162,23 @@ void GCreature::Damaged(int _Damage)
 
 void GCreature::Dead()
 {
+	if (m_StatInfo->IsDead)
+		return;
+
 	DropItem();
 	m_StatInfo->IsDead = true;
 	DeleteGameObject(this);
 }
 
+#pragma region Interaction
+
 void GCreature::Smash()
 {
-	if (m_StatInfo->Material != MATERIAL_TYPE::STONE)
-		return;
-
 	Damaged(2);
 }
 
 void GCreature::CutWood()
 {
-	if (m_StatInfo->Material != MATERIAL_TYPE::WOOD)
-		return;
 
 	Damaged(2);
 }
@@ -184,6 +191,8 @@ void GCreature::BeAttacked(int _Damage)
 
 void GCreature::Burn()
 {
+	m_ElementTick = true;
+
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::FIRE;
 	m_StatInfo->Effect.Duration += 2 * DT;
 }
@@ -213,6 +222,7 @@ void GCreature::Wet()
 {
 	m_StatInfo->Effect.ElementType = ELEMENT_TYPE::WATER;
 	m_StatInfo->Effect.Duration = 30.f;
+
 }
 
 void GCreature::Extinguish()
@@ -227,6 +237,8 @@ void GCreature::Melt()
 	m_StatInfo->Effect.Duration = 0.f;
 }
 
+#pragma endregion
+
 void GCreature::KnockBack()
 {
 
@@ -235,43 +247,48 @@ void GCreature::KnockBack()
 void GCreature::Ignite()
 {
 	// 불이 나지 않았고 1초 이상 타고 있다면
-	if (m_StatInfo->Effect.Duration > 1.f && !IsValid(m_Effect))
+	if (m_StatInfo->Effect.Duration > 1.f && !IsValid(m_Element))
 	{
 		//Damaged(1);
 		m_StatInfo->Effect.Duration -= 1.f;
 
 		// 불 효과 범위 추가
-		// 불 상태이상이 켜저도 Enter가 한번 발동 되므로 계속 불타지 않음
 		// 상태이상 공격 박스
-		m_Effect = new GFire;
-		CreateChildGameObject(this, m_Effect, LAYER_TYPE::ELEMENT);
+		m_Element = new GFire;
+		CreateChildGameObject(this, m_Element, LAYER_TYPE::ELEMENT);
 
 	}
 	// 불에 1초 이상 타고 있다면
 	else if (m_StatInfo->Effect.Duration > 1.f)
 	{
-		Damaged(1);
+		m_StatInfo->HP -= 1;
+
+		if (m_StatInfo->HP <= 0)
+			Dead();
+
 		m_StatInfo->Effect.Duration -= 1.f;
 		m_StatInfo->Effect.Time += 1.f;
+
 	}
-	else if (m_StatInfo->Effect.Time > 5.f && IsValid(m_Effect))
+	else if (m_StatInfo->Effect.Time > 5.f && IsValid(m_Element))
 	{
-		DeleteGameObject(m_Effect);
-		m_Effect = nullptr;
+		DeleteGameObject(m_Element);
+		m_Element = nullptr;
 		m_StatInfo->Effect.Duration = 0.f;
+		m_StatInfo->Effect.Time = 0.f;
 	}
 }
 
 void GCreature::InstantIgnite()
 {
 	// 불이 나지 않았다면
-	if (!IsValid(m_Effect))
+	if (!IsValid(m_Element))
 	{
 		// 불 효과 범위 추가
 		// 불 상태이상이 켜저도 Enter가 한번 발동 되므로 계속 불타지 않음
 		// 상태이상 공격 박스
-		m_Effect = new GFire;
-		CreateChildGameObject(this, m_Effect, LAYER_TYPE::ELEMENT);
+		m_Element = new GFire;
+		CreateChildGameObject(this, m_Element, LAYER_TYPE::ELEMENT);
 
 	}
 }

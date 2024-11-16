@@ -193,6 +193,9 @@
     <Filter Include="Game\05. Object\01. Creature\6000. Wall">
       <UniqueIdentifier>{35578f41-fb9f-44d0-9b5f-bbf57da40085}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\06. Component\01. Collider\03. Tile">
+      <UniqueIdentifier>{51b9562f-efae-48ba-b37d-2f7c84d51a69}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="targetver.h">

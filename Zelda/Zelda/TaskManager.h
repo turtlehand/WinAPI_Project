@@ -5,6 +5,7 @@ private:
 	SINGLE(TaskManager)
 private:
 	vector<Task> m_Task;
+	vector<Task> m_TimeTask;
 	vector<CObj*> m_Garbage;
 public:
 	void Tick();

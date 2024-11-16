@@ -38,6 +38,7 @@ GLevel_Editor::GLevel_Editor() :
 	m_CurIndex(-1),
 	m_MapObj(nullptr)
 {
+	SetName(L"Editor");
 }
 
 GLevel_Editor::~GLevel_Editor()
@@ -66,7 +67,7 @@ void GLevel_Editor::Begin()
 
 	m_MapObj = new GMap;
 	m_MapObj->Awake();
-	AddObject(m_MapObj, LAYER_TYPE::TILE);
+	AddObject(m_MapObj, LAYER_TYPE::BACKGROUND);
 	m_MapObj->SetName(L"Map");
 	m_MapObj->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 
@@ -122,7 +123,7 @@ void GLevel_Editor::Tick()
 		if (m_DrawMode == DRAW_MODE_TYPE::TILE)
 		{
 			m_DrawMode = DRAW_MODE_TYPE::OBJECT;
-			m_CurIndex = 1;
+			m_CurIndex = 2;
 		}
 		else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
 		{
@@ -178,13 +179,12 @@ void GLevel_Editor::Tick()
 
 		if (GETMW < 0)
 		{
-			int maxSize = (INT)CREATURE_ID::Player;
+			int maxSize = (INT)CREATURE_ID::END;
 			while(true)
 			{
 				m_CurIndex = ++m_CurIndex < maxSize ? m_CurIndex : maxSize - 1;
 				if (GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex) != nullptr)
 					break;
-
 			}
 			
 		}
@@ -192,7 +192,7 @@ void GLevel_Editor::Tick()
 		{
 			while (true)
 			{
-				m_CurIndex = 1 < m_CurIndex ? --m_CurIndex : 1;
+				m_CurIndex = 2 < m_CurIndex ? --m_CurIndex : 2;
 				if (GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex) != nullptr)
 					break;
 

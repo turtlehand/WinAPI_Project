@@ -1,0 +1,19 @@
+[ASSETTYPE]
+2
+
+[LEFTTOP]
+88, 0
+
+[SLICE]
+8, 16
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+Object_16
+
+[ATLAS_PATH]
+Texture\Object_16.png
+

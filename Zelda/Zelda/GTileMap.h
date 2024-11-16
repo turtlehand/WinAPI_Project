@@ -13,6 +13,7 @@ private:
 	int m_Col;	// 타일 열 개수
 
 	vector<pair<const GTile*,CREATURE_ID>> m_vecTile;			// 타일의 주소를 갖는 벡터
+	vector<CObj*> m_vecCreature;
 
 public:
 	void SetScale(Vec2 _Scale);
@@ -34,7 +35,10 @@ public:
 	int Save(const wstring& _FullPath);
 	int Load(const wstring& _FullPath);
 
+	void Optimize();
+
 private:
+	void CreatCreature_Pos(CREATURE_ID _CreatureID, int Row, int Col);
 	void CreateCreature();
 
 public:

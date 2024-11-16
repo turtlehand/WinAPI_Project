@@ -17,7 +17,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 1
@@ -29,7 +29,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 2
@@ -41,7 +41,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 3
@@ -53,7 +53,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 4
@@ -65,7 +65,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 5
@@ -77,7 +77,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 6
@@ -89,7 +89,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 7
@@ -101,7 +101,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 8
@@ -113,7 +113,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 9
@@ -125,7 +125,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 10
@@ -137,7 +137,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 11
@@ -233,7 +233,7 @@ test_0
 Tile\test_0.tile
 
 [CREATUREID]
-3
+-1
 
 [INDEX]
 19
@@ -245,7 +245,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 20
@@ -257,7 +257,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 21
@@ -353,7 +353,7 @@ test_0
 Tile\test_0.tile
 
 [CREATUREID]
-3
+-1
 
 [INDEX]
 29
@@ -365,7 +365,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 30
@@ -377,7 +377,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 31
@@ -473,7 +473,7 @@ test_0
 Tile\test_0.tile
 
 [CREATUREID]
-3
+-1
 
 [INDEX]
 39
@@ -485,7 +485,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 40
@@ -497,7 +497,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 41
@@ -605,7 +605,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 50
@@ -617,7 +617,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 51
@@ -665,7 +665,7 @@ test_10
 Tile\test_10.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 55
@@ -677,7 +677,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 56
@@ -689,7 +689,7 @@ test_12
 Tile\test_12.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 57
@@ -725,7 +725,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 60
@@ -737,7 +737,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 61
@@ -785,7 +785,7 @@ test_1
 Tile\test_1.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 65
@@ -797,7 +797,7 @@ test_2
 Tile\test_2.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 66
@@ -809,7 +809,7 @@ test_3
 Tile\test_3.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 67
@@ -845,7 +845,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 70
@@ -857,7 +857,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 71
@@ -965,7 +965,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 80
@@ -977,7 +977,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 81
@@ -1085,7 +1085,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 90
@@ -1097,7 +1097,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 91
@@ -1109,7 +1109,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 92
@@ -1121,7 +1121,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 93
@@ -1133,7 +1133,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 94
@@ -1145,7 +1145,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 95
@@ -1157,7 +1157,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 96
@@ -1169,7 +1169,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 97
@@ -1181,7 +1181,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 98
@@ -1193,7 +1193,7 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 
 [INDEX]
 99
@@ -1205,5 +1205,5 @@ test_11
 Tile\test_11.tile
 
 [CREATUREID]
-31
+32
 

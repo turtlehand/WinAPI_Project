@@ -9,7 +9,10 @@ class GBoxCollider;
 enum class CREATURE_ID
 {
 	NONE = -1,
-	
+
+	// 플레이어
+	Player,
+
 	// 몬스터
 	Monster,
 
@@ -63,8 +66,6 @@ enum class CREATURE_ID
 	HitBox,
 	// 벽
 	Wall,
-	// 플레이어
-	Player,
 
 	END,
 };
@@ -77,15 +78,16 @@ private:
 	DefaultStatsInfo*	m_StatInfo;			// 기본 스탯 정보
 	GBoxCollider*		m_HitBox;			// 피격 박스 또는 공격 박스
 
-	CObj* m_Effect;
+	CObj* m_Element;
 
+	bool m_ElementTick;						// 현재 틱에서 속성 효과를 받았다면 true
 public:
 	CREATURE_ID GetCreatureID() { return m_CreatureID; }
 
 	void SetStatInfo(DefaultStatsInfo* _StatInfo) { m_StatInfo = _StatInfo; }
 	DefaultStatsInfo* GetStatInfo() { return m_StatInfo; }
 
-	CObj* GetEffectBox() { return m_Effect; }
+	CObj* GetElement() { return m_Element; }
 
 protected:
 	GBoxCollider* GetHitBox() { return m_HitBox; }
