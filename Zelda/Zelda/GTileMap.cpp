@@ -61,13 +61,11 @@ void GTileMap::SetRowCol(int _Row, int _Col)
 	m_Col = _Col;
 
 	m_vecTile.resize(m_Row * m_Col);
-	m_vecCreature.resize(m_Row * m_Col);
 
 	for (int i = 0; i < m_Row * m_Col; ++i)
 	{
 		m_vecTile[i].first = nullptr;
 		m_vecTile[i].second = CREATURE_ID::NONE;
-		m_vecCreature[i] = nullptr;
 	}
 }
 
@@ -129,7 +127,6 @@ void GTileMap::SetCreature(Vec2 _MousePos, CREATURE_ID _CreatureID)
 	if (_CreatureID == CREATURE_ID::NONE)
 	{
 		m_vecTile[Row * m_Col + Col].second = CREATURE_ID::NONE;
-		CreatCreature_Pos(_CreatureID, Row, Col);
 		return;
 	}
 
@@ -137,15 +134,8 @@ void GTileMap::SetCreature(Vec2 _MousePos, CREATURE_ID _CreatureID)
 	assert(GPrefabManager::GetInst()->FindPrefab(_CreatureID) != nullptr);
 
 	m_vecTile[Row * m_Col + Col].second = _CreatureID;
-
-	CreatCreature_Pos(_CreatureID, Row, Col);
 }
 
-/// <summary>
-/// 마우스 위치에 타일을 내보낸다.
-/// </summary>
-/// <param name="_MousePos"></param>
-/// <returns></returns>
 /*
 const GTile** GTileMap::GetTile(Vec2 _MousePos)
 {
@@ -292,11 +282,10 @@ int GTileMap::Load(const wstring& _FullPath)
 
 	fclose(File);
 
-	CreateCreature();
+	//CreateCreature();
 
 	return true;
 }
-
 
 void GTileMap::Optimize()
 {
@@ -427,7 +416,7 @@ void GTileMap::Optimize()
 			}
 
 			CObj* pWall = GPrefabManager::GetInst()->GetInst()->CreatePrefab(CREATURE_ID::Wall);
-			CreateChildGameObject(GetOwner(), pWall, LAYER_TYPE::OBJECT);
+			CreateChildGameObject(GetOwner(), pWall, LAYER_TYPE::DEFAULT);
 			Vec2 Scale = (RightTop - LeftDown) + Vec2(1.f, 1.f);
 			Vec2 Pos = LeftDown + Scale / 2;
 			pWall->SetPos(Pos * 64.f);
@@ -449,49 +438,14 @@ void GTileMap::Optimize()
 	DArray;
 }
 
-
-
-void GTileMap::CreatCreature_Pos(CREATURE_ID _CreatureID, int Row, int Col)
-{
-	if (IsValid(m_vecCreature[Row * m_Col + Col]))
-	{
-		DeleteGameObject(m_vecCreature[Row * m_Col + Col]);
-		m_vecCreature[Row * m_Col + Col] = nullptr;
-	}
-	
-	if (_CreatureID == CREATURE_ID::NONE || _CreatureID == CREATURE_ID::Wall)
-		return;
-
-	CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(_CreatureID);
-	LAYER_TYPE LayerType = LAYER_TYPE::END;
-
-	if ((int)CREATURE_ID::Monster < (int)_CreatureID && (int)_CreatureID < (int)CREATURE_ID::Obstacle)
-		LayerType = LAYER_TYPE::MONSTER;
-	else if ((int)CREATURE_ID::Obstacle < (int)_CreatureID && (int)_CreatureID < (int)CREATURE_ID::Item)
-		LayerType = LAYER_TYPE::OBJECT;
-	else if ((int)CREATURE_ID::Item < (int)_CreatureID && (int)_CreatureID < (int)CREATURE_ID::ELEMENT)
-		LayerType = LAYER_TYPE::ITEM;
-	else if ((int)CREATURE_ID::ELEMENT < (int)_CreatureID && (int)_CreatureID < (int)CREATURE_ID::ETC)
-		LayerType = LAYER_TYPE::ELEMENT;
-	else if ((int)CREATURE_ID::HitBox == (int)_CreatureID)
-		LayerType = LAYER_TYPE::OBJECT;
-	else if ((int)CREATURE_ID::Wall == (int)_CreatureID)
-		LayerType = LAYER_TYPE::OBJECT;
-
-	if (CreatureObj != nullptr)
-	{
-		Vec2 Pos;
-		Pos.x += m_Scale.x * TILE_SIZE * Col + m_Scale.x * TILE_SIZE / 2;
-		Pos.y += m_Scale.y * TILE_SIZE * Row + m_Scale.x * TILE_SIZE / 2;
-		CreatureObj->SetPos(Pos);
-		CreateChildGameObject(GetOwner(), CreatureObj, LayerType);
-	}
-
-	m_vecCreature[Row * m_Col + Col] = CreatureObj;
-}
-
 void GTileMap::CreateCreature()
 {
+	// 맵에 모든 오브젝트를 삭제한다.
+	for (size_t i = 0; i < GetOwner()->GetChilds().size(); ++i)
+	{
+		DeleteGameObject(GetOwner()->GetChilds()[i]);
+	}
+
 
 	for (int Row = 0; Row < m_Row; ++Row)
 	{
@@ -502,14 +456,33 @@ void GTileMap::CreateCreature()
 			// 해당 타일정보에 접근한다.
 			CREATURE_ID CreatureID = m_vecTile[Row * m_Col + Col].second;
 
-			// 타일이 비어있다면 그리지 않는다.
-			if (CreatureID == CREATURE_ID::NONE)
+			// 해당 타일에 아무것도 삽입하지 않거나 벽이라면 넘어간다.
+			if (CreatureID == CREATURE_ID::NONE || CreatureID == CREATURE_ID::Wall)
 				continue;
+			
+			LAYER_TYPE LayerType = LAYER_TYPE::END;
 
-			// 존재하지 않는 타일이라면 어썰트
-			// 은근 시간을 많이 잡아먹으므로 최적화 필요
-			//assert(GAssetManager::GetInst()->FindTile(Tile->GetKey()) != nullptr);
-			CreatCreature_Pos(CreatureID, Row, Col);
+			if ((int)CREATURE_ID::Monster < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Obstacle)
+				LayerType = LAYER_TYPE::MONSTER;
+			else if ((int)CREATURE_ID::Obstacle < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::Item)
+				LayerType = LAYER_TYPE::OBJECT;
+			else if ((int)CREATURE_ID::Item < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::ELEMENT)
+				LayerType = LAYER_TYPE::ITEM;
+			else if ((int)CREATURE_ID::ELEMENT < (int)CreatureID && (int)CreatureID < (int)CREATURE_ID::ETC)
+				LayerType = LAYER_TYPE::ELEMENT;
+			else if ((int)CREATURE_ID::HitBox == (int)CreatureID)
+				LayerType = LAYER_TYPE::OBJECT;
+
+			CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(CreatureID);
+
+			if (CreatureObj != nullptr)
+			{
+				Vec2 Pos;
+				Pos.x += m_Scale.x * TILE_SIZE * Col + m_Scale.x * TILE_SIZE / 2;
+				Pos.y += m_Scale.y * TILE_SIZE * Row + m_Scale.x * TILE_SIZE / 2;
+				CreatureObj->SetPos(Pos);
+				CreateChildGameObject(GetOwner(), CreatureObj, LayerType);
+			}
 		}
 	}
 
@@ -581,20 +554,31 @@ void GTileMap::Render()
 			// 반목문 회차에 맞는 행렬에 대해서 이게 몇번째 타일정보인지 1차원 인덱스로 변환
 			// 해당 타일정보에 접근한다.
 			const GTile* Tile = m_vecTile[Row * m_Col + Col].first;
+			CREATURE_ID CreatureID = m_vecTile[Row * m_Col + Col].second;
 
-			// 타일이 비어있다면 그리지 않는다.
-			if (Tile == nullptr)
-				continue;
+			// 타일이 있다면 그린다.
+			if (Tile != nullptr)
+			{
+				StretchBlt(dc,
+					(int)OwnerRenderPos.x + Col * TILE_SIZE * m_Scale.x, (int)OwnerRenderPos.y - (Row * TILE_SIZE + TILE_SIZE) * m_Scale.y,
+					TILE_SIZE * m_Scale.x, TILE_SIZE * m_Scale.y,
+					Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y,
+					Tile->GetSprite()->GetSlice().x, Tile->GetSprite()->GetSlice().y, SRCCOPY);
+			}
 
-			// 존재하지 않는 타일이라면 어썰트
-			// 은근 시간을 많이 잡아먹으므로 최적화 필요
-			//assert(GAssetManager::GetInst()->FindTile(Tile->GetKey()) != nullptr);
+			// 타일이 NONE이 아니라면 그린다.
+			if (CLevelMgr::GetInst()->GetCurrentLevelType() == LEVEL_TYPE::EDITOR && CreatureID != CREATURE_ID::NONE)
+			{
+				GSprite* TitleSprite = GPrefabManager::GetInst()->FindPrefab(CreatureID)->GetTitleSprite();
+				StretchBlt(dc,
+					(int)OwnerRenderPos.x + Col * TILE_SIZE * m_Scale.x, (int)OwnerRenderPos.y - (Row * TILE_SIZE + TILE_SIZE) * m_Scale.y,
+					TILE_SIZE * m_Scale.x, TILE_SIZE * m_Scale.y,
+					TitleSprite->GetAtlas()->GetDC(), TitleSprite->GetLeftTop().x, TitleSprite->GetLeftTop().y,
+					TitleSprite->GetSlice().x, TitleSprite->GetSlice().y, SRCCOPY);
+			}
 
-			StretchBlt(dc,
-				(int)OwnerRenderPos.x + Col * TILE_SIZE * m_Scale.x, (int)OwnerRenderPos.y - (Row * TILE_SIZE + TILE_SIZE) * m_Scale.y,
-				TILE_SIZE * m_Scale.x, TILE_SIZE * m_Scale.y,
-				Tile->GetSprite()->GetAtlas()->GetDC(), Tile->GetSprite()->GetLeftTop().x, Tile->GetSprite()->GetLeftTop().y,
-				Tile->GetSprite()->GetSlice().x,Tile->GetSprite()->GetSlice().y, SRCCOPY);
+
+
 		}
 	}
 }

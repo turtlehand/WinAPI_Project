@@ -18,7 +18,7 @@ GFire::~GFire()
 void GFire::Awake()
 {
 	GHitBox::Awake();
-	GetHitBox()->SetScale(Vec2(96.f, 96.f));
+	GetHitBox()->SetScale(Vec2(70.f, 70.f));
 	GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
 	GetFlipBookPlayer()->SetPlay(0, 4, true);
 	GetStatInfo()->Material = MATERIAL_TYPE::FIRE;

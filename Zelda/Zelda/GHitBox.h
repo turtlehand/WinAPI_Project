@@ -43,7 +43,7 @@ public:
 
 public:
 	GHitBox(CREATURE_ID _CreatureID = CREATURE_ID::HitBox);
-	virtual ~GHitBox() override;
+	~GHitBox();
 
 	friend class GPAttackState;
 	friend class GCreature;

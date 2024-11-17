@@ -45,27 +45,36 @@ void GLevel_Start::Begin()
 
 	GCamera::GetInst()->SetTarget(player);
 
+	/*
 	GMoblin* pMonster = new GMoblin;
 	pMonster->Awake();
 	AddObject(pMonster, LAYER_TYPE::MONSTER);
 	pMonster->SetPos(333.f, 0.f);
-
-	/*
+	*/
+	
 	GMap* pMap = new GMap;
 	m_Map = pMap;
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_BigMap.tm";
+	pMapPath += L"TileMap\\test_Creature.tm";
 	pMap->SetName(L"Map");
 	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 5, TILE_SIZE * 4 * 5));
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
 	pMap->SetActive(true);
-	*/
+	pMap->GetTileMap()->CreateCreature();
+	
 	
 
 	CollisionManager::GetInst()->CollisionCheckClear();
+
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::PLAYER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::PLAYER_OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::MONSTER);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::MONSTER_OBJECT);
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::OBJECT);
+
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::PLAYER_OBJECT, LAYER_TYPE::ITEM);

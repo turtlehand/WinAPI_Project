@@ -58,7 +58,6 @@ void TaskManager::Tick()
    			CObj* pObject = (CObj*)m_Task[i].Param0;
 			
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject,(LAYER_TYPE)m_Task[i].Param1);
-			pObject->Begin();
 		}
 		break;
 
@@ -74,9 +73,9 @@ void TaskManager::Tick()
 				DeleteGameObject(pObject);
 				break;
 			}
+			// 부모 오브젝트를 삭제 처리하고 자식 오브젝트를 생성하면 자식 오브젝트 삭제되지 않음
 
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject, (LAYER_TYPE)m_Task[i].Param2);
-			pObject->Begin();
 			
 		}
 		break;
@@ -88,10 +87,10 @@ void TaskManager::Tick()
 			float Time = (float)m_Task[i].Time;
 
 			// 시간이 아직 남았다면 미뤄준다.
-			if (Time > 0)
+			if (Time > 0.f)
 			{
 				Time -= DT;
-				Task task = { Time, TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)pObject, (DWORD_PTR)Time };
+				Task task = { Time, TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)pObject };
 				m_TimeTask.push_back(task);
 				break;
 			}
@@ -100,9 +99,27 @@ void TaskManager::Tick()
 			// 동시 같은 오브젝트에 대해서 Delete 요청이 여러번인 경우 대처하기 위함z
 			if (!pObject->IsDead())
 			{
-				pObject->m_Dead = true;
+				list<CObj*> queue;
+				queue.push_back(pObject);
 
-				m_Garbage.push_back(pObject);
+				while (!queue.empty())
+				{
+					CObj* Object = queue.front();
+					queue.pop_front();
+
+					for (int i = 0; i < Object->GetChilds().size(); ++i)
+					{
+						queue.push_back(Object->GetChilds()[i]);
+					}
+
+					// 오브젝트가 삭제 상태가 아니라면
+					if (!Object->IsDead())
+					{
+						Object->m_Dead = true;
+						m_Garbage.push_back(Object);
+					}
+				}
+
 			}
 		}
 		break;

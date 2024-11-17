@@ -17,6 +17,7 @@ GHitBox::GHitBox(CREATURE_ID _CreatureID) :
 
 GHitBox::~GHitBox()
 {
+
 }
 
 void GHitBox::Awake()
@@ -49,11 +50,18 @@ void GHitBox::OnTriggerEnter(GCollider* _Collider)
 	if (m_IsProjectile)
 	{
 		// 플레이어 레이어 일 때
-		if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::MONSTER)
-			DeleteGameObject(this);
+ 		if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::MONSTER)
+ 			DeleteGameObject(this);
 		else if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::PLAYER)
 			DeleteGameObject(this);
-		else if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::OBJECT)
+ 		else if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::OBJECT)
+		{
+			GCreature* Creature = dynamic_cast<GCreature*>(_Collider->GetOwner());
+			assert(Creature != nullptr);
+			if(Creature->GetCreatureID() != CREATURE_ID::Grass)
+    				DeleteGameObject(this);
+		}
+		else if(_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::DEFAULT)
 			DeleteGameObject(this);
 	}
 

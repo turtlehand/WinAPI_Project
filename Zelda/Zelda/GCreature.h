@@ -136,6 +136,7 @@ protected:
 	//void Freeze();
 	//void Shock(); 
 
+public:
 	void Ignite();
 	void InstantIgnite();
 

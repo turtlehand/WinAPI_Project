@@ -247,7 +247,7 @@ void GCreature::KnockBack()
 void GCreature::Ignite()
 {
 	// 불이 나지 않았고 1초 이상 타고 있다면
-	if (m_StatInfo->Effect.Duration > 1.f && !IsValid(m_Element))
+	if (m_StatInfo->Effect.Duration >= 0.9f && !IsValid(m_Element))
 	{
 		//Damaged(1);
 		m_StatInfo->Effect.Duration -= 1.f;

@@ -16,6 +16,8 @@ public:
 
 	virtual void OnTriggerEnter(GCollider* _Collider);
 
+	virtual void DropItem();
+
 public:
 	GRock();
 	virtual ~GRock() override;

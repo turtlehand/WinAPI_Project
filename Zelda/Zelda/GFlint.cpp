@@ -47,11 +47,11 @@ void GFlint::Awake()
 
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
 	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"FLINT", L"Sprite\\Item_16\\FLINT.sprite"));
-	m_SpriteRenderer->SetScale(Vec2(4.f, 4.f));
+	m_SpriteRenderer->SetScale(Vec2(2.f, 2.f));
 	m_SpriteRenderer->SetDeleteColor(RGB(116, 116, 116));
 
 	GetHitBox()->SetName(L"FIREWOOD_HITBOX");
-	GetHitBox()->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetScale(Vec2(32.f, 32.f));
 	GetHitBox()->SetTrigger(true);
 
 }

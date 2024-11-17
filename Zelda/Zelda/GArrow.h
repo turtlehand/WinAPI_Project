@@ -22,6 +22,8 @@ public:
 
 	virtual void InteractionEffect_Element(GCreature* _Creature);
 
+	virtual void OnTriggerEnter(GCollider* _Collider);
+
 public:
 	void SetVelocity(Vec2 _Velocity);
 	Vec2 GetVelocity() { return m_Velocity; }

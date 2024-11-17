@@ -37,13 +37,16 @@ void GArrow::Awake()
 void GArrow::Begin()
 {
 	GHitBox::Begin();
-	DeleteGameObject(this, 0.5f);
+	DeleteGameObject(this, 5.f);
 }
 
 void GArrow::Tick()
 {
 	GHitBox::Tick();
 	m_RigidBody->SetVelocity(m_Velocity);
+
+	if (isnan(GetPos().x) || isnan(GetPos().y))
+		bool isnan = true;
 }
 
 
@@ -58,6 +61,37 @@ void GArrow::InteractionEffect_Element(GCreature* _Creature)
 	{
 		InstantIgnite();
 	}
+
+	// 불타고 있을 때 나무에 닿는다며 대상은 불이 붙는다.
+	if (GetElement() != nullptr && _Creature->GetStatInfo()->Material == MATERIAL_TYPE::WOOD)
+	{
+		_Creature->InstantIgnite();
+	}
+}
+
+void GArrow::OnTriggerEnter(GCollider* _Collider)
+{
+	GHitBox::OnTriggerEnter(_Collider);
+
+	GHitBox* Element = dynamic_cast<GHitBox*>(GetElement());
+
+	if (Element == nullptr)
+		return;
+
+	// 불화살 일 때
+	if (Element->GetStatInfo()->Material == MATERIAL_TYPE::FIRE)
+	{
+		// 대상이 크리쳐인지 확인
+		GCreature* Creature = dynamic_cast<GCreature*>(_Collider->GetOwner());
+
+		// 대상이 나무, 생명체라면 즉시 불을 붙인다.
+		if (Creature->GetStatInfo()->Material == MATERIAL_TYPE::WOOD || Creature->GetStatInfo()->Material == MATERIAL_TYPE::LIFE)
+		{
+			Creature->InstantIgnite();
+		}
+	}
+
+	
 }
 
 void GArrow::SetVelocity(Vec2 _Velocity)

@@ -92,7 +92,7 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 
 	switch (_Key)
 	{
-	// 몬스터
+		// 몬스터
 	case CREATURE_ID::Moblin:
 	{
 		CreatureObj = new GMoblin;
@@ -163,6 +163,12 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 	case CREATURE_ID::Iron_Sword:
 	{
 		CreatureObj = new GWeapon(CREATURE_ID::Iron_Sword);
+	}
+	break;
+
+	case CREATURE_ID::Stone_Hammer:
+	{
+		CreatureObj = new GWeapon(CREATURE_ID::Stone_Hammer);
 	}
 	break;
 

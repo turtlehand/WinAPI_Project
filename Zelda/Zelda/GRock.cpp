@@ -7,6 +7,7 @@
 #include "GHitBox.h"
 
 #include "GAssetManager.h"
+#include "GPrefabManager.h"
 
 GRock::GRock() :
 	GCreature(CREATURE_ID::Rock),
@@ -58,6 +59,33 @@ void GRock::OnTriggerEnter(GCollider* _Collider)
 	GHitBox* HitBox = dynamic_cast<GHitBox*>(_Collider->GetOwner());
 	if(HitBox != nullptr)
 		Interaction_Attack(HitBox);
+}
+
+void GRock::DropItem()
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(0, 5);
+
+	int RandomIndex = dist(gen);
+
+	if (RandomIndex == 0)
+	{
+		CObj* Flint = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Flint);
+
+		if (GetParent() != nullptr)
+		{
+			CreateChildGameObject(GetParent(), Flint, LAYER_TYPE::ITEM);
+			Flint->SetPos(GetPos());
+		}
+		else
+		{
+			CreateGameObject(Flint, LAYER_TYPE::ITEM);
+			Flint->SetPos(GetPos());
+		}
+
+		
+	}
 }
 
 
