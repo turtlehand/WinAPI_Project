@@ -7,6 +7,8 @@ class GMChaseState : public GState
 {
 private:
 	GMonster* m_Monster;
+	MonsterInfo* m_MonsterInfo;
+	Vec2 m_PrevDir;
 
 public:
 	virtual void Begin() override;

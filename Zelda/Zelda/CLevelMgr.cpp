@@ -30,9 +30,9 @@ void CLevelMgr::Init()
 	m_arrLevel[(int)LEVEL_TYPE::START] = new GLevel_Start;
 	m_arrLevel[(int)LEVEL_TYPE::START]->Awake();
 
-	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::START];
+	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::EDITOR];
 	m_CurLevel->Begin();
-	m_CurLevelType = LEVEL_TYPE::START;
+	m_CurLevelType = LEVEL_TYPE::EDITOR;
 }
 
 void CLevelMgr::Progress()

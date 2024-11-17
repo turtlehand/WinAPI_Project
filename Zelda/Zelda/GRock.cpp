@@ -13,7 +13,7 @@ GRock::GRock() :
 	m_Sprite(nullptr)
 {
 	SetName(L"Rock");
-	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\test_18.sprite"));
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\Object_16\\ROCK.sprite"));
 }
 
 GRock::~GRock()

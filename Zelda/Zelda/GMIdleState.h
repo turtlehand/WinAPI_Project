@@ -8,6 +8,8 @@ class GMIdleState :
 {
 private:
     GMonster* m_Monster;
+    MonsterInfo* m_MonsterInfo;
+    float m_MoveTimer;
 
 public:
     virtual void Begin() override;

@@ -518,7 +518,6 @@ void GTileMap::CreateCreature()
 
 void GTileMap::FinalTick()
 {
-	return;
 	if (!DeBugRenderManager::GetInst()->GetShow())
 		return;
 

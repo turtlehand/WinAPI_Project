@@ -209,6 +209,7 @@ struct WeaponInfo : public DefaultStatsInfo
 struct MonsterInfo : public DefaultStatsInfo
 {
 	float DetectRange;
+	float DetectKeepRange;
 	float AttackRange;
 	Vec2 Direction;
 };

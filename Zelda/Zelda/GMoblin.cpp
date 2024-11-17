@@ -37,6 +37,7 @@ void GMoblin::Awake()
 	pMInfo->Speed = 64;
 	pMInfo->Direction = Vec2::down();
 	pMInfo->DetectRange = 128;
+	pMInfo->DetectKeepRange = 256;
 	pMInfo->AttackRange = 0;
 	pMInfo->IsDead = false;
 	SetStatInfo(pMInfo);

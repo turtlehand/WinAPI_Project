@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <assert.h>
 #include <cmath>
+#include <random>
 
 #pragma comment(lib, "Msimg32.lib")
 
@@ -19,5 +20,6 @@ using std::list;
 using std::map;
 using std::make_pair;
 using std::pair;
+using std::random_device;
 
 #include "global.h"

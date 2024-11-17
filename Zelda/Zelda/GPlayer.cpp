@@ -77,7 +77,7 @@ void GPlayer::Awake()
 	// 히트박스 추가
 	GetHitBox()->SetName(L"Player_Hit_Box");
 	GetHitBox()->SetPos(Vec2(0, 0));
-	GetHitBox()->SetScale(Vec2(64.f, 64.f));
+	GetHitBox()->SetScale(Vec2(50.f, 50.f));
 	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"WEAPON_X", L"FlipBook\\Link_16\\Weapon\\WEAPON_X.flip"));
 	m_AttackBox->GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"WEAPON_Y", L"FlipBook\\Link_16\\Weapon\\WEAPON_Y.flip"));
 
