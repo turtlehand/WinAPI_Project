@@ -30,16 +30,10 @@ GLevel_Start::~GLevel_Start()
 
 void GLevel_Start::Begin()
 {
-	GInventory* pInven = new GInventory;
-	pInven->Awake();
-	AddObject(pInven, LAYER_TYPE::UI);
-
-
 	// Player 생성하기
 	GPlayer* player = new GPlayer;
 	player->Awake();
 	m_Player = player;
-	player->SetInvenUI(pInven);
 	AddObject(player, LAYER_TYPE::PLAYER);
 	player->SetPos(0.f, 0.f);
 
@@ -57,7 +51,7 @@ void GLevel_Start::Begin()
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\bug_Test.tm";
+	pMapPath += L"TileMap\\test_Creature.tm";
 	pMap->SetName(L"Map");
 	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 6, TILE_SIZE * 4 * 5));
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
@@ -123,5 +117,17 @@ void GLevel_Start::Render()
 	CLevel::Render();
 
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Start Level", wcslen(L"Start Level"));
+
+	/*
+	Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos();
+	wchar_t buff[255] = {};
+	swprintf_s(buff, 255, L"%d, %d", (int)MousePos.x, (int)MousePos.y);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, buff, wcslen(buff));
+	*/
+
+	Vec2 MousePos_Window = CKeyMgr::GetInst()->GetMousePos_Window();
+	wchar_t buff[255] = {};
+	swprintf_s(buff, 255, L"%d, %d", (int)MousePos_Window.x, (int)MousePos_Window.y);
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, buff, wcslen(buff));
 	//TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, m_Player->GetCurrentState().c_str(), m_Player->GetCurrentState().size());
 }

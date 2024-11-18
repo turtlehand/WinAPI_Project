@@ -438,6 +438,16 @@
     <ClInclude Include="GPrefabManager.h">
       <Filter>Game\03. Manager\12. Prefab</Filter>
     </ClInclude>
+    <ClInclude Include="GSlot.h">
+      <Filter>Game\05. Object\08. GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GHeart.h" />
+    <ClInclude Include="GPBeAttackedState.h">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GMBeAttackedState.h">
+      <Filter>Game\08. State\02. Monster</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -661,6 +671,16 @@
     </ClCompile>
     <ClCompile Include="GPrefabManager.cpp">
       <Filter>Game\03. Manager\12. Prefab</Filter>
+    </ClCompile>
+    <ClCompile Include="GSlot.cpp">
+      <Filter>Game\05. Object\08. GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GHeart.cpp" />
+    <ClCompile Include="GPBeAttackedState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GMBeAttackedState.cpp">
+      <Filter>Game\08. State\02. Monster</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

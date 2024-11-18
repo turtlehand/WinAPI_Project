@@ -13,6 +13,7 @@
 
 #include "GMIdleState.h"
 #include "GMChaseState.h"
+#include "GMBeAttackedState.h"
 
 GMoblin::GMoblin() :
 	GMonster(CREATURE_ID::Moblin)
@@ -57,10 +58,11 @@ void GMoblin::Awake()
 	GetAttackBox()->GetComponent<GBoxCollider>()->SetScale(Vec2(64.f, 64.f));
 	GetAttackBox()->SetAttackType(ATTACK_TYPE::STRIKE);
 	GetAttackBox()->SetMaterialType(MATERIAL_TYPE::LIFE);
-	GetAttackBox()->SetDamage(4);
+	GetAttackBox()->SetDamage(1);
 
 	GetFSM()->AddState(L"IDLE", new GMIdleState);
 	GetFSM()->AddState(L"CHASE", new GMChaseState);
+	GetFSM()->AddState(L"BEATTACKED", new GMBeAttackedState);
 	GetFSM()->ChanageState(L"IDLE");
 }
 

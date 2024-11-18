@@ -1,21 +1,33 @@
 #pragma once
-#include "GUI.h"
+#include "GPanel.h"
 #include "GItem.h"
 
 #define PRE 0
 #define CUR 1
 #define POST 2
 
+class GSprite;
+class GSlot;
+
 class GInventory :
-	public GUI
+	public GPanel
 {
 private:
-	GSprite* m_CurImage[3];
+	int m_CurItem;
+	vector<pair<CREATURE_ID, int>>& m_Inventory;
+	GSlot* m_ItemSlot[3];
 
 public:
-	void UseItem(CREATURE_ID _ItemID, GCreature* _User);
+	void SetCurItem(int _Index);
+	int FristItem();
+	int LastItem();
+	int PreItem();					// 이전 아이템
+	int PostItem();					// 다음 아이템
 
-	void SetCurItme(CREATURE_ID _ItemID);
+	//void PickUpItem();		
+	void DropItem(GCreature* _User);
+	void UseItem(GCreature* _User);
+	
 
 public:
 	virtual void Awake() override;
@@ -23,7 +35,7 @@ public:
 	virtual void Render_UI() override;
 
 public:
-	GInventory();
+	GInventory(vector<pair<CREATURE_ID, int>>& _Inventory);
 	virtual ~GInventory() override;
 };
 

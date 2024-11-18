@@ -1,0 +1,19 @@
+[ASSETTYPE]
+2
+
+[LEFTTOP]
+636, 117
+
+[SLICE]
+8, 8
+
+[OFFSET]
+0, 0
+
+[ATLAS]
+[ATLAS_KEY]
+HUD
+
+[ATLAS_PATH]
+Texture\HUD.png
+

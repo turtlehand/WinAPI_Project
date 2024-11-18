@@ -111,17 +111,17 @@ public:
 	virtual void InteractionEffect_Attack(GHitBox* _HitBox) {};		// 상호작용 시 효과
 
 	void Damaged(int _Damage);									// 피해
-	void KnockBack();											// 밀려남 
+	void KnockBack(GHitBox* _HitBox);											// 밀려남 
 
 
-	void Dead();
+	virtual void Dead();
 	virtual void DropItem() {};					// 죽었을 시 떨어트리는 오브젝트
 
 protected:
 	// 소재 - 공격 반응
 	void Smash();
 	void CutWood();
-	void BeAttacked(int _Damage);
+	void BeAttacked(GHitBox* _HitBox);
 
 	// 소재 - 속성 반응
 	void Burn();

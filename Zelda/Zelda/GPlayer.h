@@ -32,8 +32,9 @@ private:
 
 	// 아이템 관련
 	GInventory* m_InventoryUI;
-	int m_InvenIndex;
 	vector<pair<CREATURE_ID, int>> m_Inventory;
+
+
 	CObj* m_NearbyItem;
 
 public:
@@ -52,15 +53,16 @@ public:
 	const wstring& GetCurrentState();
 	void CreateAnimator();
 
-	void SetInvenUI(GInventory* _InvenUI) { m_InventoryUI = _InvenUI; }
-
 	void SetAttackBox(CREATURE_ID _WeaponID);
 	void SetTool(CREATURE_ID _ToolID);
 
+public:
+	virtual void Dead();
+
 private:
 	void PickUpItem();
-	void DropItem(int index);
-	void UseItem(int index);
+	void DropItem();
+	void UseItem();
 
 public:
 	GPlayer();
@@ -70,6 +72,7 @@ public:
 	friend class GPMoveState;
 	friend class GPAttackState;
 	friend class GPUseToolState;
+	friend class GPBeAttackedState;
 };
 
 enum class PLAYER_ANIM_STATE

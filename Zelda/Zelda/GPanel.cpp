@@ -17,7 +17,7 @@ void GPanel::Tick_UI()
 {
 	if (IsLBtnDown())
 	{
-		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+		Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos_Window();
 		Vec2 vDiff = vMousePos - m_DownPos;
 
 		Vec2 vPos = GetPos();
@@ -30,7 +30,7 @@ void GPanel::Tick_UI()
 
 void GPanel::MouseLBtnDown()
 {
-	m_DownPos = CKeyMgr::GetInst()->GetMousePos();
+	m_DownPos = CKeyMgr::GetInst()->GetMousePos_Window();
 }
 
 void GPanel::MouseLBtnClikced()

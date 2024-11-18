@@ -58,7 +58,9 @@ private:
 
 	int						m_MouseWheel;
 	bool					m_MouseWheelPrevPressed;
+
 	Vec2					m_MousePos;
+	Vec2					m_MousePos_Window;
 
 public:
 	void SetMouseWheel(int _State) { m_MouseWheel = _State; }
@@ -66,8 +68,10 @@ public:
 
 	KEY_STATE GetKeyState(KEY _key) { return m_vecKeyInfo[(int) _key].State; }		// 키의 현재 상태를 반환하는 함수
 	Vec2 GetMousePos() { return m_MousePos; }
+	Vec2 GetMousePos_Window() { return m_MousePos_Window; }
 
 	bool IsMouseOffScreen();
+	bool ISMouseOffScreen_Window();
 public:
 	void Init();
 	void Progress();

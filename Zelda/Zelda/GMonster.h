@@ -13,6 +13,7 @@ class GMonster :
 {
 	friend class GMIdleState;
 	friend class GMChaseState;
+	friend class GMBeAttackedState;
 
 private:
 	CObj* m_Target;
@@ -35,6 +36,9 @@ public:
 	GFlipBookPlayer* GetFlipBookPlayer() { return m_FlipBookPlayer; }
 	GRigidBody* GetRigidBody() { return m_RigidBody; }
 	GHitBox* GetAttackBox() { return m_AttackBox; }
+
+public:
+	virtual void Dead();
 
 public:
 	virtual void Awake() override;

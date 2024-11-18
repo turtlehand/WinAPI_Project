@@ -24,6 +24,7 @@ public:
 private:
 	friend class TaskManager;
 	void ChangeLevel(LEVEL_TYPE _Level);
+	void ReLoadLevel();
 	
 
 };

@@ -50,7 +50,7 @@ void GUI::Render()
 
 void GUI::Render_UI()
 {
-	Vec2 vRenderPos = GCamera::GetInst()->GetRenderPos(GetGlobalPos());
+	Vec2 vRenderPos = GetGlobalPos();
 	Vec2 vScale = GetScale();
 	HDC dc = CEngine::GetInst()->GetSecondDC();
 
@@ -66,12 +66,12 @@ void GUI::Render_UI()
 
 void GUI::MouseHoverCheck()
 {
-	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
+	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos_Window();
 	Vec2 vPos = GetGlobalPos();
 	Vec2 vScale = GetScale();
 
 	if (vPos.x <= vMousePos.x && vMousePos.x <= vPos.x + vScale.x &&
-		vPos.y - vScale.y <= vMousePos.y && vMousePos.y <= vPos.y )
+		vPos.y <= vMousePos.y && vMousePos.y <= vPos.y + vScale.y)
 	{
 		m_MouseHover = true;
 	}

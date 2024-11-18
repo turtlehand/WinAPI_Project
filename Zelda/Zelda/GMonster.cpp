@@ -27,6 +27,11 @@ GMonster::~GMonster()
 
 }
 
+void GMonster::Dead()
+{
+	GCreature::Dead();
+}
+
 void GMonster::Awake()
 {
 	GCreature::Awake();

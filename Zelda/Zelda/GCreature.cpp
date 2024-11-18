@@ -4,6 +4,8 @@
 #include "CLevel.h"
 #include "CLevelMgr.h"
 #include "GAssetManager.h"
+#include "GRigidBody.h"
+#include "GFSM.h"
 
 #include "GBoxCollider.h"
 
@@ -80,6 +82,10 @@ void GCreature::StatusEffect()
 
 void GCreature::Interaction_Element(GCreature* _Creature)
 {
+	// 무적 상태라면 무시
+	if (m_StatInfo->IsInvincible)
+		return;
+
 	// 현재 틱에 속성 효과를 받았다면
 	if (m_ElementTick)
 		return;
@@ -132,6 +138,9 @@ void GCreature::Interaction_Element(GCreature* _Creature)
 
 void GCreature::Interaction_Attack(GHitBox* _HitBox)
 {
+	// 무적 상태라면 무시
+	if (m_StatInfo->IsInvincible)
+		return;
 
 	// 현재 소재에 공격이 닿는다면
 
@@ -143,7 +152,7 @@ void GCreature::Interaction_Attack(GHitBox* _HitBox)
 	if (CMaterialType == MATERIAL_TYPE::STONE && HBAttackType == ATTACK_TYPE::STRIKE)
 		Smash();
 	else if (CMaterialType == MATERIAL_TYPE::LIFE && HBAttackType != ATTACK_TYPE::NONE )
-		BeAttacked(_HitBox->GetDamage());
+		BeAttacked(_HitBox);
 	else if (CMaterialType == MATERIAL_TYPE::WOOD && HBAttackType == ATTACK_TYPE::SLASH)
 		CutWood();
 
@@ -184,10 +193,17 @@ void GCreature::CutWood()
 	Damaged(2);
 }
 
-void GCreature::BeAttacked(int _Damage)
+void GCreature::BeAttacked(GHitBox* _HitBox)
 {
-	Damaged(_Damage);
-	KnockBack();
+	Damaged(_HitBox->GetDamage());
+	KnockBack(_HitBox);
+
+	// 피격 상태로 변경한다.
+	GFSM* FSM = GetComponent<GFSM>();
+	if (FSM == nullptr)
+		return;
+
+	FSM->ChanageState(L"BEATTACKED");
 }
 
 void GCreature::Burn()
@@ -240,9 +256,29 @@ void GCreature::Melt()
 
 #pragma endregion
 
-void GCreature::KnockBack()
+void GCreature::KnockBack(GHitBox* _HitBox)
 {
 
+	GRigidBody* RigidBody = GetComponent<GRigidBody>();
+	if (RigidBody == nullptr)
+		return;
+
+	Vec2 Direction = (_HitBox->GetGlobalPos() - this->GetGlobalPos()).Normalize();
+
+	// x축 방향이 더 크다면
+	if (fabs(Direction.x) > fabs(Direction.y))
+	{
+		// x 축 방향으로 이동한다.
+		Direction = Vec2(Direction.x, 0.f);
+	}
+	else
+	{
+		// y 축 방향으로 이동한다.
+		Direction = Vec2(0.f, Direction.y);
+	}
+	Direction = Direction.Normalize();
+
+	RigidBody->AddForce(Direction * -35000);
 }
 
 void GCreature::Ignite()

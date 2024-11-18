@@ -96,9 +96,14 @@ void CKeyMgr::Progress()
 		// 그 좌표를 창 기준 좌표로 변경시켜준다.
 		ScreenToClient(CEngine::GetInst()->GetMainWndHwnd(), &ptPos);
 
+		// 게임 좌표 기준
 		// 마우스가 화면 밖이라면 NAN
 		m_MousePos = GCamera::GetInst()->GetGamePos(ptPos);
 		m_MousePos = IsMouseOffScreen() ? Vec2(NAN, NAN) : GCamera::GetInst()->GetGamePos(ptPos);
+
+		// 화면 좌쵸 기준
+		m_MousePos_Window = ptPos;
+		m_MousePos_Window = ISMouseOffScreen_Window() ? Vec2(NAN, NAN) : ptPos;
 
 		//
 		if (m_MouseWheel != 0 && !m_MouseWheelPrevPressed)
@@ -142,8 +147,19 @@ bool CKeyMgr::IsMouseOffScreen()
 	Vec2 Resolution = CEngine::GetInst()->GetResolution()/2;
 	Vec2 CameraPos = GCamera::GetInst()->GetOffset();
 
-	if (CameraPos.x - Resolution.x < m_MousePos.x && m_MousePos.x < CameraPos.x + Resolution.x &&
-		CameraPos.y - Resolution.y < m_MousePos.y && m_MousePos.y < CameraPos.y + Resolution.y)
+	if (CameraPos.x - Resolution.x <= m_MousePos.x && m_MousePos.x <= CameraPos.x + Resolution.x &&
+		CameraPos.y - Resolution.y <= m_MousePos.y && m_MousePos.y <= CameraPos.y + Resolution.y)
+		return false;
+
+	return true;
+}
+
+bool CKeyMgr::ISMouseOffScreen_Window()
+{
+	Vec2 Resolution = CEngine::GetInst()->GetResolution();
+
+	if (0 <= m_MousePos_Window.x && m_MousePos_Window.x <= Resolution.x &&
+		0 <= m_MousePos_Window.y && m_MousePos_Window.y <= Resolution.y)
 		return false;
 
 	return true;

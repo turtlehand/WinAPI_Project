@@ -19,6 +19,7 @@ private:
 
 	bool				m_XFlip;
 	bool				m_YFlip;
+	float				m_Alpha;
 
 	GTexture*			m_RenderTexture;		// Render 시킬 Texture
 public:
@@ -26,6 +27,7 @@ public:
 	void SetXFlip(bool _XFlip) { m_XFlip = _XFlip; }
 
 	void SetYFlip(bool _YFlip) { m_YFlip = _YFlip; }
+	void SetAlpha(int _Alpha) { m_Alpha = (float)_Alpha; }
 
 	// 재생 여부
 	void Pause() { m_Play = false; }

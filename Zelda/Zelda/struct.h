@@ -199,6 +199,7 @@ struct DefaultStatsInfo
 	float Speed = 0.f;
 
 	bool IsDead = false;
+	bool IsInvincible = false;
 };
 
 struct WeaponInfo : public DefaultStatsInfo

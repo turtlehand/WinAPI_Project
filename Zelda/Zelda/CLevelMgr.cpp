@@ -53,7 +53,11 @@ void CLevelMgr::ChangeLevel(LEVEL_TYPE _Level)
 {
 	// 1. 현재 레벨과 변경하려는 레벨이 동일하면 아무일도 안 일어난다.
 	if (m_CurLevel == m_arrLevel[(UINT)_Level])
+	{
+		ReLoadLevel();
 		return;
+	}
+		
 
 	// 2. 현재 레벨의 오브젝트를 소멸 시켜준다.
 	m_CurLevel->End();
@@ -63,5 +67,11 @@ void CLevelMgr::ChangeLevel(LEVEL_TYPE _Level)
 	m_CurLevelType = _Level;
 
 	// 4. 현재 레벨을 Begin을 호출 시킨다.
+	m_CurLevel->Begin();
+}
+
+void CLevelMgr::ReLoadLevel()
+{
+	m_CurLevel->End();
 	m_CurLevel->Begin();
 }

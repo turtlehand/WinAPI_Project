@@ -29,7 +29,8 @@ GFlipBookPlayer::GFlipBookPlayer() :
 	m_DeleteColor(RGB(-1, -1, -1)),
 	*/
 	m_XFlip(false),
-	m_YFlip(false)
+	m_YFlip(false),
+	m_Alpha(255)
 {
 }
 
@@ -124,7 +125,7 @@ void GFlipBookPlayer::DeleteColorAlpha(GTexture*& _Textrue)
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = Info.Alpha;
+	blend.SourceConstantAlpha = Info.Alpha * (m_Alpha / 255 );
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
@@ -174,7 +175,7 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
-	blend.SourceConstantAlpha = Info.Alpha;
+	blend.SourceConstantAlpha = Info.Alpha * (m_Alpha / 255);
 	blend.AlphaFormat = 0;
 
 	AlphaBlend(hBackDC
@@ -266,7 +267,7 @@ void GFlipBookPlayer::Render()
 
 	// 업애고 싶은 색도 있고 알파값도 수정하고 싶다면
 	// 복봍을 여러번 하므로 자제할 것
-	if (RGB(-1, -1, -1) != Info.DeleteColor && Info.Alpha != 255)
+	if (RGB(-1, -1, -1) != Info.DeleteColor && (Info.Alpha != 255 || m_Alpha != 255))
 	{
 		DeleteColorAlpha(m_RenderTexture);
 	}

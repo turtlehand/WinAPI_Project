@@ -121,9 +121,9 @@ enum class LEVEL_TYPE
 
 enum class ATTACK_TYPE
 {
+	THRUSHT,
 	SLASH,
 	STRIKE,
-	THRUSHT,
 	NONE,
 };
 

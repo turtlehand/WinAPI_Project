@@ -50,11 +50,11 @@ void GPMoveState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::Z))
 	{
-		m_Player->UseItem(m_Player->m_InvenIndex);
+		m_Player->UseItem();
 	}
 	else if (GETKEYDOWN(KEY::X))
 	{
-		m_Player->DropItem(m_Player->m_InvenIndex);
+		m_Player->DropItem();
 	}
 
 	// 이동 방향

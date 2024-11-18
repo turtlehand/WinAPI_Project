@@ -76,7 +76,7 @@ void TaskManager::Tick()
 			// 부모 오브젝트를 삭제 처리하고 자식 오브젝트를 생성하면 자식 오브젝트 삭제되지 않음
 
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject, (LAYER_TYPE)m_Task[i].Param2);
-			pParent->AddChild(pObject);
+
 			
 		}
 		break;

@@ -22,7 +22,9 @@
 #include "GPMoveState.h"
 #include "GPAttackState.h"
 #include "GPUseToolState.h"
+#include "GPBeAttackedState.h"
 
+#include "GHeart.h"
 #include "GInventory.h"
 #include "GPrefabManager.h"
 
@@ -62,8 +64,8 @@ void GPlayer::Awake()
 	// 스탯 설정
 	PlayerInfo* pInfo = new PlayerInfo;
 	pInfo->Material = MATERIAL_TYPE::LIFE;
-	pInfo->MaxHP = 120;
-	pInfo->HP = 120;
+	pInfo->MaxHP = 12;
+	pInfo->HP = 12;
 	pInfo->AttackPower = 0;
 	pInfo->Speed = 128;
 	pInfo->Direction = Vec2::down();
@@ -97,9 +99,24 @@ void GPlayer::Awake()
 	m_FSM->AddState(L"IDLE", new GPIdleState);
 	m_FSM->AddState(L"ATTACK", new GPAttackState);
 	m_FSM->AddState(L"TOOL", new GPUseToolState);
+	m_FSM->AddState(L"BEATTACKED", new GPBeAttackedState);
 	m_FSM->ChanageState(L"IDLE");
 
 	m_Inventory.reserve(MAX_SLOT);
+
+	// UI
+	GInventory* pInven = new GInventory(m_Inventory);
+	pInven->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pInven, LAYER_TYPE::UI);
+	m_InventoryUI = pInven;
+	m_InventoryUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(224.f, 80.f) - Vec2(8.f,8.f) );
+	m_InventoryUI->SetScale(Vec2( 224.f, 80.f));
+
+	GHeart* pHeart = new GHeart(*pInfo);
+	pHeart->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pHeart, LAYER_TYPE::UI);
+	pHeart->SetPos(Vec2(8.f, 8.f));
+	pHeart->SetScale(32.f, 32.f);
 }
 
 void GPlayer::Begin()
@@ -111,25 +128,6 @@ void GPlayer::Begin()
 void GPlayer::Tick()
 {
 	GCreature::Tick();
-
-	if (m_Inventory.size() > 0)
-	{
-		if (GETKEYDOWN(KEY::A))
-		{
-			m_InvenIndex = m_InvenIndex <= 0 ? 0 : --m_InvenIndex;
-			m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
-		}
-		else if (GETKEYDOWN(KEY::D))
-		{
-			m_InvenIndex = m_Inventory.size() - 1 <= m_InvenIndex ? m_Inventory.size() - 1 : ++m_InvenIndex;
-			m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
-		}
-	}
-	else
-	{
-		m_InventoryUI->SetCurItme(CREATURE_ID::END);
-	}
-	
 }
 
 
@@ -281,6 +279,14 @@ void GPlayer::SetTool(CREATURE_ID _ToolID)
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
 }
 
+void GPlayer::Dead()
+{
+	GCreature::Dead();
+	ChangeLevel(LEVEL_TYPE::START);
+}
+
+#pragma region Item
+
 void GPlayer::PickUpItem()
 {
 	// 근처 아이템이 없거나 슬롯이 꽉찼다면
@@ -294,7 +300,7 @@ void GPlayer::PickUpItem()
 	vector<pair<CREATURE_ID, int>>::iterator iter = m_Inventory.begin();
 
 	// 인벤토리에서 아이템이 있는지 찾는다.
-	for (iter ; iter != m_Inventory.end(); ++iter)
+	for (iter; iter != m_Inventory.end(); ++iter)
 	{
 		if (iter->first == Item->GetCreatureID())
 			break;
@@ -306,12 +312,10 @@ void GPlayer::PickUpItem()
 	{
 		// 인벤토리에서 아이템을 추가한다.
 		m_Inventory.push_back(make_pair(Item->GetCreatureID(), 1));
-
-		m_InvenIndex = m_Inventory.size() - 1;
-		m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
+		m_InventoryUI->SetCurItem(m_InventoryUI->LastItem());
 	}
 	// 인벤토리에서 아이템을 찾았다.
-	else 
+	else
 	{
 		//아이템 수를 증가시킨다.
 		++((*iter).second);
@@ -319,74 +323,29 @@ void GPlayer::PickUpItem()
 
 	DeleteGameObject((CObj*)(m_NearbyItem));
 	m_NearbyItem = nullptr;
-	
+
 }
 
-void GPlayer::DropItem(int index)
+void GPlayer::DropItem()
 {
-	//index가 현재 인벤토리보다 크다면 반환
-	if (index >= m_Inventory.size())
+	// 아이템이 없다면 반환
+	if (m_Inventory.size() == 0)
 		return;
 
-	// 인벤토리의 아이템의 개수가 1 이상이어야 한다.
-	assert(m_Inventory[index].second > 0);
+	m_InventoryUI->DropItem(this);
 
-	CObj* DropObj = GPrefabManager::GetInst()->CreatePrefab(m_Inventory[index].first);
-
-	if (DropObj != nullptr)
-	{
-		DropObj->SetPos(GetPos().x, GetPos().y);
-		CreateGameObject(DropObj, LAYER_TYPE::ITEM);
-	}
-
-	// 해당 인벤토리의 아이템의 개수가 1이라면 슬롯에서 지운다.
-	if (m_Inventory[index].second == 1)
-	{
-		m_InvenIndex = m_InvenIndex <= 0 ? 0 : --m_InvenIndex;
-		m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
-		m_Inventory.erase(m_Inventory.begin() + index);
-	}
-	else
-		m_Inventory[index].second -= 1;
-		
 }
 
-void GPlayer::UseItem(int index)
+void GPlayer::UseItem()
 {
-	//index가 현재 인벤토리보다 크다면 반환
-	if (index >= m_Inventory.size())
+	// 아이템이 없다면 반환
+	if (m_Inventory.size() == 0)
 		return;
 
-	// 인벤토리의 아이템의 개수가 1 이상이어야 한다.
-	assert(m_Inventory[index].second > 0);
-
-	// 음식일 때
-	if (4200 < (int)m_Inventory[index].first && (int)m_Inventory[index].first < 4300)
-	{
-		// 인벤토리에서 해당 아이템을 
-		m_InventoryUI->UseItem(m_Inventory[index].first,(GCreature*)this);
-
-		// 해당 인벤토리의 아이템의 개수가 1이라면 슬롯에서 지운다.
-		if (m_Inventory[index].second == 1)
-		{
-			m_InvenIndex = m_InvenIndex <= 0 ? 0 : --m_InvenIndex;
-			m_InventoryUI->SetCurItme(m_Inventory[m_InvenIndex].first);
-			m_Inventory.erase(m_Inventory.begin() + index);
-		}
-		else
-			m_Inventory[index].second -= 1;
-	}
-	// 무기일 때
-	else if ((int)CREATURE_ID::WEAPON < (int)m_Inventory[index].first && (int)m_Inventory[index].first < (int)CREATURE_ID::TOOLS)
-	{
-		// 인벤토리에서 해당 아이템을 
-		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);
-	}
-	// 도구일 때
-	else if ((int)CREATURE_ID::TOOLS < (int)m_Inventory[index].first && (int)m_Inventory[index].first < (int)CREATURE_ID::ETC)
-	{
-		// 인벤토리에서 해당 아이템을 
-		m_InventoryUI->UseItem(m_Inventory[index].first, (GCreature*)this);
-	}
-
+	m_InventoryUI->UseItem(this);
 }
+
+
+#pragma endregion
+
+
