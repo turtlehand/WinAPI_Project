@@ -23,10 +23,17 @@ GHitBox::~GHitBox()
 void GHitBox::Awake()
 {
 	GCreature::Awake();
-	DefaultStatsInfo* pStat = new DefaultStatsInfo;
-	pStat->IsDead = true;
 
-	SetStatInfo(pStat);
+	DefaultStatsInfo* pStat = GetStatInfo();
+	if (pStat == nullptr)
+	{
+		pStat = new DefaultStatsInfo;
+		pStat->IsDead = true;
+		SetStatInfo(pStat);
+	}
+	
+
+	
 
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();

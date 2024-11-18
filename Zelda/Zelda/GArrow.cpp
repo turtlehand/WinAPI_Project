@@ -37,7 +37,7 @@ void GArrow::Awake()
 void GArrow::Begin()
 {
 	GHitBox::Begin();
-	DeleteGameObject(this, 5.f);
+	//DeleteGameObject(this, 5.f);
 }
 
 void GArrow::Tick()
@@ -83,6 +83,8 @@ void GArrow::OnTriggerEnter(GCollider* _Collider)
 	{
 		// 대상이 크리쳐인지 확인
 		GCreature* Creature = dynamic_cast<GCreature*>(_Collider->GetOwner());
+		if (Creature == nullptr)
+			return;
 
 		// 대상이 나무, 생명체라면 즉시 불을 붙인다.
 		if (Creature->GetStatInfo()->Material == MATERIAL_TYPE::WOOD || Creature->GetStatInfo()->Material == MATERIAL_TYPE::LIFE)

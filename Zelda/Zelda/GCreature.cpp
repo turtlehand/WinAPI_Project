@@ -26,6 +26,7 @@ GCreature::GCreature(CREATURE_ID _CreatrueID) :
 GCreature::~GCreature()
 {
 	delete m_StatInfo;
+	m_StatInfo = nullptr;
 }
 
 void GCreature::Awake()

@@ -8,7 +8,6 @@ CLevel::CLevel()
 
 CLevel::~CLevel()
 {
-	this;
 	for (size_t i = 0; i < (int)LAYER_TYPE::END; ++i)
 	{
 		Delete_Vector(m_vecObjects[i]);

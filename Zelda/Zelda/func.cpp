@@ -37,7 +37,7 @@ void CreateChildGameObject(CObj* _ParentObject, CObj* _NewObject, LAYER_TYPE _La
 	Task task = {0.f, TASK_TYPE::CREATE_CHILDE_OBJECT,(DWORD_PTR)_ParentObject, (DWORD_PTR)_NewObject, (DWORD_PTR)_Layer };
 	TaskManager::GetInst()->AddTask(task);
 
-	_ParentObject->AddChild(_NewObject);
+	//_ParentObject->AddChild(_NewObject);
 	_NewObject->Awake();
 }
 
@@ -45,8 +45,6 @@ void DeleteGameObject(CObj* _DestroyObject, float _Time)
  {
 	Task task = { _Time, TASK_TYPE::DELETE_OBJECT,(DWORD_PTR)_DestroyObject};
 	TaskManager::GetInst()->AddTask(task);
-
-
 }
 
 void ChangeLevel(LEVEL_TYPE _Level)

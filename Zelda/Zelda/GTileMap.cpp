@@ -494,6 +494,9 @@ void GTileMap::FinalTick()
 	if (!DeBugRenderManager::GetInst()->GetShow())
 		return;
 
+	if (CLevelMgr::GetInst()->GetCurrentLevelType() != LEVEL_TYPE::EDITOR)
+		return;
+
 	Vec2 OwnerPos = GetOwner()->GetPos();
 	
 	for (int i = 0; i < m_Row + 1; ++i)
@@ -572,7 +575,7 @@ void GTileMap::Render()
 				GSprite* TitleSprite = GPrefabManager::GetInst()->FindPrefab(CreatureID)->GetTitleSprite();
 				StretchBlt(dc,
 					(int)OwnerRenderPos.x + Col * TILE_SIZE * m_Scale.x, (int)OwnerRenderPos.y - (Row * TILE_SIZE + TILE_SIZE) * m_Scale.y,
-					TILE_SIZE * m_Scale.x, TILE_SIZE * m_Scale.y,
+					TILE_SIZE * m_Scale.x / 2, TILE_SIZE * m_Scale.y / 2,
 					TitleSprite->GetAtlas()->GetDC(), TitleSprite->GetLeftTop().x, TitleSprite->GetLeftTop().y,
 					TitleSprite->GetSlice().x, TitleSprite->GetSlice().y, SRCCOPY);
 			}

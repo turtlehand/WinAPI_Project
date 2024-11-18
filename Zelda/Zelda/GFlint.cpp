@@ -11,7 +11,9 @@
 
 GFlint::GFlint() :
 	GItem(CREATURE_ID::Flint),
-	m_SpriteRenderer(nullptr)
+	m_SpriteRenderer(nullptr),
+	m_DeadTimer(0.f),
+	m_TimerOn(false)
 {
 	SetName(L"Flint");
 	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"FLINT", L"Sprite\\Item_16\\FLINT.sprite"));
@@ -27,7 +29,8 @@ void GFlint::InteractionEffect_Attack(GHitBox* _HitBox)
 		_HitBox->GetMaterialType() == MATERIAL_TYPE::METAL)
 	{
 		InstantIgnite();
-		DeleteGameObject(this, 0.5f);
+		m_DeadTimer = 0.5f;
+		m_TimerOn = true;
 	}
 }
 
@@ -54,6 +57,16 @@ void GFlint::Awake()
 	GetHitBox()->SetScale(Vec2(32.f, 32.f));
 	GetHitBox()->SetTrigger(true);
 
+}
+
+void GFlint::Tick()
+{
+	if (m_TimerOn)
+	{
+		m_DeadTimer -= DT;
+		if (m_DeadTimer < 0.f)
+			DeleteGameObject(this);
+	}
 }
 
 void GFlint::Render()

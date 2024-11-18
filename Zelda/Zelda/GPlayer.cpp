@@ -335,7 +335,6 @@ void GPlayer::DropItem(int index)
 
 	if (DropObj != nullptr)
 	{
-		DropObj->Awake();
 		DropObj->SetPos(GetPos().x, GetPos().y);
 		CreateGameObject(DropObj, LAYER_TYPE::ITEM);
 	}

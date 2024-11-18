@@ -57,9 +57,9 @@ void GLevel_Start::Begin()
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_Creature.tm";
+	pMapPath += L"TileMap\\bug_Test.tm";
 	pMap->SetName(L"Map");
-	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 5, TILE_SIZE * 4 * 5));
+	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 6, TILE_SIZE * 4 * 5));
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
 	pMap->SetActive(true);
@@ -95,6 +95,12 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
+}
+
+void GLevel_Start::End()
+{
+	CLevel::End();
+	GCamera::GetInst()->SetTarget(nullptr);
 }
 
 void GLevel_Start::Tick()
