@@ -6,11 +6,13 @@
 #include "GPlayer.h"
 #include "GHitBox.h"
 #include "GBoxCollider.h"
+#include "GSound.h"
 
 #include "GFlipBookPlayer.h"
 #include "CKeyMgr.h"
 
 GPAttackState::GPAttackState() :
+	m_SlashSound(nullptr),
 	m_Player(nullptr),
 	m_PlayerInfo(nullptr),
 	m_AttackBox(nullptr),
@@ -22,8 +24,11 @@ GPAttackState::~GPAttackState()
 {
 }
 
-void GPAttackState::Begin()
+void GPAttackState::Awake()
 {
+	m_SlashSound = GAssetManager::GetInst()->LoadSound(L"Sword_Slash", L"Sound\\Sound_Effects\\LOZ_Sword_Slash.wav");
+	m_SlashSound->SetVolume(100.f);
+
 	if (m_Player == nullptr)
 	{
 		m_Player = dynamic_cast<GPlayer*>(GetOwnerObj());
@@ -44,6 +49,8 @@ void GPAttackState::Begin()
 
 void GPAttackState::Enter()
  {
+	m_SlashSound->Play();
+
 	m_PrevAnim = (PLAYER_ANIM_STATE)m_Player->m_FlipBookPlayer->GetCurIndex();
 	m_AttackBox->SetActive(true);
 

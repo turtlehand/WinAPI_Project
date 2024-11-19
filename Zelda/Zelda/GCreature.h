@@ -66,6 +66,7 @@ enum class CREATURE_ID
 	HitBox,
 	// º®
 	Wall,
+	Water,
 
 	END,
 };

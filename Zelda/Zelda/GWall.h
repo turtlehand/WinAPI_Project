@@ -1,6 +1,7 @@
 #pragma once
 #include "CObj.h"
 
+enum class CREATURE_ID;
 class SpriteRenderer;
 
 class GWall : public CObj
@@ -11,7 +12,7 @@ public:
 	virtual void Render() override ;
 
 public:
-	GWall();
+	GWall(CREATURE_ID _CreatureID);
 	virtual ~GWall() override;
 };
 

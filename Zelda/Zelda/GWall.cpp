@@ -9,6 +9,8 @@
 #include "CLevel.h"
 #include "CLevelMgr.h"
 
+#include "GCreature.h"
+
 void GWall::Awake()
 {
 	GBoxCollider* Collider = AddComponent<GBoxCollider>();
@@ -31,10 +33,18 @@ void GWall::Render()
 	}
 }
 
-GWall::GWall()
+GWall::GWall(CREATURE_ID _CreatureID)
 {
-	SetName(L"Wall");
-	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"WALL", L"Sprite\\Object_16\\WALL.sprite"));
+	if (_CreatureID == CREATURE_ID::Wall)
+	{
+		SetName(L"Wall");
+		SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"WALL", L"Sprite\\Object_16\\WALL.sprite"));
+	}
+	else if(_CreatureID == CREATURE_ID::Water)
+	{
+		SetName(L"Water");
+		SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"WATER", L"Sprite\\Object_16\\WATER.sprite"));
+	}
 }
 
 GWall::~GWall()

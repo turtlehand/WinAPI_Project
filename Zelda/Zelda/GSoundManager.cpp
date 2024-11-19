@@ -39,3 +39,4 @@ void GSoundManager::RegisterToBGM(GSound* _pSound)
 		m_pBGM->Stop(true);
 	m_pBGM = _pSound;
 }
+

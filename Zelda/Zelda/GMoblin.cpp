@@ -14,6 +14,7 @@
 #include "GMIdleState.h"
 #include "GMChaseState.h"
 #include "GMBeAttackedState.h"
+#include "GMDieState.h"
 
 GMoblin::GMoblin() :
 	GMonster(CREATURE_ID::Moblin)
@@ -58,17 +59,19 @@ void GMoblin::Awake()
 	GetAttackBox()->GetComponent<GBoxCollider>()->SetScale(Vec2(64.f, 64.f));
 	GetAttackBox()->SetAttackType(ATTACK_TYPE::STRIKE);
 	GetAttackBox()->SetMaterialType(MATERIAL_TYPE::LIFE);
-	GetAttackBox()->SetDamage(1);
+	GetAttackBox()->SetDamage(pMInfo->AttackPower);
 
 	GetFSM()->AddState(L"IDLE", new GMIdleState);
 	GetFSM()->AddState(L"CHASE", new GMChaseState);
 	GetFSM()->AddState(L"BEATTACKED", new GMBeAttackedState);
+	GetFSM()->AddState(L"DIE", new GMDieState);
 	GetFSM()->ChanageState(L"IDLE");
 }
 
 void GMoblin::Tick()
 {
 	GCreature::Tick();
+
 }
 
 void GMoblin::Render()

@@ -16,7 +16,7 @@ GMChaseState::~GMChaseState()
 
 }
 
-void GMChaseState::Begin()
+void GMChaseState::Awake()
 {
 	m_Monster = dynamic_cast<GMonster*>(GetOwnerObj());
 	assert(m_Monster != nullptr);

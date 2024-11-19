@@ -5,6 +5,7 @@ class GFire :
 {
 public:
     virtual void Awake() override;
+    virtual void Begin() override;
 
 public:
     GFire();

@@ -101,7 +101,7 @@ bool GSound::LoadWaveSound(const wstring& _strPath)
 	mmioClose(hFile, 0);
 
 	// 기본 볼륨 50으로 설정
-	SetVolume(50.f);
+	SetVolume(100.f);
 
 	return true;
 }

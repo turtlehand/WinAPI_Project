@@ -7,6 +7,7 @@
 #include "GHitBox.h"
 #include "GBoxCollider.h"
 #include "GArrow.h"
+#include "GSound.h"
 
 #include "GFlipBookPlayer.h"
 #include "GSpriteRenderer.h"
@@ -16,6 +17,7 @@ GPUseToolState::GPUseToolState() :
 	m_Player(nullptr),
 	m_PlayerInfo(nullptr),
 	m_AttackBox(nullptr),
+	m_ShotSound(nullptr),
 	m_PrevAnim(PLAYER_ANIM_STATE::NONE)
 {
 }
@@ -24,7 +26,7 @@ GPUseToolState::~GPUseToolState()
 {
 }
 
-void GPUseToolState::Begin()
+void GPUseToolState::Awake()
 {
 	if (m_Player == nullptr)
 	{
@@ -42,29 +44,33 @@ void GPUseToolState::Begin()
 		m_AttackBox = m_Player->m_AttackBox;
 	}
 
+	m_ShotSound = GAssetManager::GetInst()->LoadSound(L"Shot", L"Sound\\Sound_Effects\\LOZ_Arrow_Boomerang.wav");
+	m_ShotSound->SetVolume(100.f);
+
 }
 
 void GPUseToolState::Enter()
 {
+	
 	m_PrevAnim = (PLAYER_ANIM_STATE)m_Player->m_FlipBookPlayer->GetCurIndex();
 
 
 	if (m_PlayerInfo->Direction == Vec2::up())
 	{
-		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_UP, 30.f, false);
+		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_UP, 4.f, false);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::down())
 	{
-		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_DOWN, 30.f, false);
+		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_DOWN, 4.f, false);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::left())
 	{
-		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_RIGHT, 30.f, false);
+		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_RIGHT, 4.f, false);
 		m_Player->m_FlipBookPlayer->SetXFlip(true);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::right())
 	{
-		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_RIGHT, 30.f, false);
+		m_Player->m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::ATTACK_RIGHT, 4.f, false);
 		m_Player->m_FlipBookPlayer->SetXFlip(false);
 	}
 
@@ -90,6 +96,8 @@ void GPUseToolState::Exit()
 
 void GPUseToolState::Bow()
 {
+	m_ShotSound->Play();
+
 	GArrow* pArrow = new GArrow();
 	CreateGameObject(pArrow, LAYER_TYPE::PLAYER_OBJECT);
 	pArrow->SetDamage(m_PlayerInfo->AttackPower);

@@ -14,7 +14,7 @@ GPIdleState::~GPIdleState()
 {
 }
 
-void GPIdleState::Begin()
+void GPIdleState::Awake()
 {
 	m_Player = dynamic_cast<GPlayer*>(GetOwnerObj());
 	assert(m_Player != nullptr);
@@ -48,7 +48,7 @@ void GPIdleState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::X))
 	{
-		m_Player->DropItem();
+		m_Player->DropInvenItem();
 	}
 }
 

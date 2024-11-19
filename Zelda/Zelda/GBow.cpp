@@ -2,6 +2,7 @@
 #include "GBow.h"
 
 #include "GAssetManager.h"
+#include "GSound.h"
 
 #include "GSpriteRenderer.h"
 #include "GBoxCollider.h"
@@ -58,6 +59,7 @@ void GBow::UseItem(GCreature* _User)
 		GPlayer* pPlayer = dynamic_cast<GPlayer*>(_User);
 		assert(pPlayer != nullptr);
 		pPlayer->SetTool(GetCreatureID());
+		GAssetManager::GetInst()->LoadSound(L"Equip", L"Sound\\Sound_Effects\\LOZ_Get_Rupee.wav")->Play();
 	}
 	/*
 	else if (_User->GetLayerType() == LAYER_TYPE::MONSTER)

@@ -7,6 +7,7 @@
 #include "GSpriteRenderer.h"
 
 #include "GHitBox.h"
+#include "GSound.h"
 
 GRoastFruit::GRoastFruit() :
 	GItem(CREATURE_ID::Roast_Fruit),
@@ -59,10 +60,6 @@ void GRoastFruit::OnTriggerEnter(GCollider* _Collider)
 
 void GRoastFruit::UseItem(GCreature* _User)
 {
-	_User->GetStatInfo()->HP += 12;
-}
-
-void GRoastFruit::DropItem()
-{
-
+	_User->GetStatInfo()->HP = _User->GetStatInfo()->HP + 12 > _User->GetStatInfo()->MaxHP ? _User->GetStatInfo()->MaxHP : _User->GetStatInfo()->HP + 12;
+	GAssetManager::GetInst()->LoadSound(L"Heart", L"Sound\\Sound_Effects\\LOZ_Get_Heart.wav")->Play();
 }

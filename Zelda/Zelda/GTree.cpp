@@ -8,6 +8,7 @@
 #include "GLog.h"
 
 #include "GAssetManager.h"
+#include "GPrefabManager.h"
 
 GTree::GTree() :
 	GCreature(CREATURE_ID::Tree),
@@ -23,9 +24,19 @@ GTree::~GTree()
 
 void GTree::DropItem()
 {
-	CObj* DropLog = new GLog;
-	DropLog->SetPos(GetGlobalPos());
-	CreateGameObject(DropLog, LAYER_TYPE::OBJECT);
+
+	CObj* Log = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Log);
+	if (GetParent() != nullptr)
+	{
+
+		CreateChildGameObject(GetParent(), Log, LAYER_TYPE::OBJECT);
+		Log->SetPos(GetPos());
+	}
+	else
+	{
+		CreateGameObject(Log, LAYER_TYPE::OBJECT);
+		Log->SetPos(GetPos());
+	}
 }
 
 void GTree::Awake()

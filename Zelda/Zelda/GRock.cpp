@@ -65,16 +65,16 @@ void GRock::DropItem()
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(0, 5);
+	std::uniform_int_distribution<int> dist(0, 2);
 
 	int RandomIndex = dist(gen);
 
 	if (RandomIndex == 0)
 	{
 		CObj* Flint = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Flint);
-
 		if (GetParent() != nullptr)
 		{
+			
 			CreateChildGameObject(GetParent(), Flint, LAYER_TYPE::ITEM);
 			Flint->SetPos(GetPos());
 		}

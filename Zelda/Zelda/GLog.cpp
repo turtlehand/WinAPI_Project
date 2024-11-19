@@ -8,6 +8,7 @@
 #include "GHitBox.h"
 
 #include "GAssetManager.h"
+#include "GPrefabManager.h"
 
 GLog::GLog() :
 	GCreature(CREATURE_ID::Log),
@@ -20,11 +21,6 @@ GLog::GLog() :
 
 GLog::~GLog()
 {
-}
-
-void GLog::DropItem()
-{
-
 }
 
 void GLog::Awake()
@@ -65,4 +61,31 @@ void GLog::Tick()
 void GLog::Render()
 {
 	m_Sprite->Render();
+}
+
+void GLog::DropItem()
+{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(0, 3);
+
+	int RandomIndex = dist(gen);
+
+	if (RandomIndex == 0)
+	{
+		CObj* FireWood = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Fire_Wood);
+		if (GetParent() != nullptr)
+		{
+
+			CreateChildGameObject(GetParent(), FireWood, LAYER_TYPE::ITEM);
+			FireWood->SetPos(GetPos());
+		}
+		else
+		{
+			CreateGameObject(FireWood, LAYER_TYPE::ITEM);
+			FireWood->SetPos(GetPos());
+		}
+	}
+
+
 }

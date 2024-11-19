@@ -10,6 +10,7 @@
 #include "GTexture.h"
 #include "GFlipBook.h"
 #include "GSprite.h"
+#include "GSound.h"
 
 #include "GBoxCollider.h"
 #include "GCircleCollider.h"
@@ -23,6 +24,8 @@
 #include "GPAttackState.h"
 #include "GPUseToolState.h"
 #include "GPBeAttackedState.h"
+#include "GPPickUpState.h"
+#include "GPDieState.h"
 
 #include "GHeart.h"
 #include "GInventory.h"
@@ -100,6 +103,8 @@ void GPlayer::Awake()
 	m_FSM->AddState(L"ATTACK", new GPAttackState);
 	m_FSM->AddState(L"TOOL", new GPUseToolState);
 	m_FSM->AddState(L"BEATTACKED", new GPBeAttackedState);
+	m_FSM->AddState(L"PICKUP", new GPPickUpState);
+	m_FSM->AddState(L"DIE", new GPDieState);
 	m_FSM->ChanageState(L"IDLE");
 
 	m_Inventory.reserve(MAX_SLOT);
@@ -172,6 +177,7 @@ void GPlayer::CreateAnimator()
 {
 	m_FlipBookPlayer->SetName(L"Player_FlipBookPlayer");
 	//m_FlipBookPlayer->SetScale(Vec2(4.f, 4.f));
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_DIE", L"FlipBook\\Link_16\\LINK_DIE.flip"));
 
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_UP", L"FlipBook\\Link_16\\LINK_UP.flip"));
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_DOWN", L"FlipBook\\Link_16\\LINK_DOWN.flip"));
@@ -181,6 +187,7 @@ void GPlayer::CreateAnimator()
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_DOWN", L"FlipBook\\Link_16\\Attack\\LINK_DOWN_ATTACK.flip"));
 	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_ATTACK_RIGHT", L"FlipBook\\Link_16\\Attack\\LINK_RIGHT_ATTACK.flip"));
 
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"LINK_PICK_UP", L"FlipBook\\Link_16\\LINK_PICK_UP.flip"));
 
 	m_FlipBookPlayer->SetPlay((int)PLAYER_ANIM_STATE::DOWN, 5, true);
 
@@ -274,15 +281,22 @@ void GPlayer::SetTool(CREATURE_ID _ToolID)
 	m_WeaponEquip = CREATURE_ID::END;
 	m_ToolEquip = _ToolID;
 
-	GetPlayerStatInfo()->AttackPower = 4;
+	GetPlayerStatInfo()->AttackPower = 1;
 
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
 }
 
 void GPlayer::Dead()
 {
-	GCreature::Dead();
-	ChangeLevel(LEVEL_TYPE::START);
+	if (GetStatInfo()->IsDead)
+		return;
+
+	DropItem();
+	GetStatInfo()->IsDead = true;
+	//DeleteGameObject(this);
+
+	m_FSM->ChanageState(L"DIE");
+	m_RigidBody->SetVelocity(Vec2(0.f, 0.f));
 }
 
 #pragma region Item
@@ -313,10 +327,12 @@ void GPlayer::PickUpItem()
 		// 인벤토리에서 아이템을 추가한다.
 		m_Inventory.push_back(make_pair(Item->GetCreatureID(), 1));
 		m_InventoryUI->SetCurItem(m_InventoryUI->LastItem());
+		m_FSM->ChanageState(L"PICKUP");
 	}
 	// 인벤토리에서 아이템을 찾았다.
 	else
 	{
+		GAssetManager::GetInst()->LoadSound(L"Pick_Up", L"Sound\\Sound_Effects\\LOZ_Get_Item.wav")->Play();
 		//아이템 수를 증가시킨다.
 		++((*iter).second);
 	}
@@ -326,13 +342,16 @@ void GPlayer::PickUpItem()
 
 }
 
-void GPlayer::DropItem()
+void GPlayer::DropInvenItem()
 {
 	// 아이템이 없다면 반환
 	if (m_Inventory.size() == 0)
 		return;
 
 	m_InventoryUI->DropItem(this);
+	GSound* DropSound = GAssetManager::GetInst()->LoadSound(L"Drop", L"Sound\\Sound_Effects\\LOZ_Bomb_Drop.wav");
+	DropSound->SetVolume(100.f);
+	DropSound->Play();
 
 }
 

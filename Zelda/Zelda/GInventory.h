@@ -28,6 +28,7 @@ public:
 	void DropItem(GCreature* _User);
 	void UseItem(GCreature* _User);
 	
+	GSprite* GetCurItemSprite();
 
 public:
 	virtual void Awake() override;

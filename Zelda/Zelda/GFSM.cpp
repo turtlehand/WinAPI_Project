@@ -15,7 +15,7 @@ void GFSM::AddState(const wstring& _Key, GState* _State)
 	m_mapState.insert(make_pair(_Key, _State));
 	_State->m_Owner = this;
 	_State->SetName(_Key);
-	_State->Begin();
+	_State->Awake();
 }
 
 GState* GFSM::FindState(const wstring& _Key)

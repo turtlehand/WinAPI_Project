@@ -9,7 +9,7 @@ private:
     GPlayer* m_Player;
 
 public:
-    virtual void Begin() override;
+    virtual void Awake() override;
     virtual void Enter() override;
     virtual void FinalTick() override;
     virtual void Exit() override;

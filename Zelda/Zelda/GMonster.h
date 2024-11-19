@@ -14,6 +14,7 @@ class GMonster :
 	friend class GMIdleState;
 	friend class GMChaseState;
 	friend class GMBeAttackedState;
+	friend class GMDieState;
 
 private:
 	CObj* m_Target;
@@ -53,6 +54,7 @@ public:
 
 enum class MOBLIN_ANIM_STATE
 {
+	DIE,
 	UP,
 	DOWN,
 	RIGHT,

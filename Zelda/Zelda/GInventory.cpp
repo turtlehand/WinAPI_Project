@@ -91,6 +91,11 @@ void GInventory::UseItem(GCreature* _User)
 	}
 }
 
+GSprite* GInventory::GetCurItemSprite()
+{
+	return m_ItemSlot[1]->GetItemSprite();
+}
+
 void GInventory::SetCurItem(int _Index)
 {
 	// -1을 가르키면 저장한다.

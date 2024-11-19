@@ -21,7 +21,7 @@ GMIdleState::~GMIdleState()
 {
 }
 
-void GMIdleState::Begin()
+void GMIdleState::Awake()
 {
 	m_Monster = dynamic_cast<GMonster*>(GetOwnerObj());
 	assert(m_Monster != nullptr);

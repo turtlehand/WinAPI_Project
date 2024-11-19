@@ -296,78 +296,26 @@ void GTileMap::Optimize()
 	{
 		for (int Col = 0; Col < m_Col; ++Col)
 		{
-			if (DArray[Row * m_Col + Col] != 0 || m_vecTile[Row * m_Col + Col].second != CREATURE_ID::Wall)
+			if (DArray[Row * m_Col + Col] != 0)
 				continue;
 
-			Vec2 LeftDown = Vec2(Col, Row);
-			Vec2 RightTop = Vec2(Col, Row);
-
-			while (true)
+			if (m_vecTile[Row * m_Col + Col].second == CREATURE_ID::Wall)
 			{
-				int rt = (RightTop.y + 1) * m_Col + RightTop.x + 1;
-				int r = RightTop.y * m_Col + RightTop.x + 1;
-				int t = (RightTop.y + 1) * m_Col + RightTop.x;
+				Vec2 LeftDown = Vec2(Col, Row);
+				Vec2 RightTop = Vec2(Col, Row);
 
-				// 오른쪽 위 벽이 존재 한다면 
-				if (RightTop.x + 1 < m_Col && RightTop.y + 1 < m_Row && m_vecTile[rt].second == CREATURE_ID::Wall && DArray[rt] == 0)
+				while (true)
 				{
-					// 오른쪽, 위 벽 모두 확인
-					// 오른쪽 벽 모두 확인
-					bool ROK = true;
-					// 오른쪽 벽에 아래를 모두 존재하는 지 확인한다.
-					for (int up = LeftDown.y; up < RightTop.y + 1; ++up)
-					{
-						// 오른쪽이 벽이 아니면 빠져나간다.
-						int test = RightTop.x + 1 + up * m_Col;
-						if (m_vecTile[test].second != CREATURE_ID::Wall)
-						{
-							ROK = false;
-							break;
-						}
-					}
+					int rt = (RightTop.y + 1) * m_Col + RightTop.x + 1;
+					int r = RightTop.y * m_Col + RightTop.x + 1;
+					int t = (RightTop.y + 1) * m_Col + RightTop.x;
 
-					bool TOK = true;
-
-					// 위쪽 벽에 아래를 모두 존재하는 지 확인한다.
-					for (int right = LeftDown.x; right < RightTop.x + 1; ++right)
+					// 오른쪽 위 벽이 존재 한다면 
+					if (RightTop.x + 1 < m_Col && RightTop.y + 1 < m_Row && m_vecTile[rt].second == CREATURE_ID::Wall && DArray[rt] == 0)
 					{
-						// 위쪽 벽이 아니면 빠져나간다.
-						int test = right  + (RightTop.y + 1) * m_Col;
-						if (m_vecTile[test].second != CREATURE_ID::Wall)
-						{
-							TOK = false;
-							break;
-						}
-					}
-
-
-					if (TOK && ROK)
-					{
-						//오른쪽 위로 갈 수 있다.
-						++RightTop.x;
-						++RightTop.y;
-					}
-					else if (TOK)
-					{
-						++RightTop.y;
-					}
-					else if (ROK)
-					{
-						++RightTop.x;;
-					}
-					else
-					{
-						break;
-					}
-				
-				}
-				else
-				{
-					// 오른쪽 벽이 존재한다면 
-					if (RightTop.x + 1 < m_Col && m_vecTile[r].second == CREATURE_ID::Wall && DArray[r] == 0)
-					{
+						// 오른쪽, 위 벽 모두 확인
 						// 오른쪽 벽 모두 확인
-						bool OK = true;
+						bool ROK = true;
 						// 오른쪽 벽에 아래를 모두 존재하는 지 확인한다.
 						for (int up = LeftDown.y; up < RightTop.y + 1; ++up)
 						{
@@ -375,22 +323,13 @@ void GTileMap::Optimize()
 							int test = RightTop.x + 1 + up * m_Col;
 							if (m_vecTile[test].second != CREATURE_ID::Wall)
 							{
-								OK = false;
+								ROK = false;
 								break;
 							}
 						}
 
-						// 모두 벽이라면 1 RightTop을 1 증가시킨다.
-						if (OK)
-							++RightTop.x;
-						else
-							break;
-					}
-					// 위 벽이 존재 한다면
-					else if (RightTop.y + 1 < m_Row && m_vecTile[t].second == CREATURE_ID::Wall && DArray[t] == 0)
-					{
-						// 위 벽 모두 확인
-						bool OK = true;
+						bool TOK = true;
+
 						// 위쪽 벽에 아래를 모두 존재하는 지 확인한다.
 						for (int right = LeftDown.x; right < RightTop.x + 1; ++right)
 						{
@@ -398,40 +337,236 @@ void GTileMap::Optimize()
 							int test = right + (RightTop.y + 1) * m_Col;
 							if (m_vecTile[test].second != CREATURE_ID::Wall)
 							{
-								OK = false;
+								TOK = false;
 								break;
 							}
 						}
 
-						// 모두 벽이라면 1 RightTop을 1 증가시킨다.
-						if (OK)
+
+						if (TOK && ROK)
+						{
+							//오른쪽 위로 갈 수 있다.
+							++RightTop.x;
 							++RightTop.y;
+						}
+						else if (TOK)
+						{
+							++RightTop.y;
+						}
+						else if (ROK)
+						{
+							++RightTop.x;;
+						}
+						else
+						{
+							break;
+						}
+
+					}
+					else
+					{
+						// 오른쪽 벽이 존재한다면 
+						if (RightTop.x + 1 < m_Col && m_vecTile[r].second == CREATURE_ID::Wall && DArray[r] == 0)
+						{
+							// 오른쪽 벽 모두 확인
+							bool OK = true;
+							// 오른쪽 벽에 아래를 모두 존재하는 지 확인한다.
+							for (int up = LeftDown.y; up < RightTop.y + 1; ++up)
+							{
+								// 오른쪽이 벽이 아니면 빠져나간다.
+								int test = RightTop.x + 1 + up * m_Col;
+								if (m_vecTile[test].second != CREATURE_ID::Wall)
+								{
+									OK = false;
+									break;
+								}
+							}
+
+							// 모두 벽이라면 1 RightTop을 1 증가시킨다.
+							if (OK)
+								++RightTop.x;
+							else
+								break;
+						}
+						// 위 벽이 존재 한다면
+						else if (RightTop.y + 1 < m_Row && m_vecTile[t].second == CREATURE_ID::Wall && DArray[t] == 0)
+						{
+							// 위 벽 모두 확인
+							bool OK = true;
+							// 위쪽 벽에 아래를 모두 존재하는 지 확인한다.
+							for (int right = LeftDown.x; right < RightTop.x + 1; ++right)
+							{
+								// 위쪽 벽이 아니면 빠져나간다.
+								int test = right + (RightTop.y + 1) * m_Col;
+								if (m_vecTile[test].second != CREATURE_ID::Wall)
+								{
+									OK = false;
+									break;
+								}
+							}
+
+							// 모두 벽이라면 1 RightTop을 1 증가시킨다.
+							if (OK)
+								++RightTop.y;
+							else
+								break;
+						}
 						else
 							break;
 					}
-					else
-						break;
+
 				}
-				
-			}
 
-			CObj* pWall = GPrefabManager::GetInst()->GetInst()->CreatePrefab(CREATURE_ID::Wall);
-			CreateChildGameObject(GetOwner(), pWall, LAYER_TYPE::DEFAULT);
-			Vec2 Scale = (RightTop - LeftDown) + Vec2(1.f, 1.f);
-			Vec2 Pos = LeftDown + Scale / 2;
-			pWall->SetPos(Pos * 64.f);
-			pWall->GetComponent<GBoxCollider>()->SetScale(Scale * 64);
+				CObj* pWall = GPrefabManager::GetInst()->GetInst()->CreatePrefab(CREATURE_ID::Wall);
+				CreateChildGameObject(GetOwner(), pWall, LAYER_TYPE::WALL);
+				Vec2 Scale = (RightTop - LeftDown) + Vec2(1.f, 1.f);
+				Vec2 Pos = LeftDown + Scale / 2;
+				pWall->SetPos(Pos * 64.f);
+				pWall->GetComponent<GBoxCollider>()->SetScale(Scale * 64);
 
-			for (int col = LeftDown.x; col < RightTop.x + 1; ++col)
-			{
-				for (int row = LeftDown.y; row < RightTop.y + 1; ++row)
+				for (int col = LeftDown.x; col < RightTop.x + 1; ++col)
 				{
-					DArray[row * m_Col + col] = num;
+					for (int row = LeftDown.y; row < RightTop.y + 1; ++row)
+					{
+						DArray[row * m_Col + col] = num;
+					}
 				}
+				++num;
 			}
-			++num;
-			
+			else if (m_vecTile[Row * m_Col + Col].second == CREATURE_ID::Water)
+			{
+				Vec2 LeftDown = Vec2(Col, Row);
+				Vec2 RightTop = Vec2(Col, Row);
 
+				while (true)
+				{
+					int rt = (RightTop.y + 1) * m_Col + RightTop.x + 1;
+					int r = RightTop.y * m_Col + RightTop.x + 1;
+					int t = (RightTop.y + 1) * m_Col + RightTop.x;
+
+					// 오른쪽 위 벽이 존재 한다면 
+					if (RightTop.x + 1 < m_Col && RightTop.y + 1 < m_Row && m_vecTile[rt].second == CREATURE_ID::Water && DArray[rt] == 0)
+					{
+						// 오른쪽, 위 벽 모두 확인
+						// 오른쪽 벽 모두 확인
+						bool ROK = true;
+						// 오른쪽 벽에 아래를 모두 존재하는 지 확인한다.
+						for (int up = LeftDown.y; up < RightTop.y + 1; ++up)
+						{
+							// 오른쪽이 벽이 아니면 빠져나간다.
+							int test = RightTop.x + 1 + up * m_Col;
+							if (m_vecTile[test].second != CREATURE_ID::Water)
+							{
+								ROK = false;
+								break;
+							}
+						}
+
+						bool TOK = true;
+
+						// 위쪽 벽에 아래를 모두 존재하는 지 확인한다.
+						for (int right = LeftDown.x; right < RightTop.x + 1; ++right)
+						{
+							// 위쪽 벽이 아니면 빠져나간다.
+							int test = right + (RightTop.y + 1) * m_Col;
+							if (m_vecTile[test].second != CREATURE_ID::Water)
+							{
+								TOK = false;
+								break;
+							}
+						}
+
+
+						if (TOK && ROK)
+						{
+							//오른쪽 위로 갈 수 있다.
+							++RightTop.x;
+							++RightTop.y;
+						}
+						else if (TOK)
+						{
+							++RightTop.y;
+						}
+						else if (ROK)
+						{
+							++RightTop.x;;
+						}
+						else
+						{
+							break;
+						}
+
+					}
+					else
+					{
+						// 오른쪽 벽이 존재한다면 
+						if (RightTop.x + 1 < m_Col && m_vecTile[r].second == CREATURE_ID::Water && DArray[r] == 0)
+						{
+							// 오른쪽 벽 모두 확인
+							bool OK = true;
+							// 오른쪽 벽에 아래를 모두 존재하는 지 확인한다.
+							for (int up = LeftDown.y; up < RightTop.y + 1; ++up)
+							{
+								// 오른쪽이 벽이 아니면 빠져나간다.
+								int test = RightTop.x + 1 + up * m_Col;
+								if (m_vecTile[test].second != CREATURE_ID::Water)
+								{
+									OK = false;
+									break;
+								}
+							}
+
+							// 모두 벽이라면 1 RightTop을 1 증가시킨다.
+							if (OK)
+								++RightTop.x;
+							else
+								break;
+						}
+						// 위 벽이 존재 한다면
+						else if (RightTop.y + 1 < m_Row && m_vecTile[t].second == CREATURE_ID::Water && DArray[t] == 0)
+						{
+							// 위 벽 모두 확인
+							bool OK = true;
+							// 위쪽 벽에 아래를 모두 존재하는 지 확인한다.
+							for (int right = LeftDown.x; right < RightTop.x + 1; ++right)
+							{
+								// 위쪽 벽이 아니면 빠져나간다.
+								int test = right + (RightTop.y + 1) * m_Col;
+								if (m_vecTile[test].second != CREATURE_ID::Water)
+								{
+									OK = false;
+									break;
+								}
+							}
+
+							// 모두 벽이라면 1 RightTop을 1 증가시킨다.
+							if (OK)
+								++RightTop.y;
+							else
+								break;
+						}
+						else
+							break;
+					}
+
+				}
+
+				CObj* pWall = GPrefabManager::GetInst()->GetInst()->CreatePrefab(CREATURE_ID::Water);
+				CreateChildGameObject(GetOwner(), pWall, LAYER_TYPE::WATER);
+				Vec2 Scale = (RightTop - LeftDown) + Vec2(1.f, 1.f);
+				Vec2 Pos = LeftDown + Scale / 2;
+				pWall->SetPos(Pos * 64.f);
+				pWall->GetComponent<GBoxCollider>()->SetScale(Scale * 64);
+
+				for (int col = LeftDown.x; col < RightTop.x + 1; ++col)
+				{
+					for (int row = LeftDown.y; row < RightTop.y + 1; ++row)
+					{
+						DArray[row * m_Col + col] = num;
+					}
+				}
+				++num;
+			}
 		}
 	}
 
@@ -457,7 +592,7 @@ void GTileMap::CreateCreature()
 			CREATURE_ID CreatureID = m_vecTile[Row * m_Col + Col].second;
 
 			// 해당 타일에 아무것도 삽입하지 않거나 벽이라면 넘어간다.
-			if (CreatureID == CREATURE_ID::NONE || CreatureID == CREATURE_ID::Wall)
+			if (CreatureID == CREATURE_ID::NONE || CreatureID == CREATURE_ID::Wall || CreatureID== CREATURE_ID::Water)
 				continue;
 			
 			LAYER_TYPE LayerType = LAYER_TYPE::END;

@@ -12,6 +12,7 @@
 #include "GFire.h"
 #include "GHitBox.h";
 #include "GFlipBookPlayer.h"
+#include "GSound.h"
 
 GCreature::GCreature(CREATURE_ID _CreatrueID) :
 	m_CreatureID(_CreatrueID),
@@ -195,7 +196,6 @@ void GCreature::CutWood()
 
 void GCreature::BeAttacked(GHitBox* _HitBox)
 {
-	Damaged(_HitBox->GetDamage());
 	KnockBack(_HitBox);
 
 	// 피격 상태로 변경한다.
@@ -204,6 +204,8 @@ void GCreature::BeAttacked(GHitBox* _HitBox)
 		return;
 
 	FSM->ChanageState(L"BEATTACKED");
+
+	Damaged(_HitBox->GetDamage());
 }
 
 void GCreature::Burn()
@@ -278,7 +280,19 @@ void GCreature::KnockBack(GHitBox* _HitBox)
 	}
 	Direction = Direction.Normalize();
 
-	RigidBody->AddForce(Direction * -35000);
+	if (_HitBox->GetAttackType() == ATTACK_TYPE::THRUSHT)
+	{
+		RigidBody->AddForce(Direction * -20000);
+	}
+	else if (_HitBox->GetAttackType() == ATTACK_TYPE::SLASH)
+	{
+		RigidBody->AddForce(Direction * -30000);
+	}
+	else if (_HitBox->GetAttackType() == ATTACK_TYPE::STRIKE)
+	{
+		RigidBody->AddForce(Direction * -40000);
+	}
+	
 }
 
 void GCreature::Ignite()

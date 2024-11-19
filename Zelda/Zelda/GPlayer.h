@@ -61,7 +61,7 @@ public:
 
 private:
 	void PickUpItem();
-	void DropItem();
+	void DropInvenItem();
 	void UseItem();
 
 public:
@@ -71,12 +71,16 @@ public:
 	friend class GPIdleState;
 	friend class GPMoveState;
 	friend class GPAttackState;
+	friend class GPPickUpState;
 	friend class GPUseToolState;
 	friend class GPBeAttackedState;
+	friend class GPDieState;
 };
 
 enum class PLAYER_ANIM_STATE
 {
+	DIE,
+
 	UP,
 	DOWN,
 	RIGHT,
@@ -84,6 +88,8 @@ enum class PLAYER_ANIM_STATE
 	ATTACK_UP,
 	ATTACK_DOWN,
 	ATTACK_RIGHT,
+
+	PICK_UP,
 	NONE
 };
 

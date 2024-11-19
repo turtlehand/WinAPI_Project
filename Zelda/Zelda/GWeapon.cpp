@@ -7,6 +7,7 @@
 #include "GBoxCollider.h"
 #include "GSpriteRenderer.h"
 #include "GAssetManager.h"
+#include "GSound.h"
 
 GWeapon::GWeapon(CREATURE_ID _CreatureID) :
 	GItem(_CreatureID),
@@ -156,6 +157,7 @@ void GWeapon::UseItem(GCreature* _User)
 		GPlayer* pPlayer = dynamic_cast<GPlayer*>(_User);
 		assert(pPlayer != nullptr);
 		pPlayer->SetAttackBox(GetCreatureID());
+		GAssetManager::GetInst()->LoadSound(L"Equip", L"Sound\\Sound_Effects\\LOZ_Get_Rupee.wav")->Play();
 	}
 	/*
 	else if (_User->GetLayerType() == LAYER_TYPE::MONSTER)

@@ -17,7 +17,6 @@ public:
 
 
 	virtual void UseItem(GCreature* _User) override;
-	virtual void DropItem() override;
 
 public:
 	GRoastFruit();

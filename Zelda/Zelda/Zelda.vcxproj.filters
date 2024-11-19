@@ -139,9 +139,6 @@
     <Filter Include="Game\05. Object\03. Arrow">
       <UniqueIdentifier>{533c0575-d88a-4045-9fff-0560fdc1fcc0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\08. GameUI">
-      <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\03. Manager\12. Prefab">
       <UniqueIdentifier>{87fb09cf-35a1-4a5c-96fa-981b9306ca2b}</UniqueIdentifier>
     </Filter>
@@ -195,6 +192,9 @@
     </Filter>
     <Filter Include="Game\06. Component\01. Collider\03. Tile">
       <UniqueIdentifier>{51b9562f-efae-48ba-b37d-2f7c84d51a69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\02. GameUI">
+      <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +254,6 @@
     </ClInclude>
     <ClInclude Include="GMonster.h">
       <Filter>Game\05. Object\01. Creature\2000. Monster</Filter>
-    </ClInclude>
-    <ClInclude Include="GArrow.h">
-      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClInclude>
     <ClInclude Include="TaskManager.h">
       <Filter>Game\03. Manager\04. Task</Filter>
@@ -415,7 +412,7 @@
       <Filter>Game\05. Object\01. Creature\4000. Item\200. Food\202. RoastFruit</Filter>
     </ClInclude>
     <ClInclude Include="GInventory.h">
-      <Filter>Game\05. Object\08. GameUI</Filter>
+      <Filter>Game\05. Object\02. GameUI</Filter>
     </ClInclude>
     <ClInclude Include="GWeapon.h">
       <Filter>Game\05. Object\01. Creature\4000. Item\300. Weapon</Filter>
@@ -439,14 +436,31 @@
       <Filter>Game\03. Manager\12. Prefab</Filter>
     </ClInclude>
     <ClInclude Include="GSlot.h">
-      <Filter>Game\05. Object\08. GameUI</Filter>
+      <Filter>Game\05. Object\02. GameUI</Filter>
     </ClInclude>
-    <ClInclude Include="GHeart.h" />
     <ClInclude Include="GPBeAttackedState.h">
       <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
     <ClInclude Include="GMBeAttackedState.h">
       <Filter>Game\08. State\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="GHeart.h">
+      <Filter>Game\05. Object\02. GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GPPickUpState.h">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GGameImage.h">
+      <Filter>Game\05. Object\02. GameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GArrow.h">
+      <Filter>Game\05. Object\01. Creature\5000. HitBox</Filter>
+    </ClInclude>
+    <ClInclude Include="GMDieState.h">
+      <Filter>Game\08. State\02. Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="GPDieState.h">
+      <Filter>Game\08. State\01. Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -490,9 +504,6 @@
     </ClCompile>
     <ClCompile Include="GMonster.cpp">
       <Filter>Game\05. Object\01. Creature\2000. Monster</Filter>
-    </ClCompile>
-    <ClCompile Include="GArrow.cpp">
-      <Filter>Game\05. Object\03. Arrow</Filter>
     </ClCompile>
     <ClCompile Include="TaskManager.cpp">
       <Filter>Game\03. Manager\04. Task</Filter>
@@ -646,7 +657,7 @@
       <Filter>Game\05. Object\01. Creature\4000. Item\200. Food\202. RoastFruit</Filter>
     </ClCompile>
     <ClCompile Include="GInventory.cpp">
-      <Filter>Game\05. Object\08. GameUI</Filter>
+      <Filter>Game\05. Object\02. GameUI</Filter>
     </ClCompile>
     <ClCompile Include="GWeapon.cpp">
       <Filter>Game\05. Object\01. Creature\4000. Item\300. Weapon</Filter>
@@ -673,14 +684,31 @@
       <Filter>Game\03. Manager\12. Prefab</Filter>
     </ClCompile>
     <ClCompile Include="GSlot.cpp">
-      <Filter>Game\05. Object\08. GameUI</Filter>
+      <Filter>Game\05. Object\02. GameUI</Filter>
     </ClCompile>
-    <ClCompile Include="GHeart.cpp" />
     <ClCompile Include="GPBeAttackedState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
     <ClCompile Include="GMBeAttackedState.cpp">
       <Filter>Game\08. State\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GHeart.cpp">
+      <Filter>Game\05. Object\02. GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GPPickUpState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GGameImage.cpp">
+      <Filter>Game\05. Object\02. GameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GArrow.cpp">
+      <Filter>Game\05. Object\01. Creature\5000. HitBox</Filter>
+    </ClCompile>
+    <ClCompile Include="GMDieState.cpp">
+      <Filter>Game\08. State\02. Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="GPDieState.cpp">
+      <Filter>Game\08. State\01. Player</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

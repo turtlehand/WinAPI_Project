@@ -69,7 +69,8 @@ void GPrefabManager::Init()
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Fire, new GFire));
 
 	// º®
-	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wall, new GWall));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wall, new GWall(CREATURE_ID::Wall)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Water, new GWall(CREATURE_ID::Water)));
 
 
 }
@@ -194,7 +195,14 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 	// º®
 	case CREATURE_ID::Wall:
 	{
-		CreatureObj = new GWall;
+		CreatureObj = new GWall(CREATURE_ID::Wall);
+	}
+	break;
+
+	// ¹°
+	case CREATURE_ID::Water:
+	{
+		CreatureObj = new GWall(CREATURE_ID::Water);
 	}
 	break;
 

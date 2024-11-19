@@ -2,6 +2,7 @@
 #include "GFire.h"
 
 #include "GAssetManager.h"
+#include "GSound.h"
 #include "GBoxCollider.h"
 
 GFire::GFire() :
@@ -22,6 +23,11 @@ void GFire::Awake()
 	GetFlipBookPlayer()->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"FIRE", L"FlipBook\\NPC_16\\FIRE.flip"));
 	GetFlipBookPlayer()->SetPlay(0, 4, true);
 	GetStatInfo()->Material = MATERIAL_TYPE::FIRE;
+}
+
+void GFire::Begin()
+{
+	GAssetManager::GetInst()->LoadSound(L"Fire", L"Sound\\Sound_Effects\\LOZ_Candle.wav")->Play();
 }
 
 

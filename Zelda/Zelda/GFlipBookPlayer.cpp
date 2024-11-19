@@ -176,7 +176,7 @@ void GFlipBookPlayer::Alpha(GTexture*& _Texture)
 	blend.BlendOp = AC_SRC_OVER;
 	blend.BlendFlags = 0;
 	blend.SourceConstantAlpha = Info.Alpha * (m_Alpha / 255);
-	blend.AlphaFormat = 0;
+	blend.AlphaFormat = AC_SRC_ALPHA;
 
 	AlphaBlend(hBackDC
 		, vPos.x - _Texture->GetWidth() * Info.Scale.x / 2  + Sprite->GetOffset().x * Info.Scale.x + (m_XFlip != Info.XFlip ? -Info.Offset.x * Info.Scale.x : Info.Offset.x * Info.Scale.x)

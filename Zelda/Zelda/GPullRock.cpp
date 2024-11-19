@@ -4,6 +4,7 @@
 #include "GBoxCollider.h"
 #include "GRigidBody.h"
 #include "GSpriteRenderer.h"
+#include "GSound.h"
 
 #include "GHitBox.h"
 
@@ -66,3 +67,4 @@ void GPullRock::OnTriggerEnter(GCollider* _Collider)
 	if (HitBox != nullptr)
 		Interaction_Attack(HitBox);
 }
+

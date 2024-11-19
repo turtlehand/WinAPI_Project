@@ -68,7 +68,7 @@ void GHitBox::OnTriggerEnter(GCollider* _Collider)
 			if(Creature->GetCreatureID() != CREATURE_ID::Grass)
     				DeleteGameObject(this);
 		}
-		else if(_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::DEFAULT)
+		else if(_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::WALL)
 			DeleteGameObject(this);
 	}
 

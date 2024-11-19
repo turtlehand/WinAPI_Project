@@ -1,0 +1,33 @@
+[ASSETTYPE]
+3
+
+[SPRITESIZE]
+1
+
+[INDEX]
+0
+
+[KEY]
+LINK_UP_PICK_UP_1
+
+[PATH]
+Sprite\Link_16\LINK_UP_PICK_UP_1.sprite
+
+[RENDERINFO]
+[OFFSET]
+0, 0
+
+[SCALE]
+4, 4
+
+[ALPHA]
+255
+
+[COLORREF]
+7631988
+
+[XFLIP]
+0
+
+[YFLIP]
+0

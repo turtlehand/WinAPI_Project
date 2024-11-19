@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "GMonster.h"
 
+#include "GAssetManager.h"
+#include "GSound.h"
+
 #include "CLevel.h"
 #include "CLevelMgr.h"
 
@@ -29,7 +32,15 @@ GMonster::~GMonster()
 
 void GMonster::Dead()
 {
-	GCreature::Dead();
+	if (GetStatInfo()->IsDead)
+		return;
+
+	DropItem();
+	GetStatInfo()->IsDead = true;
+	//DeleteGameObject(this);
+
+	m_FSM->ChanageState(L"DIE");
+	m_RigidBody->SetVelocity(Vec2(0.f, 0.f));
 }
 
 void GMonster::Awake()
@@ -42,6 +53,7 @@ void GMonster::Awake()
 	AddChild(m_AttackBox);
 
 	m_FlipBookPlayer = AddComponent<GFlipBookPlayer>();
+	m_FlipBookPlayer->AddFlipBook(GAssetManager::GetInst()->LoadFlipBook(L"ENEMY_DIE", L"FlipBook\\Enemy\\ENEMY_DIE.flip"));
 
 	m_RigidBody = AddComponent<GRigidBody>();
 

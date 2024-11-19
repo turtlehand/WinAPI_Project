@@ -101,7 +101,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-19
+-1
 
 [INDEX]
 8
@@ -161,7 +161,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-11
+33
 
 [INDEX]
 13
@@ -221,7 +221,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-12
+-1
 
 [INDEX]
 18

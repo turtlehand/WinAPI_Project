@@ -17,7 +17,7 @@ GPMoveState::~GPMoveState()
 {
 }
 
-void GPMoveState::Begin()
+void GPMoveState::Awake()
 {
 	m_Player = dynamic_cast<GPlayer*>(GetOwnerObj());
 	assert(m_Player != nullptr);
@@ -54,7 +54,7 @@ void GPMoveState::FinalTick()
 	}
 	else if (GETKEYDOWN(KEY::X))
 	{
-		m_Player->DropItem();
+		m_Player->DropInvenItem();
 	}
 
 	// 이동 방향
