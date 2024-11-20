@@ -33,6 +33,9 @@ enum class TASK_TYPE
 {
 	// Param0 : Object Address, Param1 : bool
 	ACTIVE_OBJECT,
+
+	// Param0 : Object Address, Param1 : bool
+	ENABLED_COMPONENT,
 	
 	// Param0 : Object Address, Param1 : Layer Index
 	CREATE_OBJECT,

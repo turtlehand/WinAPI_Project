@@ -413,7 +413,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 34
@@ -425,7 +425,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 35
@@ -437,7 +437,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 36
@@ -449,7 +449,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 37
@@ -461,7 +461,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 38
@@ -473,7 +473,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 39
@@ -485,7 +485,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 40
@@ -497,7 +497,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 41
@@ -713,7 +713,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 59
@@ -725,7 +725,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 60
@@ -737,7 +737,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 61
@@ -749,7 +749,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-5
+-1
 
 [INDEX]
 62
@@ -761,7 +761,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 63
@@ -773,7 +773,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 64
@@ -797,7 +797,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 66
@@ -1025,7 +1025,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 85
@@ -1037,7 +1037,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+5
 
 [INDEX]
 86
@@ -1049,7 +1049,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 87
@@ -1061,7 +1061,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 88
@@ -1073,7 +1073,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 89
@@ -1085,7 +1085,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 90
@@ -1097,7 +1097,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 91
@@ -1337,7 +1337,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 111
@@ -1349,7 +1349,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 112
@@ -1361,7 +1361,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-5
+-1
 
 [INDEX]
 113
@@ -1373,7 +1373,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 114
@@ -1385,7 +1385,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 115
@@ -1397,7 +1397,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 116
@@ -1649,7 +1649,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 137
@@ -1661,7 +1661,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+5
 
 [INDEX]
 138
@@ -1673,7 +1673,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 139
@@ -1685,7 +1685,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 140
@@ -1697,7 +1697,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 141
@@ -1985,7 +1985,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 165
@@ -1997,7 +1997,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 166
@@ -3665,7 +3665,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 305
@@ -3677,7 +3677,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 306
@@ -3689,7 +3689,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 307
@@ -3701,7 +3701,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 308
@@ -3713,7 +3713,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 309
@@ -3725,7 +3725,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 310
@@ -3737,7 +3737,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 311
@@ -3965,7 +3965,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 330
@@ -3977,7 +3977,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 331
@@ -4025,7 +4025,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 335
@@ -4037,7 +4037,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-4
+-1
 
 [INDEX]
 336
@@ -4253,7 +4253,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
--1
+8
 
 [INDEX]
 354
@@ -4349,7 +4349,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
--1
+8
 
 [INDEX]
 362

@@ -14,7 +14,8 @@ CObj::CObj() :
 	m_LayerType(LAYER_TYPE::END),
 	m_PrevActive(true),
 	m_Active(true),
-	m_Dead(false)
+	m_Dead(false),
+	m_TitleSprite(nullptr)
 {
 }
 
@@ -27,7 +28,11 @@ void CObj::FinalTick()
 {
 	for (size_t i = 0; i < m_Component.size(); ++i)
 	{
+		// 컴포넌트의 현재와 이전 모두 비활성화 상태라면 
+		if (!(m_Component[i]->m_PrevEnabled || m_Component[i]->m_Enabled))
+			continue;
 		m_Component[i]->FinalTick();
+		m_Component[i]->m_PrevEnabled = m_Component[i]->m_Enabled;
 	}
 }
 

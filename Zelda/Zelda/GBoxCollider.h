@@ -9,7 +9,8 @@ private:
 
 public:
     void SetScale(Vec2 _Scale) { m_Scale = _Scale; }
-    Vec2 GetScale() const { return m_Scale; }
+
+    virtual Vec2 GetScale() override { return m_Scale; }
 
 public:
     virtual void FinalTick();

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GLevel_Start.h"
 
+#include "GSoundManager.h"
 #include "CollisionManager.h"
 #include "GCamera.h"
 
@@ -35,7 +36,7 @@ void GLevel_Start::Begin()
 	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Dark_World", L"Sound\\BGM\\Dark_World.wav");
 	if (pSound != nullptr)
 	{
-		pSound->SetVolume(50.f);
+		pSound->SetVolume(25.f);
 		pSound->PlayToBGM(true);
 	}
 
@@ -62,10 +63,9 @@ void GLevel_Start::Begin()
 	wstring pMapPath = GPathManager::GetContentPath();
 	pMapPath += L"TileMap\\test_Creature.tm";
 	pMap->SetName(L"Map");
-	pMap->SetPos(pMap->GetPos() - Vec2(TILE_SIZE * 4 * 6, TILE_SIZE * 4 * 5));
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
-	pMap->SetActive(true);
+	pMap->SetPos(pMap->GetPos() - Vec2(32 * 10, 32 * 10));
 	pMap->GetTileMap()->CreateCreature();
 	
 	
@@ -81,8 +81,6 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WATER, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WATER, LAYER_TYPE::MONSTER);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WATER, LAYER_TYPE::PLAYER);
-	
-	
 
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::OBJECT, LAYER_TYPE::ITEM);
@@ -109,6 +107,7 @@ void GLevel_Start::End()
 {
 	CLevel::End();
 	GCamera::GetInst()->SetTarget(nullptr);
+	GSoundManager::GetInst()->RegisterToBGM(nullptr);
 }
 
 void GLevel_Start::Tick()

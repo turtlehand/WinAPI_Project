@@ -3,6 +3,7 @@
 #include "CObj.h"
 #include "CLevelMgr.h"
 #include "CLevel.h"
+#include "GComponent.h"
 
 TaskManager::TaskManager()
 {
@@ -50,6 +51,23 @@ void TaskManager::Tick()
 				// 오브젝트가 비활성화 된 상태에서 활성화 할 때
 				pObject->m_Active = true;
 				pObject->OnEnable();
+			}
+		}
+		break;
+		case TASK_TYPE::ENABLED_COMPONENT:
+		{
+			GComponent* pComponent = (GComponent*)m_Task[i].Param0;
+			bool Enabled = (bool)m_Task[i].Param1;
+
+			if (pComponent->m_Enabled && !Enabled)
+			{
+				// 오브젝트가 활성화 된 상태에서 비활성화 할 때
+				pComponent->m_Enabled = false;
+			}
+			else if (!pComponent->m_Enabled && Enabled)
+			{
+				// 오브젝트가 비활성화 된 상태에서 활성화 할 때
+				pComponent->m_Enabled = true;
 			}
 		}
 		break;

@@ -189,9 +189,6 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 	GBoxCollider* _LeftBox = dynamic_cast<GBoxCollider*>(_LeftCol);
 	GBoxCollider* _RightBox = dynamic_cast<GBoxCollider*>(_RightCol);
 
-	GRigidBody* _LeftRigid = _LeftBox->GetOwner()->GetComponent<GRigidBody>();
-	GRigidBody* _RightRigid = _RightBox->GetOwner()->GetComponent<GRigidBody>();
-
 	assert(_LeftBox != nullptr && _RightBox != nullptr);
 
 	Vec2 LPos = _LeftBox->GetGlobalPos();
@@ -201,7 +198,6 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 	Vec2 RScale = _RightBox->GetScale();
 
 	Vec2 Distance = _RightBox->GetGlobalPos() - _LeftBox->GetGlobalPos();
-
 
 	if (fabs(Distance.x) < (LScale.x + RScale.x ) / 2.f &&
 		fabs(Distance.y) < (LScale.y + RScale.y ) / 2.f)
@@ -219,17 +215,17 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 				// 왼쪽 콜라이더가 왼쪽에 있고 오른쪽 콜라이더가 오른쪽에 있을 때
 				if (LPos.x < RPos.x)
 				{
-					if(_LeftRigid != nullptr)
+					if(_LeftBox->IsRigidBody())
 						_LeftCol->GetOwner()->AddPos(-Pull.x,0);
-					if (_RightRigid != nullptr)
+					if (_RightBox->IsRigidBody())
 						_RightCol->GetOwner()->AddPos(Pull.x,0);
 				}
 				// 왼쪽 콜라이더가 오른쪽에 있고 오른쪽 콜라이더가 왼쪽에 있을 때
 				else if (LPos.x > RPos.x)
 				{
-					if (_LeftRigid != nullptr)
+					if (_LeftBox->IsRigidBody())
 						_LeftCol->GetOwner()->AddPos(Pull.x, 0);
-					if (_RightRigid != nullptr)
+					if (_RightBox->IsRigidBody())
 						_RightCol->GetOwner()->AddPos(-Pull.x, 0);
 				}
 			}
@@ -240,17 +236,17 @@ bool CollisionManager::IsCollision_BoxBtwBox(GCollider* _LeftCol, GCollider* _Ri
 				// 왼쪽 콜라이더가 아래에 있고 오른쪽 콜라이더가 위에 있을 때
 				if (LPos.y < RPos.y)
 				{
-					if (_LeftRigid != nullptr)
+					if (_LeftBox->IsRigidBody())
 						_LeftCol->GetOwner()->AddPos(0, -Pull.y);
-					if (_RightRigid != nullptr)
+					if (_RightBox->IsRigidBody())
 						_RightCol->GetOwner()->AddPos(0, Pull.y);
 				}
 				// 왼쪽 콜라이더가 위에 있고 오른쪽 콜라이더가 아래에 있을 때
 				else if (LPos.y > RPos.y)
 				{
-					if (_LeftRigid != nullptr)
+					if (_LeftBox->IsRigidBody())
 						_LeftCol->GetOwner()->AddPos(0, Pull.y);
-					if (_RightRigid != nullptr)
+					if (_RightBox->IsRigidBody())
 						_RightCol->GetOwner()->AddPos(0, -Pull.y);
 				}
 			}
@@ -353,28 +349,6 @@ bool CollisionManager::IsCollision_CircleBtwCircle(GCollider* _LeftCol, GCollide
 	return false;
 }
 */
-
-void CollisionManager::Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid)
-{
-	if (_LeftRigid != nullptr && _RightRigid != nullptr)
-	{
-		float m1 = _LeftRigid->GetMass();  // 물체 1의 질량
-		float m2 = _RightRigid->GetMass();  // 물체 2의 질량
-		Vec2 u1 = _LeftRigid->GetVelocity();  // 물체 1의 충돌 전 속도
-		Vec2 u2 = _RightRigid->GetVelocity();  // 물체 2의 충돌 전 속도 
-		float e = 1.f; //(_LeftRigid->GetElasticity() + _RightRigid->GetElasticity()) / 2;
-
-		// 충돌 후 속도 공식 사용
-		float v1_x = ((e + 1) * m2 * u2.x + u1.x * (m1 - e * m2)) / (m1 + m2);  //물체 1의 충돌후 x방향 속도
-		float v1_y = ((e + 1) * m2 * u2.y + u1.y * (m1 - e * m2)) / (m1 + m2);  //물체 1의 충돌후 y방향 속도
-		float v2_x = ((e + 1) * m1 * u1.x + u2.x * (m2 - e * m1)) / (m1 + m2);  //물체 2의 충돌후 x방향 속도
-		float v2_y = ((e + 1) * m1 * u1.y + u2.y * (m2 - e * m1)) / (m1 + m2);  //물체 2의 충돌후 y방향 속도
-
-		// 물체 1,2에 새로운 속도 적용
-		_LeftRigid->SetVelocity(Vec2(v1_x, v1_y));
-		_RightRigid->SetVelocity(Vec2(v2_x, v2_y));
-	}
-}
 
 void CollisionManager::Tick()
 {

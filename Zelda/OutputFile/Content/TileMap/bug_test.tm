@@ -161,7 +161,7 @@ OverWorldTile_0
 Tile\OverWorldTile\OverWorldTile_0.tile
 
 [CREATUREID]
-33
+2
 
 [INDEX]
 13

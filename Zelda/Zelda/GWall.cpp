@@ -10,6 +10,8 @@
 #include "CLevelMgr.h"
 
 #include "GCreature.h"
+#include "GBoxCollider.h"
+
 
 void GWall::Awake()
 {
@@ -33,8 +35,33 @@ void GWall::Render()
 	}
 }
 
+void GWall::OnCollisionEnter(GCollider* _Collider)
+{
+	if (m_CreatureID == CREATURE_ID::Water)
+	{
+
+		if (_Collider->GetOwner()->GetLayerType() == LAYER_TYPE::OBJECT)
+		{
+			GCreature* Creature = dynamic_cast<GCreature*>(_Collider->GetOwner());
+
+			if (Creature->GetCreatureID() == CREATURE_ID::Log)
+			{
+				_Collider->GetOwner()->SetPos(GetPos());
+				_Collider->SetEnabled(false);
+				DeleteGameObject(this);
+			}
+			else if (Creature->GetCreatureID() == CREATURE_ID::PullRock)
+			{
+				//DeleteGameObject(this);
+				DeleteGameObject(_Collider->GetOwner());
+			}
+		}
+	}
+}
+
 GWall::GWall(CREATURE_ID _CreatureID)
 {
+	m_CreatureID = _CreatureID;
 	if (_CreatureID == CREATURE_ID::Wall)
 	{
 		SetName(L"Wall");

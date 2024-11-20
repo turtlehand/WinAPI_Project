@@ -39,8 +39,6 @@ private:
 	
 	//bool IsCollision_EdgeBtwEdge(GCollider* _LeftCol, GCollider* _RightCol);
 
-	void Collision(GRigidBody* _LeftRigid, GRigidBody* _RightRigid);
-
 public:
 	void Tick();
 };

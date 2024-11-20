@@ -12,13 +12,23 @@ GCollider::GCollider(COLLIDER_TYPE _Type) :
 	m_ColliderType(_Type),
 	m_Offset(),
 	m_OverlapCount(0),
-	m_Trigger(false)
+	m_Trigger(false),
+	m_IsRigidBody(false)
 {
 }
 
 GCollider::~GCollider()
 {
 	
+}
+
+void GCollider::Awake()
+{
+	GRigidBody* RigidBody = GetOwner()->GetComponent<GRigidBody>();
+	if (RigidBody == nullptr)
+		return;
+
+	m_IsRigidBody = true;
 }
 
 void GCollider::FinalTick()

@@ -8,7 +8,7 @@ private:
 
 public:
     void SetRadius(float _Radius) { m_Radius = _Radius; }
-    float GetRadius() { return m_Radius; };
+    virtual Vec2 GetScale() override { return Vec2(m_Radius,m_Radius); }
 
 public:
     virtual void FinalTick();

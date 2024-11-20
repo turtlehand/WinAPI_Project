@@ -41,11 +41,11 @@ private:
 	void CalFriction();
 
 public:
+	virtual void Awake() override;
 	virtual void FinalTick() override;
 
 public:
 	GRigidBody();
 	virtual ~GRigidBody() override;
-
 };
 

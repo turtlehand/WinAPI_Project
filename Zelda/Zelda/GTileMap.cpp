@@ -433,6 +433,7 @@ void GTileMap::Optimize()
 				}
 				++num;
 			}
+			/*
 			else if (m_vecTile[Row * m_Col + Col].second == CREATURE_ID::Water)
 			{
 				Vec2 LeftDown = Vec2(Col, Row);
@@ -567,6 +568,7 @@ void GTileMap::Optimize()
 				}
 				++num;
 			}
+			*/
 		}
 	}
 
@@ -592,7 +594,7 @@ void GTileMap::CreateCreature()
 			CREATURE_ID CreatureID = m_vecTile[Row * m_Col + Col].second;
 
 			// 해당 타일에 아무것도 삽입하지 않거나 벽이라면 넘어간다.
-			if (CreatureID == CREATURE_ID::NONE || CreatureID == CREATURE_ID::Wall || CreatureID== CREATURE_ID::Water)
+			if (CreatureID == CREATURE_ID::NONE || CreatureID == CREATURE_ID::Wall)
 				continue;
 			
 			LAYER_TYPE LayerType = LAYER_TYPE::END;
@@ -607,6 +609,8 @@ void GTileMap::CreateCreature()
 				LayerType = LAYER_TYPE::ELEMENT;
 			else if ((int)CREATURE_ID::HitBox == (int)CreatureID)
 				LayerType = LAYER_TYPE::OBJECT;
+			else if ((int)CREATURE_ID::Water == (int)CreatureID)
+				LayerType = LAYER_TYPE::WATER;
 
 			CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(CreatureID);
 

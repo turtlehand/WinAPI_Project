@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "GRigidBody.h"
 
+#include "GCollider.h"
+
 GRigidBody::GRigidBody() :
 	GComponent(COMPONENT_TYPE::RIGIDBODY),
 	m_RigidBodyType(RIGIDBODY_TYPE::DYNAMIC),
@@ -35,6 +37,14 @@ void GRigidBody::CalFriction()
 
 		m_Velocity = m_Velocity.Normalize() * Speed;
 	}
+}
+
+void GRigidBody::Awake()
+{
+	GCollider* Collider = GetOwner()->GetComponent<GCollider>();
+	if (Collider == nullptr)
+		return;
+	Collider->m_IsRigidBody = true;
 }
 
 void GRigidBody::FinalTick()

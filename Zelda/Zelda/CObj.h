@@ -121,6 +121,7 @@ T* CObj::AddComponent()
 	T* _Component = new T;
 	_Component->m_Owner = this;
 	m_Component.push_back(_Component);
+	_Component->Awake();
 	
 	return _Component;
 }
