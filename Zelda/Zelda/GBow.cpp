@@ -39,7 +39,7 @@ void GBow::Awake()
 	m_SpriteRenderer = AddComponent<GSpriteRenderer>();
 	m_SpriteRenderer->SetSprite(GAssetManager::GetInst()->LoadSprite(L"BOW", L"Sprite\\Item_16\\BOW_Y.sprite"));
 	m_SpriteRenderer->SetScale(Vec2(4.f, 4.f));
-	m_SpriteRenderer->SetDeleteColor(RGB(0, 0, 0));
+	m_SpriteRenderer->SetDeleteColor(RGB(116, 116, 116));
 
 	GetHitBox()->SetName(L"BOW_HITBOX");
 	GetHitBox()->SetScale(Vec2(64.f, 64.f));

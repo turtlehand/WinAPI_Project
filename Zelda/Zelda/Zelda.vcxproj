@@ -174,7 +174,12 @@
     <ClInclude Include="GHitBox.h" />
     <ClInclude Include="GInventory.h" />
     <ClInclude Include="GGameImage.h" />
+    <ClInclude Include="GLevelChange.h" />
     <ClInclude Include="GLevel_Editor.h" />
+    <ClInclude Include="GLevel_Stage_0.h" />
+    <ClInclude Include="GLevel_Stage_1.h" />
+    <ClInclude Include="GLevel_Stage_2.h" />
+    <ClInclude Include="GLevel_Stage_3.h" />
     <ClInclude Include="GLevel_Start.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="GLog.h" />
@@ -260,7 +265,12 @@
     <ClCompile Include="GHitBox.cpp" />
     <ClCompile Include="GInventory.cpp" />
     <ClCompile Include="GGameImage.cpp" />
+    <ClCompile Include="GLevelChange.cpp" />
     <ClCompile Include="GLevel_Editor.cpp" />
+    <ClCompile Include="GLevel_Stage_0.cpp" />
+    <ClCompile Include="GLevel_Stage_1.cpp" />
+    <ClCompile Include="GLevel_Stage_2.cpp" />
+    <ClCompile Include="GLevel_Stage_3.cpp" />
     <ClCompile Include="GLevel_Start.cpp" />
     <ClCompile Include="GLog.cpp" />
     <ClCompile Include="GMap.cpp" />

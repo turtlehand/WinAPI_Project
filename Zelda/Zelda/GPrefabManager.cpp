@@ -24,6 +24,7 @@
 
 // 벽
 #include "GWall.h"
+#include "GLevelChange.h"
 
 GPrefabManager::GPrefabManager()
 {
@@ -60,6 +61,7 @@ void GPrefabManager::Init()
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wooden_Sword, new GWeapon(CREATURE_ID::Wooden_Sword)));
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Iron_Sword, new GWeapon(CREATURE_ID::Iron_Sword)));
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Stone_Hammer, new GWeapon(CREATURE_ID::Stone_Hammer)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Branch, new GWeapon(CREATURE_ID::Branch)));
 
 	// 도구
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Bow, new GBow));
@@ -68,9 +70,10 @@ void GPrefabManager::Init()
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::HitBox, new GHitBox));
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Fire, new GFire));
 
-	// 벽
+	// 기타
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Wall, new GWall(CREATURE_ID::Wall)));
 	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::Water, new GWall(CREATURE_ID::Water)));
+	m_mapPrefab.insert(make_pair((UINT)CREATURE_ID::LevelChange, new GLevelChange));
 
 
 }
@@ -78,7 +81,7 @@ void GPrefabManager::Init()
 
 const CObj* GPrefabManager::FindPrefab(CREATURE_ID _Key)
 {
-	map<UINT, CObj*>::iterator iter = m_mapPrefab.find((UINT)_Key);
+	map<UINT, CObj*>::iterator iter = m_mapPrefab.find((int)_Key);
 
 	if (iter == m_mapPrefab.end())
 	{
@@ -173,6 +176,12 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 	}
 	break;
 
+	case CREATURE_ID::Branch:
+	{
+		CreatureObj = new GWeapon(CREATURE_ID::Branch);
+	}
+	break;
+
 	case CREATURE_ID::Bow:
 	{
 		CreatureObj = new GBow;
@@ -203,6 +212,13 @@ CObj* GPrefabManager::CreatePrefab(CREATURE_ID _Key)
 	case CREATURE_ID::Water:
 	{
 		CreatureObj = new GWall(CREATURE_ID::Water);
+	}
+	break;
+
+	// 물
+	case CREATURE_ID::LevelChange:
+	{
+		CreatureObj = new GLevelChange;
 	}
 	break;
 

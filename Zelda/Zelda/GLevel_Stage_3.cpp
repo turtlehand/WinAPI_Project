@@ -1,5 +1,6 @@
 #include "pch.h"
-#include "GLevel_Start.h"
+#include "GLevel_Stage_3.h"
+#include "CLevelMgr.h"
 
 #include "DeBugRenderManager.h"
 #include "GSoundManager.h"
@@ -7,6 +8,7 @@
 #include "GCamera.h"
 
 #include "GPlayer.h"
+#include "GLevelChange.h"
 
 #include "GPathManager.h"
 
@@ -15,51 +17,56 @@
 #include "GAssetManager.h"
 #include "GSound.h"
 
-GLevel_Start::GLevel_Start() :
+GLevel_Stage_3::GLevel_Stage_3() :
 	m_Player(nullptr),
 	m_Map(nullptr)
 {
-	SetName(L"Start");
+	SetName(L"Stage_2");
 }
 
-GLevel_Start::~GLevel_Start()
+GLevel_Stage_3::~GLevel_Stage_3()
 {
 }
 
-void GLevel_Start::Begin()
+void GLevel_Stage_3::Begin()
 {
 	DeBugRenderManager::GetInst()->ShowDeBugRender(false);
-
-	//배경음 지정
-	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Dark_World", L"Sound\\BGM\\Dark_World.wav");
-	if (pSound != nullptr)
-	{
-		pSound->SetVolume(10.f);
-		pSound->PlayToBGM(true);
-	}
 
 	// Player 생성하기
 	GPlayer* player = new GPlayer;
 	player->Awake();
 	m_Player = player;
 	AddObject(player, LAYER_TYPE::PLAYER);
-	player->SetPos(0.f, 0.f);
+	if (CLevelMgr::GetInst()->GetPrevLevelType() == LEVEL_TYPE::STAGE2)
+	{
+		player->SetPos(32.f + 64 * 12, 32.f + 64 * 3);
+	}
 
 	GCamera::GetInst()->SetTarget(player);
-	
+
 	GMap* pMap = new GMap;
 	m_Map = pMap;
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_Creature.tm";
+	pMapPath += L"TileMap\\Stage_3.tm";
 	pMap->SetName(L"Map");
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
-	pMap->SetPos(pMap->GetPos() - Vec2(32 * 10, 32 * 10));
 	pMap->GetTileMap()->CreateCreature();
 
+
+
+	for (int i = 0; i < 3; ++i)
+	{
+		GLevelChange* NextLevel = dynamic_cast<GLevelChange*>(GetGameObject(LAYER_TYPE::DEFAULT)[i]);
+		NextLevel->SetChanageLevel(LEVEL_TYPE::STAGE2);
+	}
+
+
 	CollisionManager::GetInst()->CollisionCheckClear();
+
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::PLAYER);
 
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WALL, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WALL, LAYER_TYPE::MONSTER_OBJECT);
@@ -92,40 +99,19 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
 }
 
-void GLevel_Start::End()
+void GLevel_Stage_3::End()
 {
 	CLevel::End();
-	GCamera::GetInst()->SetTarget(nullptr);
-	GSoundManager::GetInst()->RegisterToBGM(nullptr);
+	//GCamera::GetInst()->SetTarget(nullptr);
+	//GSoundManager::GetInst()->RegisterToBGM(nullptr);
 }
 
-void GLevel_Start::Tick()
+void GLevel_Stage_3::Tick()
 {
 	CLevel::Tick();
-	
-
-	if (GETKEYDOWN(KEY::ENTER))
-	{
-		ChangeLevel(LEVEL_TYPE::EDITOR);
-	}
 }
 
-void GLevel_Start::Render()
+void GLevel_Stage_3::Render()
 {
 	CLevel::Render();
-
-	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 10, L"Start Level", wcslen(L"Start Level"));
-
-	/*
-	Vec2 MousePos = CKeyMgr::GetInst()->GetMousePos();
-	wchar_t buff[255] = {};
-	swprintf_s(buff, 255, L"%d, %d", (int)MousePos.x, (int)MousePos.y);
-	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, buff, wcslen(buff));
-	*/
-
-	Vec2 MousePos_Window = CKeyMgr::GetInst()->GetMousePos_Window();
-	wchar_t buff[255] = {};
-	swprintf_s(buff, 255, L"%d, %d", (int)MousePos_Window.x, (int)MousePos_Window.y);
-	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, buff, wcslen(buff));
-	//TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, m_Player->GetCurrentState().c_str(), m_Player->GetCurrentState().size());
 }

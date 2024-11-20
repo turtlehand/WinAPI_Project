@@ -24,19 +24,47 @@ GTree::~GTree()
 
 void GTree::DropItem()
 {
+	CObj* Element = GetElement();
+	if (IsValid(Element))
+		return;
 
-	CObj* Log = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Log);
-	if (GetParent() != nullptr)
-	{
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(0, 2);
 
-		CreateChildGameObject(GetParent(), Log, LAYER_TYPE::OBJECT);
-		Log->SetPos(GetPos());
-	}
-	else
+	int RandomIndex = dist(gen);
+
+	if (RandomIndex == 0 || RandomIndex == 1)
 	{
-		CreateGameObject(Log, LAYER_TYPE::OBJECT);
-		Log->SetPos(GetPos());
+		CObj* Log = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Log);
+		if (GetParent() != nullptr)
+		{
+
+			CreateChildGameObject(GetParent(), Log, LAYER_TYPE::OBJECT);
+			Log->SetPos(GetPos());
+		}
+		else
+		{
+			CreateGameObject(Log, LAYER_TYPE::OBJECT);
+			Log->SetPos(GetPos());
+		}
 	}
+	else if (RandomIndex == 2)
+	{
+		CObj* Fruit = GPrefabManager::GetInst()->CreatePrefab(CREATURE_ID::Fruit);
+		if (GetParent() != nullptr)
+		{
+
+			CreateChildGameObject(GetParent(), Fruit, LAYER_TYPE::ITEM);
+			Fruit->SetPos(GetPos());
+		}
+		else
+		{
+			CreateGameObject(Fruit, LAYER_TYPE::ITEM);
+			Fruit->SetPos(GetPos());
+		}
+	}
+
 }
 
 void GTree::Awake()

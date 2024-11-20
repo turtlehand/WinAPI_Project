@@ -21,6 +21,7 @@
 #include "GSprite.h"
 #include "GTileMap.h"
 #include "GTilePalette.h"
+#include "GSoundManager.h"
 
 #include "GSound.h"
 
@@ -47,15 +48,8 @@ GLevel_Editor::~GLevel_Editor()
 
 void GLevel_Editor::Begin()
 {
-	// 배경음 지정
-	//GSound* pSound = GAssetManager::GetInst()->LoadSound(L"DM_Opening", L"Sound\\DM.wav");
-
-	//if (pSound != nullptr)
-	//{
-	//	pSound->SetVolume(1.f);
-	//	pSound->PlayToBGM(true);
-
-	//}
+	GCamera::GetInst()->SetTarget(nullptr);
+	GSoundManager::GetInst()->RegisterToBGM(nullptr);
 
 	// 메뉴바가 없다면 새로 로드
 	if (m_hMenu == nullptr)
@@ -116,14 +110,14 @@ void GLevel_Editor::Tick()
 
 	if(GETKEYDOWN(KEY::ENTER))
 	{
-		ChangeLevel(LEVEL_TYPE::START);
+		ChangeLevel(LEVEL_TYPE::STAGE0);
 	}
 	else if (GETKEYDOWN(KEY::SPACE))
 	{
 		if (m_DrawMode == DRAW_MODE_TYPE::TILE)
 		{
 			m_DrawMode = DRAW_MODE_TYPE::OBJECT;
-			m_CurIndex = 2;
+			m_CurIndex = 2001;
 		}
 		else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
 		{
@@ -192,7 +186,7 @@ void GLevel_Editor::Tick()
 		{
 			while (true)
 			{
-				m_CurIndex = 2 < m_CurIndex ? --m_CurIndex : 2;
+				m_CurIndex = 2001 < m_CurIndex ? --m_CurIndex : 2001;
 				if (GPrefabManager::GetInst()->FindPrefab((CREATURE_ID)m_CurIndex) != nullptr)
 					break;
 
@@ -200,9 +194,6 @@ void GLevel_Editor::Tick()
 			
 		}
 	}
-
-
-
 }
 
 void GLevel_Editor::Render()
@@ -216,8 +207,12 @@ void GLevel_Editor::Render()
 	swprintf_s(buff, 255, L"%d, %d", (int)MousePos.x, (int)MousePos.y);
 	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 30, buff, wcslen(buff));
 
+	wstring Mode;
+
 	if (m_DrawMode == DRAW_MODE_TYPE::TILE)
 	{
+		Mode = L"Tile_Mode";
+
 		if (m_TilePalette != nullptr && -1 < m_CurIndex)
 		{
 			// 현재 타일
@@ -231,6 +226,7 @@ void GLevel_Editor::Render()
 	}
 	else if (m_DrawMode == DRAW_MODE_TYPE::OBJECT)
 	{
+		Mode = L"Object_Mode";
 		if (0 < m_CurIndex)
 		{
 			// 현재 타일
@@ -248,6 +244,8 @@ void GLevel_Editor::Render()
 				Sprite->GetSlice().x, Sprite->GetSlice().y, SRCCOPY);
 		}
 	}
+
+	TextOut(CEngine::GetInst()->GetSecondDC(), 10, 50, Mode.c_str(), Mode.size());
 }
 
 void GLevel_Editor::End()

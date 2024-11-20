@@ -35,7 +35,7 @@ void GMoblin::Awake()
 	pMInfo->Material = MATERIAL_TYPE::LIFE;
 	pMInfo->MaxHP = 12;
 	pMInfo->HP = 12;
-	pMInfo->AttackPower = 4;
+	pMInfo->AttackPower = 2;
 	pMInfo->Speed = 64;
 	pMInfo->Direction = Vec2::down();
 	pMInfo->DetectRange = 128;

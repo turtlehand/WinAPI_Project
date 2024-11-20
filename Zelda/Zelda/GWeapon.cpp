@@ -63,6 +63,12 @@ GWeapon::GWeapon(CREATURE_ID _CreatureID) :
 
 	}
 	break;
+	case CREATURE_ID::Branch:
+	{
+		m_SpriteX = GAssetManager::GetInst()->LoadSprite(L"BRANCH_X", L"Sprite\\Item_16\\Weapon\\BRANCH_X.sprite");
+		m_SpriteY = GAssetManager::GetInst()->LoadSprite(L"BRANCH_Y", L"Sprite\\Item_16\\Weapon\\BRANCH_Y.sprite");
+	}
+	break;
 	}
 
 	SetTitleSprite(m_SpriteY);
@@ -122,6 +128,12 @@ void GWeapon::Awake()
 	}
 	break;
 	case CREATURE_ID::Korok_Leaf:
+	{
+		pInfo->Material = MATERIAL_TYPE::WOOD;
+		pInfo->AttackType = ATTACK_TYPE::STRIKE;
+	}
+	break;
+	case CREATURE_ID::Branch:
 	{
 		pInfo->Material = MATERIAL_TYPE::WOOD;
 		pInfo->AttackType = ATTACK_TYPE::STRIKE;

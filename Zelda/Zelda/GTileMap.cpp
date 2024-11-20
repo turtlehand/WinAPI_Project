@@ -611,6 +611,8 @@ void GTileMap::CreateCreature()
 				LayerType = LAYER_TYPE::OBJECT;
 			else if ((int)CREATURE_ID::Water == (int)CreatureID)
 				LayerType = LAYER_TYPE::WATER;
+			else if ((int)CREATURE_ID::LevelChange == (int)CreatureID)
+				LayerType = LAYER_TYPE::DEFAULT;
 
 			CObj* CreatureObj = GPrefabManager::GetInst()->CreatePrefab(CreatureID);
 
@@ -620,7 +622,11 @@ void GTileMap::CreateCreature()
 				Pos.x += m_Scale.x * TILE_SIZE * Col + m_Scale.x * TILE_SIZE / 2;
 				Pos.y += m_Scale.y * TILE_SIZE * Row + m_Scale.x * TILE_SIZE / 2;
 				CreatureObj->SetPos(Pos);
-				CreateChildGameObject(GetOwner(), CreatureObj, LayerType);
+
+				CreatureObj->Awake();
+				GetOwner()->AddChild(CreatureObj);
+
+				CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(CreatureObj, LayerType);
 			}
 		}
 	}

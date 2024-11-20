@@ -187,14 +187,26 @@
     <Filter Include="Game\05. Object\01. Creature\5000. HitBox">
       <UniqueIdentifier>{38e77f72-7222-4531-b79f-44a1e76276da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game\05. Object\01. Creature\6000. Wall">
-      <UniqueIdentifier>{35578f41-fb9f-44d0-9b5f-bbf57da40085}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game\06. Component\01. Collider\03. Tile">
       <UniqueIdentifier>{51b9562f-efae-48ba-b37d-2f7c84d51a69}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\05. Object\02. GameUI">
       <UniqueIdentifier>{0db6294d-71c3-4fd6-9a8c-f14bf3d643bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\05. Object\01. Creature\6000. ETC">
+      <UniqueIdentifier>{35578f41-fb9f-44d0-9b5f-bbf57da40085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\02. Stage_0">
+      <UniqueIdentifier>{7c907032-46bc-495d-85ca-ba238f100099}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\03. Stage_1">
+      <UniqueIdentifier>{5efb17f1-d848-4127-ad31-abaa8ba36e1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\04. Stage_2">
+      <UniqueIdentifier>{c3c7a92d-79e4-427a-b24b-7ed3990fe2ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\04. Level\05. Stage_3">
+      <UniqueIdentifier>{46243b8f-f51a-4f0f-a75a-6b2b2757062b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -427,7 +439,7 @@
       <Filter>Game\05. Object\01. Creature\5000. HitBox</Filter>
     </ClInclude>
     <ClInclude Include="GWall.h">
-      <Filter>Game\05. Object\01. Creature\6000. Wall</Filter>
+      <Filter>Game\05. Object\01. Creature\6000. ETC</Filter>
     </ClInclude>
     <ClInclude Include="GFire.h">
       <Filter>Game\05. Object\01. Creature\5000. HitBox</Filter>
@@ -461,6 +473,21 @@
     </ClInclude>
     <ClInclude Include="GPDieState.h">
       <Filter>Game\08. State\01. Player</Filter>
+    </ClInclude>
+    <ClInclude Include="GLevel_Stage_0.h">
+      <Filter>Game\04. Level\02. Stage_0</Filter>
+    </ClInclude>
+    <ClInclude Include="GLevelChange.h">
+      <Filter>Game\05. Object\01. Creature\6000. ETC</Filter>
+    </ClInclude>
+    <ClInclude Include="GLevel_Stage_1.h">
+      <Filter>Game\04. Level\03. Stage_1</Filter>
+    </ClInclude>
+    <ClInclude Include="GLevel_Stage_2.h">
+      <Filter>Game\04. Level\04. Stage_2</Filter>
+    </ClInclude>
+    <ClInclude Include="GLevel_Stage_3.h">
+      <Filter>Game\04. Level\05. Stage_3</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -672,7 +699,7 @@
       <Filter>Game\05. Object\01. Creature\5000. HitBox</Filter>
     </ClCompile>
     <ClCompile Include="GWall.cpp">
-      <Filter>Game\05. Object\01. Creature\6000. Wall</Filter>
+      <Filter>Game\05. Object\01. Creature\6000. ETC</Filter>
     </ClCompile>
     <ClCompile Include="GMap.cpp">
       <Filter>Game\05. Object\05. Map</Filter>
@@ -709,6 +736,21 @@
     </ClCompile>
     <ClCompile Include="GPDieState.cpp">
       <Filter>Game\08. State\01. Player</Filter>
+    </ClCompile>
+    <ClCompile Include="GLevel_Stage_0.cpp">
+      <Filter>Game\04. Level\02. Stage_0</Filter>
+    </ClCompile>
+    <ClCompile Include="GLevelChange.cpp">
+      <Filter>Game\05. Object\01. Creature\6000. ETC</Filter>
+    </ClCompile>
+    <ClCompile Include="GLevel_Stage_1.cpp">
+      <Filter>Game\04. Level\03. Stage_1</Filter>
+    </ClCompile>
+    <ClCompile Include="GLevel_Stage_2.cpp">
+      <Filter>Game\04. Level\04. Stage_2</Filter>
+    </ClCompile>
+    <ClCompile Include="GLevel_Stage_3.cpp">
+      <Filter>Game\04. Level\05. Stage_3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

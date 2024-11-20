@@ -101,10 +101,11 @@ int CEngine::Init(HINSTANCE _Inst, POINT _Resolution)
 
 	CTimeMgr::GetInst()->Init();
 	CKeyMgr::GetInst()->Init();
+	GPrefabManager::GetInst()->Init();
 	CLevelMgr::GetInst()->Init();
 	GCamera::GetInst()->Init();
 
-	GPrefabManager::GetInst()->Init();
+	
 	
 
 	// 扩档快 积己 己傍

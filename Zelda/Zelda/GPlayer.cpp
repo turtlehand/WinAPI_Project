@@ -4,6 +4,7 @@
 #include "CLevelMgr.h"
 #include "CLevel.h"
 #include "GAssetManager.h"
+#include "GPathManager.h"
 
 #include "GHitBox.h"
 
@@ -43,26 +44,17 @@ GPlayer::GPlayer() :
 	m_ToolEquip(CREATURE_ID::END)
 {
 	SetName(L"Player");
+	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"LINK_DOWN_0", L"Sprite\\Link_16\\LINK_DOWN_0.sprite"));
 }
 
 GPlayer::~GPlayer()
 {
-
+	
 }
 
 void GPlayer::Awake()
 {
 	GCreature::Awake();
-
-	// 공격 박스 설정
-	m_AttackBox = new GHitBox;
-	m_AttackBox->Awake();
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_AttackBox, LAYER_TYPE::PLAYER_OBJECT);
-	AddChild(m_AttackBox);
-	m_AttackBox->SetActive(false);
-	m_AttackBox->SetName(L"Player_AttackBox");
-	m_AttackBox->SetPos(0.f, 0.f);
-	m_AttackBox->SetScale(0, 0);
 
 	// 스탯 설정
 	PlayerInfo* pInfo = new PlayerInfo;
@@ -74,6 +66,31 @@ void GPlayer::Awake()
 	pInfo->Direction = Vec2::down();
 	pInfo->IsDead = false;
 	SetStatInfo(pInfo);
+
+	// 공격 박스 설정
+	m_AttackBox = new GHitBox;
+	m_AttackBox->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_AttackBox, LAYER_TYPE::PLAYER_OBJECT);
+	AddChild(m_AttackBox);
+	m_AttackBox->SetActive(false);
+	m_AttackBox->SetName(L"Player_AttackBox");
+	m_AttackBox->SetPos(0.f, 0.f);
+	m_AttackBox->SetScale(0, 0);
+
+	// UI
+	m_Inventory.reserve(MAX_SLOT);
+	GInventory* pInven = new GInventory(m_Inventory);
+	pInven->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pInven, LAYER_TYPE::UI);
+	m_InventoryUI = pInven;
+	m_InventoryUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(224.f, 80.f) - Vec2(8.f, 8.f));
+	m_InventoryUI->SetScale(Vec2(224.f, 80.f));
+
+	GHeart* pHeart = new GHeart(*pInfo);
+	pHeart->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pHeart, LAYER_TYPE::UI);
+	pHeart->SetPos(Vec2(8.f, 8.f));
+	pHeart->SetScale(32.f, 32.f);
 
 	// FSM 추가
 	m_FSM = AddComponent<GFSM>();
@@ -107,21 +124,12 @@ void GPlayer::Awake()
 	m_FSM->AddState(L"DIE", new GPDieState);
 	m_FSM->ChanageState(L"IDLE");
 
-	m_Inventory.reserve(MAX_SLOT);
-
-	// UI
-	GInventory* pInven = new GInventory(m_Inventory);
-	pInven->Awake();
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pInven, LAYER_TYPE::UI);
-	m_InventoryUI = pInven;
-	m_InventoryUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(224.f, 80.f) - Vec2(8.f,8.f) );
-	m_InventoryUI->SetScale(Vec2( 224.f, 80.f));
-
-	GHeart* pHeart = new GHeart(*pInfo);
-	pHeart->Awake();
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pHeart, LAYER_TYPE::UI);
-	pHeart->SetPos(Vec2(8.f, 8.f));
-	pHeart->SetScale(32.f, 32.f);
+	// 처음 시작할 때는 유저데이터 저장
+	if (CLevelMgr::GetInst()->GetCurrentLevelType() == LEVEL_TYPE::STAGE0)
+		SaveUserData();
+	else
+		LoadUserData();
+	
 }
 
 void GPlayer::Begin()
@@ -134,7 +142,6 @@ void GPlayer::Tick()
 {
 	GCreature::Tick();
 }
-
 
 void GPlayer::Render()
 {
@@ -209,7 +216,7 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID)
 	{
 		m_AttackBox->SetAttackType(ATTACK_TYPE::SLASH);
 		m_AttackBox->SetMaterialType(MATERIAL_TYPE::WOOD);
-		m_AttackBox->SetDamage(1);
+		m_AttackBox->SetDamage(2);
 		SpriteX = GAssetManager::GetInst()->LoadSprite(L"WOODEN_SWORD_X", L"Sprite\\Item_16\\Weapon\\WOODEN_SWORD_X.sprite");
 		SpriteY = GAssetManager::GetInst()->LoadSprite(L"WOODEN_SWORD_Y", L"Sprite\\Item_16\\Weapon\\WOODEN_SWORD_Y.sprite");
 	}
@@ -252,6 +259,14 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID)
 
 	}
 	break;
+	case CREATURE_ID::Branch:
+	{
+		m_AttackBox->SetAttackType(ATTACK_TYPE::STRIKE);
+		m_AttackBox->SetMaterialType(MATERIAL_TYPE::WOOD);
+		m_AttackBox->SetDamage(1);
+		SpriteX = GAssetManager::GetInst()->LoadSprite(L"BRANCH_X", L"Sprite\\Item_16\\Weapon\\BRANCH_X.sprite");
+		SpriteY = GAssetManager::GetInst()->LoadSprite(L"BRANCH_Y", L"Sprite\\Item_16\\Weapon\\BRANCH_Y.sprite");
+	}
 	}
 
 
@@ -272,6 +287,11 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID)
 	{
 		AttackY->ChangeSprite(i, SpriteY);
 	}
+	
+	CObj* Element = m_AttackBox->GetElement();
+
+	if(IsValid(Element))
+		DeleteGameObject(m_AttackBox->GetElement());
 
 }
 
@@ -284,6 +304,97 @@ void GPlayer::SetTool(CREATURE_ID _ToolID)
 	GetPlayerStatInfo()->AttackPower = 1;
 
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
+}
+
+int GPlayer::SaveUserData()
+{
+	wstring RelativePath = GPathManager::GetContentPath();
+	RelativePath += L"SaveData\\UserData.save";
+
+	FILE* File = nullptr;
+	_wfopen_s(&File, RelativePath.c_str(), L"w");
+	assert(File);
+
+	fwprintf_s(File, L"[MAXHP]\n");
+	fwprintf_s(File, L"%d\n\n", GetPlayerStatInfo()->MaxHP);
+
+	fwprintf_s(File, L"[HP]\n");
+	fwprintf_s(File, L"%d\n\n", GetPlayerStatInfo()->HP);
+
+	fwprintf_s(File, L"[ITEM]\n");
+
+	for (int i = 0; i < m_Inventory.size(); ++i)
+	{
+		fwprintf_s(File, L"[INDEX]\n");
+		fwprintf_s(File, L"%d\n\n", i);
+
+		fwprintf_s(File, L"[CREATUREID]\n");
+		fwprintf_s(File, L"%d\n\n", (int)m_Inventory[i].first);
+
+		fwprintf_s(File, L"[NUM]\n");
+		fwprintf_s(File, L"%d\n\n", (int)m_Inventory[i].second);
+	}
+
+	fclose(File);
+	return S_OK;
+}
+
+int GPlayer::LoadUserData()
+{
+	wstring RelativePath = GPathManager::GetContentPath();
+	RelativePath += L"SaveData\\UserData.save";
+
+	FILE* File = nullptr;
+	_wfopen_s(&File, RelativePath.c_str(), L"r");
+	assert(File);
+
+	while (true)
+	{
+		wchar_t szBuff[255] = {};
+		fwscanf_s(File, L"%s", szBuff, 255);
+		wstring szString = szBuff;
+		if (szString.empty())
+		{
+			break;
+		}
+
+
+		if (szString == L"[MAXHP]")
+		{
+			int MaxHP = 0;
+			fwscanf_s(File, L"%d", &MaxHP);
+			GetPlayerStatInfo()->MaxHP = MaxHP;
+		}
+		else if (szString == L"[HP]")
+		{
+			int HP = 0;
+			fwscanf_s(File, L"%d", &HP);
+			GetPlayerStatInfo()->HP = HP;
+		}
+		else if (szString == L"[INDEX]")
+		{
+			int index = 0;
+			fwscanf_s(File, L"%s", szBuff, 255);
+			fwscanf_s(File, L"%d", &index);
+
+			int ItemID, Num;
+
+			fwscanf_s(File, L"%s", szBuff, 255);
+			fwscanf_s(File, L"%d", &ItemID);
+
+			fwscanf_s(File, L"%s", szBuff, 255);
+			fwscanf_s(File, L"%d", &Num);
+			
+			m_Inventory.push_back(make_pair((CREATURE_ID)ItemID, Num));
+		}
+
+	}
+
+	m_InventoryUI->SetCurItem(m_InventoryUI->FristItem());
+
+	fclose(File);
+
+	return S_OK;
 }
 
 void GPlayer::Dead()

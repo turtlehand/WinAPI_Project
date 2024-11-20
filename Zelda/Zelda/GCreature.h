@@ -11,15 +11,15 @@ enum class CREATURE_ID
 	NONE = -1,
 
 	// 플레이어
-	Player,
+	Player = 1000,
 
 	// 몬스터
-	Monster,
+	Monster = 2000,
 
 	Moblin,
 
 	// 장애물
-	Obstacle,
+	Obstacle = 3000,
 
 	Grass,
 	Tree,
@@ -28,21 +28,21 @@ enum class CREATURE_ID
 	PullRock,
 
 	// 아이템
-	Item,
+	Item = 4000,
 
 	// 소재
-	MATERIALS,
+	MATERIALS = 4100,
 	Fire_Wood,
 	Flint,
 	MonsterMaterial,
 
 	// 음식
-	FOOD,
+	FOOD = 4200,
 	Fruit,
 	Roast_Fruit,
 
 	// 무기
-	WEAPON,
+	WEAPON = 4300,
 	Wooden_Sword,
 	Iron_Sword,
 	Stone_Hammer,
@@ -50,23 +50,27 @@ enum class CREATURE_ID
 	Wooden_Spear,
 	Iron_Spear,
 	Korok_Leaf,
+	Branch,
 
 	// 도구
-	TOOLS,
+	TOOLS = 4400,
 	Bow,
 	Arrow,
 
-	ELEMENT,
+	ELEMENT = 5000,
 	Fire,
 
 	//기타
-	ETC,
+	ETC = 6000,
 
 	// 공격 박스
 	HitBox,
 	// 벽
 	Wall,
 	Water,
+
+	// 레벨 변경
+	LevelChange,
 
 	END,
 };

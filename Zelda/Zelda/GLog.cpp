@@ -65,9 +65,13 @@ void GLog::Render()
 
 void GLog::DropItem()
 {
+	CObj* Element = GetElement();
+	if (IsValid(Element))
+		return;
+
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<int> dist(0, 3);
+	std::uniform_int_distribution<int> dist(0, 1);
 
 	int RandomIndex = dist(gen);
 

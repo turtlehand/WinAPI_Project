@@ -56,6 +56,9 @@ public:
 	void SetAttackBox(CREATURE_ID _WeaponID);
 	void SetTool(CREATURE_ID _ToolID);
 
+	int SaveUserData();
+	int LoadUserData();
+
 public:
 	virtual void Dead();
 

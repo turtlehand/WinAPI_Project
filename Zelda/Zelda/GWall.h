@@ -2,7 +2,6 @@
 #include "CObj.h"
 
 enum class CREATURE_ID;
-class SpriteRenderer;
 
 class GWall : public CObj
 {

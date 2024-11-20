@@ -40,6 +40,7 @@ void GRock::Awake()
 	m_Sprite = AddComponent< GSpriteRenderer>();
 	m_Sprite->SetSprite(GAssetManager::GetInst()->LoadSprite(L"Rock", L"Sprite\\test_18.sprite"));
 	m_Sprite->SetScale(Vec2(4.f, 4.f));
+	m_Sprite->SetDeleteColor(RGB(252, 216, 168));
 }
 
 /*
