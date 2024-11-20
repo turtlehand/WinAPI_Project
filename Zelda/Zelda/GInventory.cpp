@@ -205,7 +205,7 @@ void GInventory::Tick_UI()
 
 void GInventory::Render_UI()
 {
-	GPanel::Render_UI();
+	//GPanel::Render_UI();
 
 	if (m_CurItem == -1)
 		return;

@@ -160,12 +160,12 @@ void GPlayer::OnTriggerExit(GCollider* _Collider)
 
 void GPlayer::OnCollisionEnter(GCollider* _Collider)
 {
-	GetPlayerStatInfo()->Speed /= 2;
+	//GetPlayerStatInfo()->Speed /= 2;
 }
 
 void GPlayer::OnCollisionExit(GCollider* _Collider)
 {
-	GetPlayerStatInfo()->Speed *= 2;
+	//GetPlayerStatInfo()->Speed *= 2;
 }
 
 const wstring& GPlayer::GetCurrentState()

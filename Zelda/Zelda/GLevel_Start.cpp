@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GLevel_Start.h"
 
+#include "DeBugRenderManager.h"
 #include "GSoundManager.h"
 #include "CollisionManager.h"
 #include "GCamera.h"
@@ -31,12 +32,13 @@ GLevel_Start::~GLevel_Start()
 
 void GLevel_Start::Begin()
 {
+	DeBugRenderManager::GetInst()->ShowDeBugRender(false);
 
 	//배경음 지정
 	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Dark_World", L"Sound\\BGM\\Dark_World.wav");
 	if (pSound != nullptr)
 	{
-		pSound->SetVolume(25.f);
+		pSound->SetVolume(10.f);
 		pSound->PlayToBGM(true);
 	}
 

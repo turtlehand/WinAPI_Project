@@ -6,6 +6,7 @@
 #include "GAssetManager.h"
 #include "GSound.h"
 #include "GRigidBody.h"
+#include "GHitBox.h"
 
 GMDieState::GMDieState() : m_Monster(nullptr)
 {
@@ -26,7 +27,7 @@ void GMDieState::Enter()
 	GAssetManager::GetInst()->LoadSound(L"Enemy_Die", L"Sound\\Sound_Effects\\LOZ_Enemy_Die.wav")->Play();
 	m_Monster->m_FlipBookPlayer->SetPlay(0, 8, false);
 	m_Monster->GetStatInfo()->IsInvincible = true;
-	int rgb = RGB(-1, -1, -1);
+	m_Monster->GetAttackBox()->SetActive(false);
 }
 
 void GMDieState::FinalTick()

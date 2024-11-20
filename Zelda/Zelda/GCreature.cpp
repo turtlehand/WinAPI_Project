@@ -146,11 +146,13 @@ void GCreature::Interaction_Attack(GHitBox* _HitBox)
 	// 현재 소재에 공격이 닿는다면
 
 	ATTACK_TYPE HBAttackType = _HitBox->GetAttackType();
+	MATERIAL_TYPE HBMaterialType = _HitBox->GetMaterialType();
 
 	MATERIAL_TYPE CMaterialType = m_StatInfo->Material;
 
 	// 소재 - 공격 반응
-	if (CMaterialType == MATERIAL_TYPE::STONE && HBAttackType == ATTACK_TYPE::STRIKE)
+	// 바위에 돌 또는 바위 소재로 타격 공격을 하면
+	if (CMaterialType == MATERIAL_TYPE::STONE && (HBAttackType == ATTACK_TYPE::STRIKE && (HBMaterialType == MATERIAL_TYPE::STONE || HBMaterialType == MATERIAL_TYPE::METAL)))
 		Smash();
 	else if (CMaterialType == MATERIAL_TYPE::LIFE && HBAttackType != ATTACK_TYPE::NONE )
 		BeAttacked(_HitBox);
