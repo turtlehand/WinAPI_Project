@@ -304,6 +304,10 @@ void GPlayer::SetTool(CREATURE_ID _ToolID)
 	GetPlayerStatInfo()->AttackPower = 1;
 
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
+
+	CObj* Element = m_AttackBox->GetElement();
+	if (IsValid(Element))
+		DeleteGameObject(m_AttackBox->GetElement());
 }
 
 int GPlayer::SaveUserData()
