@@ -5,6 +5,7 @@
 #include "GAssetManager.h"
 #include "GSprite.h"
 #include "GTexture.h"
+#include "GSound.h"
 
 #include "CLevel.h"
 #include "CLevelMgr.h"
@@ -46,6 +47,7 @@ void GWall::OnCollisionEnter(GCollider* _Collider)
 
 			if (Creature->GetCreatureID() == CREATURE_ID::Log)
 			{
+				GAssetManager::GetInst()->LoadSound(L"Secret", L"Sound\\Sound_Effects\\LOZ_Secret.wav")->Play();
 				_Collider->GetOwner()->SetPos(GetPos());
 				_Collider->SetEnabled(false);
 				DeleteGameObject(this);

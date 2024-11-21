@@ -22,6 +22,7 @@ public:
 	int FristItem();
 	int LastItem();
 	int PreItem();					// 이전 아이템
+	int CurItem() { return m_CurItem; };
 	int PostItem();					// 다음 아이템
 
 	//void PickUpItem();		

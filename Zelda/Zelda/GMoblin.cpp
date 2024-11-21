@@ -58,7 +58,7 @@ void GMoblin::Awake()
 
 	GetAttackBox()->GetComponent<GBoxCollider>()->SetScale(Vec2(64.f, 64.f));
 	GetAttackBox()->SetAttackType(ATTACK_TYPE::STRIKE);
-	GetAttackBox()->SetMaterialType(MATERIAL_TYPE::LIFE);
+	GetAttackBox()->SetMaterialType(MATERIAL_TYPE::METAL);
 	GetAttackBox()->SetDamage(pMInfo->AttackPower);
 
 	GetFSM()->AddState(L"IDLE", new GMIdleState);

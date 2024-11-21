@@ -60,6 +60,6 @@ void GRoastFruit::OnTriggerEnter(GCollider* _Collider)
 
 void GRoastFruit::UseItem(GCreature* _User)
 {
-	_User->GetStatInfo()->HP = _User->GetStatInfo()->HP + 12 > _User->GetStatInfo()->MaxHP ? _User->GetStatInfo()->MaxHP : _User->GetStatInfo()->HP + 12;
+	_User->GetStatInfo()->HP = _User->GetStatInfo()->HP + 8 > _User->GetStatInfo()->MaxHP ? _User->GetStatInfo()->MaxHP : _User->GetStatInfo()->HP + 8;
 	GAssetManager::GetInst()->LoadSound(L"Heart", L"Sound\\Sound_Effects\\LOZ_Get_Heart.wav")->Play();
 }

@@ -17,17 +17,18 @@ TaskManager::~TaskManager()
 
 void TaskManager::Tick()
 {
-	for (size_t i = 0; i < m_Garbage.size(); ++i)
+	for (vector<CObj*>::reverse_iterator iter = m_Garbage.rbegin(); iter != m_Garbage.rend(); ++iter)
 	{
 		// 부모 오브젝트와 연결을 끊는다.
-		CObj* Parent = m_Garbage[i]->GetParent();
+ 		CObj* Object = (*iter);
+		CObj* Parent = Object->GetParent();
 		if (IsValid(Parent))
 		{
 
-			m_Garbage[i]->SetParent(nullptr);
+			Object->SetParent(nullptr);
 		}
 
-		delete m_Garbage[i];
+		delete Object;
 	}
 	m_Garbage.clear();
 
@@ -132,8 +133,8 @@ void TaskManager::Tick()
 						queue.push_back(Object->GetChilds()[i]);
 					}
 
-					// 오브젝트가 삭제 상태가 아니라면
-					if (!Object->IsDead())
+					// 해당 오브젝트가 삭제 상태가 아니라면
+					if (IsValid(Object))
 					{
 						Object->m_Dead = true;
 						m_Garbage.push_back(Object);

@@ -459,6 +459,12 @@ void GPlayer::DropInvenItem()
 	if (m_Inventory.size() == 0)
 		return;
 
+	if (m_Inventory[m_InventoryUI->CurItem()].first == m_WeaponEquip)
+		m_WeaponEquip = CREATURE_ID::END;
+
+	if (m_Inventory[m_InventoryUI->CurItem()].first == m_ToolEquip)
+		m_ToolEquip = CREATURE_ID::END;
+
 	m_InventoryUI->DropItem(this);
 	GSound* DropSound = GAssetManager::GetInst()->LoadSound(L"Drop", L"Sound\\Sound_Effects\\LOZ_Bomb_Drop.wav");
 	DropSound->SetVolume(100.f);
