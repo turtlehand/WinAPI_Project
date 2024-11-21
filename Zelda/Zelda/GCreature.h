@@ -93,6 +93,7 @@ public:
 	DefaultStatsInfo* GetStatInfo() { return m_StatInfo; }
 
 	CObj* GetElement() { return m_Element; }
+	void DeleteElement();		// 속성을 제거한다.
 
 protected:
 	GBoxCollider* GetHitBox() { return m_HitBox; }

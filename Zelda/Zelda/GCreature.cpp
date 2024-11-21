@@ -59,6 +59,15 @@ void GCreature::OnTriggerEnter(GCollider* _Collider)
 		Interaction_Attack(HitBox);
 }
 
+void GCreature::DeleteElement()
+{
+	if (IsValid(m_Element))
+	{
+		DeleteGameObject(m_Element);
+		m_Element = nullptr;
+	}
+}
+
 void GCreature::StatusEffect()
 {
 	if (m_StatInfo->Effect.ElementType == ELEMENT_TYPE::NONE)

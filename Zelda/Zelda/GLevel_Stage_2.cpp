@@ -40,7 +40,7 @@ void GLevel_Stage_2::Begin()
 
 	if (CLevelMgr::GetInst()->GetPrevLevelType() == LEVEL_TYPE::STAGE1)
 	{
-		player->SetPos(32.f + 64 * 6, 32.f + 64 * 2);
+		player->SetPos(32.f + 64 * 6, 32.f + 64 * 3);
 	}
 	else if (CLevelMgr::GetInst()->GetPrevLevelType() == LEVEL_TYPE::STAGE3)
 	{

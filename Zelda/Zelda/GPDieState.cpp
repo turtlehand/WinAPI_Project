@@ -36,7 +36,7 @@ void GPDieState::FinalTick()
 
 	m_Player->m_RigidBody->SetVelocity(Vec2(0.f, 0.f));
 	if (m_Player->m_FlipBookPlayer->IsFinish())
-		ChangeLevel(LEVEL_TYPE::START);
+		ChangeLevel(LEVEL_TYPE::STAGE0);
 }
 
 void GPDieState::Exit()
