@@ -49,8 +49,6 @@ void GLevel_Stage_0::Begin()
 
 	player->SetPos(32.f + 64 * 4, 32.f + 64 * 4);
 
-	GCamera::GetInst()->SetTarget(player);
-
 	GMap* pMap = new GMap;
 	m_Map = pMap;
 	pMap->Awake();
@@ -99,6 +97,12 @@ void GLevel_Stage_0::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
+
+
+	GCamera::GetInst()->SetTarget(player);
+	GCamera::GetInst()->SetCenter(player->GetGlobalPos());
+	GCamera::GetInst()->SetMapSize(Vec2(TILE_SIZE * 4 * m_Map->GetTileMap()->GetCol(), TILE_SIZE * 4 * m_Map->GetTileMap()->GetRow()));
+
 }
 
 void GLevel_Stage_0::End()

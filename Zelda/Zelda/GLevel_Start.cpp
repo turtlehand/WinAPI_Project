@@ -34,7 +34,7 @@ void GLevel_Start::Begin()
 	GSound* pSound = GAssetManager::GetInst()->LoadSound(L"Dark_World", L"Sound\\BGM\\Dark_World.wav");
 	if (pSound != nullptr)
 	{
-		pSound->SetVolume(10.f);
+		pSound->SetVolume(50.f);
 		pSound->PlayToBGM(true);
 	}
 
@@ -43,23 +43,23 @@ void GLevel_Start::Begin()
 	player->Awake();
 	m_Player = player;
 	AddObject(player, LAYER_TYPE::PLAYER);
-	player->SetPos(0.f, 0.f);
 
-	GCamera::GetInst()->SetTarget(player);
-	
+	player->SetPos(32.f + 64 * 4, 32.f + 64 * 4);
+
 	GMap* pMap = new GMap;
 	m_Map = pMap;
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test_Creature.tm";
+	pMapPath += L"TileMap\\test.tm";
 	pMap->SetName(L"Map");
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
-	pMap->SetPos(pMap->GetPos() - Vec2(32 * 10, 32 * 10));
 	pMap->GetTileMap()->CreateCreature();
 
 	CollisionManager::GetInst()->CollisionCheckClear();
+
+	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::DEFAULT, LAYER_TYPE::PLAYER);
 
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WALL, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::WALL, LAYER_TYPE::MONSTER_OBJECT);
@@ -90,6 +90,11 @@ void GLevel_Start::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
+
+
+	GCamera::GetInst()->SetTarget(player);
+	GCamera::GetInst()->SetCenter(player->GetGlobalPos());
+	GCamera::GetInst()->SetMapSize(Vec2(TILE_SIZE * 4 * m_Map->GetTileMap()->GetCol(), TILE_SIZE * 4 * m_Map->GetTileMap()->GetRow()));
 }
 
 void GLevel_Start::End()

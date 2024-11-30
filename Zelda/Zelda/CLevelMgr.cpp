@@ -33,6 +33,8 @@ void CLevelMgr::Init()
 {
 	m_arrLevel[(int)LEVEL_TYPE::EDITOR] = new GLevel_Editor;
 	m_arrLevel[(int)LEVEL_TYPE::EDITOR]->Awake();
+	m_arrLevel[(int)LEVEL_TYPE::START] = new GLevel_Start;
+	m_arrLevel[(int)LEVEL_TYPE::START]->Awake();
 	m_arrLevel[(int)LEVEL_TYPE::STAGE0] = new GLevel_Stage_0;
 	m_arrLevel[(int)LEVEL_TYPE::STAGE0]->Awake();
 	m_arrLevel[(int)LEVEL_TYPE::STAGE1] = new GLevel_Stage_1;
@@ -42,8 +44,8 @@ void CLevelMgr::Init()
 	m_arrLevel[(int)LEVEL_TYPE::STAGE3] = new GLevel_Stage_3;
 	m_arrLevel[(int)LEVEL_TYPE::STAGE3]->Awake();
 
-	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::STAGE0];
-	m_CurLevelType = LEVEL_TYPE::STAGE0;
+	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::START];
+	m_CurLevelType = LEVEL_TYPE::START;
 	m_CurLevel->Begin();
 	
 }

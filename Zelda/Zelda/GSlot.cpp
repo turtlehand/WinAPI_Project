@@ -13,7 +13,8 @@ GSlot::GSlot() :
 	m_BackGroundSprite[BLUE] = GAssetManager::GetInst()->LoadSprite(L"SLOT_BLUE", L"Sprite\\UI\\SLOT_BLUE.sprite");
 	m_BackGroundSprite[RED] = GAssetManager::GetInst()->LoadSprite(L"SLOT_RED", L"Sprite\\UI\\SLOT_RED.sprite");
 	SetTitleSprite(m_BackGroundSprite[BLUE]);
-	SetBrushType(BRUSH_TYPE::GRAY);
+	SetBrushType(BRUSH_TYPE::WHITE);
+	SetPenType(PEN_TYPE::WHITE);
 }
 
 GSlot::~GSlot()

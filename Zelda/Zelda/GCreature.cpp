@@ -293,15 +293,15 @@ void GCreature::KnockBack(GHitBox* _HitBox)
 
 	if (_HitBox->GetAttackType() == ATTACK_TYPE::THRUSHT)
 	{
-		RigidBody->AddForce(Direction * -20000);
+		RigidBody->SetVelocity(Direction * -10000 * DT);
 	}
 	else if (_HitBox->GetAttackType() == ATTACK_TYPE::SLASH)
 	{
-		RigidBody->AddForce(Direction * -30000);
+		RigidBody->SetVelocity(Direction * -20000 * DT);
 	}
 	else if (_HitBox->GetAttackType() == ATTACK_TYPE::STRIKE)
 	{
-		RigidBody->AddForce(Direction * -40000);
+		RigidBody->SetVelocity(Direction * -30000 * DT);
 	}
 	
 }

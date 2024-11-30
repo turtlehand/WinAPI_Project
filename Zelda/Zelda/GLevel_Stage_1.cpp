@@ -103,6 +103,10 @@ void GLevel_Stage_1::Begin()
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::MONSTER_OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::OBJECT);
 	CollisionManager::GetInst()->CollisionCheck(LAYER_TYPE::ELEMENT, LAYER_TYPE::ITEM);
+
+	GCamera::GetInst()->SetTarget(player);
+	GCamera::GetInst()->SetCenter(Vec2(TILE_SIZE * 2 * m_Map->GetTileMap()->GetCol(), TILE_SIZE * 2 * m_Map->GetTileMap()->GetRow()));
+	GCamera::GetInst()->SetMapSize(Vec2(TILE_SIZE * 4 * m_Map->GetTileMap()->GetCol(), TILE_SIZE * 4 * m_Map->GetTileMap()->GetRow()));
 }
 
 void GLevel_Stage_1::End()

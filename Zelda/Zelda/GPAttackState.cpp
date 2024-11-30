@@ -53,7 +53,7 @@ void GPAttackState::Enter()
 
 	m_PrevAnim = (PLAYER_ANIM_STATE)m_Player->m_FlipBookPlayer->GetCurIndex();
 	m_AttackBox->SetActive(true);
-	m_AttackBox->GetHitBox()->SetEnabled(true);
+
 
 	if (m_PlayerInfo->Direction == Vec2::up())
 	{
@@ -68,11 +68,12 @@ void GPAttackState::Enter()
 		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
-			m_AttackBox->GetHitBox()->SetEnabled(false);
 			EffectBoxObj->SetPos(Vec2(0.f, 32.f));
 			GBoxCollider* EffectCollider = EffectBoxObj->GetComponent<GBoxCollider>();
 			EffectCollider->SetScale(Vec2(64.f, 64.f));
 		}
+		else
+			m_AttackBox->GetHitBox()->SetEnabled(true);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::down())
 	{
@@ -87,11 +88,12 @@ void GPAttackState::Enter()
 		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
-			m_AttackBox->GetHitBox()->SetEnabled(false);
 			EffectBoxObj->SetPos(Vec2(0.f, -32.f));
 			GBoxCollider* EffectCollider = EffectBoxObj->GetComponent<GBoxCollider>();
 			EffectCollider->SetScale(Vec2(64.f, 64.f));
 		}
+		else
+			m_AttackBox->GetHitBox()->SetEnabled(true);
 	}
 	else if (m_PlayerInfo->Direction == Vec2::left())
 	{
@@ -108,11 +110,12 @@ void GPAttackState::Enter()
 		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
-			m_AttackBox->GetHitBox()->SetEnabled(false);
 			EffectBoxObj->SetPos(Vec2(-32.f, 0.f));
 			GBoxCollider* EffectCollider = EffectBoxObj->GetComponent<GBoxCollider>();
 			EffectCollider->SetScale(Vec2(64.f, 64.f));
 		}
+		else
+			m_AttackBox->GetHitBox()->SetEnabled(true);
 	}
 	else if(m_PlayerInfo->Direction == Vec2::right())
 	{
@@ -129,11 +132,12 @@ void GPAttackState::Enter()
 		CObj* EffectBoxObj = m_AttackBox->GetElement();
 		if (IsValid(EffectBoxObj))
 		{
-			m_AttackBox->GetHitBox()->SetEnabled(false);
 			EffectBoxObj->SetPos(Vec2(32.f, 0.f));
 			GBoxCollider* EffectCollider = EffectBoxObj->GetComponent<GBoxCollider>();
 			EffectCollider->SetScale(Vec2(64.f, 64.f));
 		}
+		else
+			m_AttackBox->GetHitBox()->SetEnabled(true);
 
 	}
 
@@ -162,5 +166,6 @@ void GPAttackState::FinalTick()
 void GPAttackState::Exit()
 {
 	m_AttackBox->SetActive(false);
+	m_AttackBox->GetHitBox()->SetEnabled(false);
 	m_Player->m_FlipBookPlayer->SetPlay((int)m_PrevAnim, 5, true);
 }
