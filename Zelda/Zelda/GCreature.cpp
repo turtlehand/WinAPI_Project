@@ -289,19 +289,20 @@ void GCreature::KnockBack(GHitBox* _HitBox)
 		// y 축 방향으로 이동한다.
 		Direction = Vec2(0.f, Direction.y);
 	}
+
 	Direction = Direction.Normalize();
 
 	if (_HitBox->GetAttackType() == ATTACK_TYPE::THRUSHT)
 	{
-		RigidBody->SetVelocity(Direction * -10000 * DT);
+		RigidBody->SetVelocity(Direction * -300);
 	}
 	else if (_HitBox->GetAttackType() == ATTACK_TYPE::SLASH)
 	{
-		RigidBody->SetVelocity(Direction * -20000 * DT);
+		RigidBody->SetVelocity(Direction * -400);
 	}
 	else if (_HitBox->GetAttackType() == ATTACK_TYPE::STRIKE)
 	{
-		RigidBody->SetVelocity(Direction * -30000 * DT);
+		RigidBody->SetVelocity(Direction * -600);
 	}
 	
 }

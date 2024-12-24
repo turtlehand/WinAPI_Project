@@ -51,7 +51,7 @@ void GLevel_Start::Begin()
 	pMap->Awake();
 	AddObject(pMap, LAYER_TYPE::BACKGROUND);
 	wstring pMapPath = GPathManager::GetContentPath();
-	pMapPath += L"TileMap\\test.tm";
+	pMapPath += L"TileMap\\bug_test.tm";
 	pMap->SetName(L"Map");
 	pMap->GetTileMap()->SetScale(Vec2(4.f, 4.f));
 	pMap->GetTileMap()->Load(pMapPath);
