@@ -30,6 +30,7 @@
 
 #include "GHeart.h"
 #include "GInventory.h"
+#include "GSlot.h"
 #include "GPrefabManager.h"
 
 GPlayer::GPlayer() :
@@ -41,7 +42,8 @@ GPlayer::GPlayer() :
 	m_Inventory{},
 	m_NearbyItem(nullptr),
 	m_WeaponEquip(CREATURE_ID::END),
-	m_ToolEquip(CREATURE_ID::END)
+	m_ToolEquip(CREATURE_ID::END),
+	m_InventoryUI(nullptr)
 {
 	SetName(L"Player");
 	SetTitleSprite(GAssetManager::GetInst()->LoadSprite(L"LINK_DOWN_0", L"Sprite\\Link_16\\LINK_DOWN_0.sprite"));
@@ -77,14 +79,28 @@ void GPlayer::Awake()
 	m_AttackBox->SetPos(0.f, 0.f);
 	m_AttackBox->SetScale(0, 0);
 
-	// UI
+	// ========================================================
+	// 인벤토리 UI
 	m_Inventory.reserve(MAX_SLOT);
 	GInventory* pInven = new GInventory(m_Inventory);
 	pInven->Awake();
 	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pInven, LAYER_TYPE::UI);
 	m_InventoryUI = pInven;
-	m_InventoryUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(224.f, 80.f) - Vec2(8.f, 8.f));
+	m_InventoryUI->SetPos(Vec2(0.f, CEngine::GetInst()->GetResolution().y) - Vec2(0.f, 88.f));
+	//m_InventoryUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(224.f, 80.f) - Vec2(8.f, 8.f));
 	m_InventoryUI->SetScale(Vec2(224.f, 80.f));
+
+	// 장비 UI
+	m_EquipUI = new GSlot;
+	m_EquipUI->Awake();
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_EquipUI, LAYER_TYPE::UI);
+	m_EquipUI->SetPos(CEngine::GetInst()->GetResolution() - Vec2(80.f, 80.f) - Vec2(8.f, 8.f));
+	m_EquipUI->SetScale(Vec2(80.f, 80.f));
+	m_EquipUI->SetBrushType(BRUSH_TYPE::BLACK);
+	m_EquipUI->SetPenType(PEN_TYPE::BLACK);
+	m_EquipUI->ChangeColor();
+
+	// ========================================================
 
 	GHeart* pHeart = new GHeart(*pInfo);
 	pHeart->Awake();
@@ -290,6 +306,8 @@ void GPlayer::SetAttackBox(CREATURE_ID _WeaponID)
 	
 	m_AttackBox->DeleteElement();
 
+	m_EquipUI->SetItemSprite(SpriteY);
+
 }
 
 void GPlayer::SetTool(CREATURE_ID _ToolID)
@@ -303,6 +321,8 @@ void GPlayer::SetTool(CREATURE_ID _ToolID)
 	m_AttackBox->GetFlipBookPlayer()->SetPlay(-1, 0, 0);
 
 	m_AttackBox->DeleteElement();
+
+	m_EquipUI->SetItemSprite(GPrefabManager::GetInst()->FindPrefab(m_ToolEquip)->GetTitleSprite());
 		
 }
 

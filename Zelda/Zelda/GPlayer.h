@@ -12,6 +12,7 @@ class GRigidBody;
 class GFSM;
 class GHitBox;
 class GInventory;
+class GSlot;
 
 
 class GPlayer :
@@ -34,7 +35,10 @@ private:
 	GInventory* m_InventoryUI;
 	vector<pair<CREATURE_ID, int>> m_Inventory;
 
+	// 현재 장착 장비
+	GSlot* m_EquipUI;
 
+	// 근처 장비
 	CObj* m_NearbyItem;
 
 public:

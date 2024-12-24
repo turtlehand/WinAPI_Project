@@ -33,12 +33,10 @@ void GInventory::Awake()
 	}
 	
 	m_ItemSlot[PRE]->SetPos(Vec2(8 + 16.f, 8.f + 16.f));
-	m_ItemSlot[PRE]->ChangeColor();
 	m_ItemSlot[PRE]->SetScale(Vec2(32.f, 32.f));
 
 	m_ItemSlot[POST]->SetPos(Vec2(8 + 72.f * 2 + 16.f, 8.f + 16.f));
 	m_ItemSlot[POST]->SetScale(Vec2(32.f, 32.f));
-	m_ItemSlot[POST]->ChangeColor();
 }
 
 void GInventory::DropItem(GCreature* _User)

@@ -44,8 +44,8 @@ void CLevelMgr::Init()
 	m_arrLevel[(int)LEVEL_TYPE::STAGE3] = new GLevel_Stage_3;
 	m_arrLevel[(int)LEVEL_TYPE::STAGE3]->Awake();
 
-	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::START];
-	m_CurLevelType = LEVEL_TYPE::START;
+	m_CurLevel = m_arrLevel[(int)LEVEL_TYPE::STAGE0];
+	m_CurLevelType = LEVEL_TYPE::STAGE0;
 	m_CurLevel->Begin();
 	
 }
