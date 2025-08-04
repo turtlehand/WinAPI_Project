@@ -35,6 +35,7 @@ void CTimeMgr::Progress()
 	QueryPerformanceCounter(&m_CurCount);
 
 	m_DT = (float)(m_CurCount.QuadPart - m_PrevCount.QuadPart) / (float)m_Frequency.QuadPart;
+	m_DT = 0.01666667f < m_DT ? 0.01666667f : m_DT;
 	m_PrevCount = m_CurCount;
 
 	++m_FPS;

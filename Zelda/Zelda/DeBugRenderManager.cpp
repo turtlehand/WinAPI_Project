@@ -20,7 +20,7 @@ DeBugRenderManager::~DeBugRenderManager()
 
 void DeBugRenderManager::Progress()
 {
-	if (GETKEYDOWN(KEY::NUM9))
+	if (GETKEYDOWN(KEY::R))
 		m_Show ? m_Show = false : m_Show = true;
 }
 
